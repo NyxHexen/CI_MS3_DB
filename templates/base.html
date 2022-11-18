@@ -12,10 +12,10 @@
     <title>DevBus | If StackOverflow and Twitter had a child.</title>
 </head>
 
-<body>
+<body class="grey darken-3">
     <header>
-        <nav>
-            <div class="nav-wrapper">
+        <nav class="deep-purple darken-3">
+            <div class="container nav-wrapper">
                 <a href="#!" class="brand-logo">Logo</a>
                 <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                 <ul class="right hide-on-med-and-down">
@@ -38,7 +38,7 @@
         {% block content%}
         {% endblock %}
     </main>
-    <footer class="page-footer">
+    <footer class="page-footer deep-purple darken-3">
         <div class="container">
             <div class="row">
                 <div class="col l6 s12">
@@ -64,8 +64,12 @@
             </div>
         </div>
     </footer>
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <!-- Compiled and minified Materialize JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- Own JS -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 
 </html>
