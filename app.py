@@ -1,6 +1,8 @@
 import os
-from flask import (Flask, flash, render_template, 
-                    redirect, request, session, url_for)
+import dns
+from flask import (
+    Flask, flash, render_template,
+    redirect, request, session, url_for)
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 if os.path.exists("env.py"):
@@ -10,21 +12,18 @@ if os.path.exists("env.py"):
 app = Flask(__name__)
 
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
-app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.secret_key = os.environ.get("SECRET_KEY")
 
 mongo = PyMongo(app)
 
 
 @app.route("/")
-@app.route("/get_posts")
-def get_posts():
+def home():
     posts = mongo.db.posts.find()
     return render_template("posts.html", posts=posts)
 
 
 if __name__ == "__main__":
-    app.run(host=os.environ.get("IP"), 
+    app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
-            debug=True # REMOVE BEFORE DEPLOYMENT AND SUBMISSION
-            )
+            debug=True) # REMOVE BEFORE DEPLOYMENT AND SUBMISSION
