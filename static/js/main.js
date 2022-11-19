@@ -1,6 +1,6 @@
-$(document).ready(function(){
-    $('.sidenav').sidenav();
-  });
+$(document).ready(function() {
+  $('.sidenav').sidenav();
+});
 
 $('.profile-languages .card-action a').click(function() {
   $('.user-languages').toggleClass('truncate');
