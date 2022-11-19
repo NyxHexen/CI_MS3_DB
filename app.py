@@ -5,6 +5,7 @@ from flask import (
     redirect, request, session, url_for)
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
+from forms import RegistrationForm, LoginForm
 if os.path.exists("env.py"):
     import env
 
@@ -24,7 +25,13 @@ def home():
 
 @app.route("/signup")
 def signup():
-    return render_template("signup.html", title='Sign Up')
+    form = RegistrationForm()
+    return render_template("signup.html", title='Sign Up', form=form)
+
+@app.route("/signin")
+def signin():
+    form = LoginForm()
+    return render_template("signin.html", title='License and Registration', form=form)
 
 
 if __name__ == "__main__":
