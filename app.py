@@ -23,15 +23,18 @@ def home():
     posts = mongo.db.posts.find()
     return render_template("home.html",posts=posts)
 
-@app.route("/signup")
+@app.route("/signup", methods=["GET", "POST"])
 def signup():
     form = RegistrationForm()
-    return render_template("signup.html", title='Sign Up', form=form)
+    if form.validate_on_submit():
+        flash("Account created successfully!", "light-green lighten-2")
+        return redirect(url_for('signin'))
+    return render_template("signup.html", title="Sign Up", form=form)
 
 @app.route("/signin")
 def signin():
     form = LoginForm()
-    return render_template("signin.html", title='License and Registration', form=form)
+    return render_template("signin.html", title="License and Registration", form=form)
 
 
 if __name__ == "__main__":
