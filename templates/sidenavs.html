@@ -1,0 +1,49 @@
+{% extends 'posts.html' %}
+
+{% block sidenavs %}
+<!-- User Sidenav -->
+<div class="container">
+    <div id="profile" class="row hide-on-small-and-down">
+        <div class="col s4 pull-s1 l3 pull-l2">
+            <div class="card">
+                <div class="card-content">
+                    <!-- User Picture -->
+                    <div class="row">
+                        <div class="col s8 push-s2">
+                            <img class="circle responsive-img"
+                                src="{{ url_for('static', filename='images/pexels-mododeolhar-2475138.jpg') }}"
+                                alt="Silhouette of a woman">
+                        </div>
+                    </div>
+                    <!-- User Username & Bio -->
+                    <div class="row">
+                        <div class="col profile-username s12">
+                            <span class="card-title center-align">NyxHexen</span>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at dapibus elit. Aenean at
+                                est et ex efficitur hendrerit.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- User Languages -->
+                    <div class="row">
+                        <div class="col profile-languages s12">
+                            <span class="card-title center-align">My Superpowers</span>
+                            <div class="user-languages truncate">
+                                <div class="chip">Python</div>
+                                <div class="chip">JavaScript</div>
+                                <div class="chip">HTML</div>
+                                <div class="chip">Sass</div>
+                                <div class="chip">Python</div>
+                            </div>
+                            <div class="card-action">
+                                <a href="#">See All</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
