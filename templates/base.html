@@ -13,30 +13,35 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/prism.css')}}">
     <!-- Own JS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css')}}">
+    {% if title %}
+    <title>{{ title }} | DevBus</title>
+    {% else %}
     <title>DevBus | If StackOverflow and Twitter had a child.</title>
+    {% endif %}
 </head>
 
 <body class="grey darken-3">
     <header>
         <nav class="deep-purple darken-3">
             <div class="container nav-wrapper">
-                <a href="#!" class="brand-logo">Logo</a>
+                <a href="{{ url_for('home' )}}" class="brand-logo">Logo</a>
                 <a href="#" data-target="mobile-menu" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                 <ul class="right hide-on-med-and-down">
-                    <li><a href="#">Home</a></li>
+                    <li><a href="{{ url_for('home' )}}">Home</a></li>
                     <li><a href="#">Sign In</a></li>
-                    <li><a href="#" class="yellow black-text waves-effect waves-light btn"><strong>Sign Up</strong></a></li>
+                    <li><a href="{{ url_for('signup' )}}"
+                            class="yellow black-text waves-effect waves-light btn"><strong>Sign Up</strong></a></li>
                 </ul>
             </div>
         </nav>
-
         <ul class="sidenav" id="mobile-menu">
-            <li><a href="#">Home</a></li>
+            <li><a href="{{ url_for('home' )}}">Home</a></li>
             <li><a href="#">Sign In</a></li>
-            <li><a href="#">SignUp</a></li>
+            <li><a href="{{ url_for('signup' )}}">SignUp</a></li>
         </ul>
     </header>
     <main>
+        <h1>{{ title }}</h1>
         {% block content%}
         {% endblock %}
     </main>
