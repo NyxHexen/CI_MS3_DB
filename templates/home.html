@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% include 'sidenavs.html' %}
+
+<div class="container">
+    {% for post in posts %}
+    <div class="row">
+        {% if post.post_type == "post" %}
+            <div class="post col s12 m9 offset-m4 l8 push-l2">
+        {% else %}
+            <div class="assist post col s12 m9 offset-m4 l8 push-l2">
+        {% endif %}
+            <div class="card grey lighten-1">
+                <div class="card-panel z-depth-1">
+                    <div class="row valign-wrapper">
+                        <div class="col s3 m2">
+                            <img src="{{ url_for('static', filename='images/pexels-mododeolhar-2475138.jpg') }}"
+                                alt="" class="circle responsive-img">
+                        </div>
+                        <div class="col s10">
+                            <div class="row">
+                                <a href="#">{{ post.created_by }}</a>
+                                <span class="grey-text">{{ post.create_date }}</span>
+                            </div>
+                            <div class="row card-title-container">
+                                <span class="card-title flow-text">{{ post.post_title }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="card-content">{{ post.post_content }}</p>
+                {% if post.code_content %}
+                    <div class="card-content code-content">
+                        <div class="chip black-text">{{ post.code_language }}</div>
+                        <pre
+                            class="z-depth-2"><code class="language-{{ post.code_language }}">{{ post.code_content }}</code></pre>
+                    </div>
+                {% endif %}
+                <div class="card-action grey lighten-2 z-depth-1">
+                    {% if post.post_type == "post" %}
+                        <div class="waves-effect waves-dark btn-flat vote-button"><i
+                                class="material-icons right green-text">thumb_up</i>{{ post.votes.up|length }}</div>
+                        <div class="waves-effect btn-flat vote-button"><i
+                                class="material-icons right small red-text">thumb_down</i>{{ post.votes.down|length }}</div>
+                        <a class="waves-effect waves-light yellow black-text btn-small right">Reply</a>
+                        <div class="waves-effect btn-flat right"><i
+                                class="material-icons right small grey-text text-darken-2">chat</i><span>{{ post.replies|length }}</span>
+                            comments
+                        </div>
+                    {% else %}
+                        <a class="waves-effect waves-light deep-purple btn">Assist</a>
+                        <div class="waves-effect btn-flat right">
+                            <i class="material-icons small grey-text text-darken-2 right">chat</i>
+                            <span> {{ post.replies|length }} assists</span>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
