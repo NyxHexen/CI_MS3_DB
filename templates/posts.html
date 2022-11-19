@@ -1,90 +1,65 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container">
-    <!-- Custom Sidenav -->
-    <div id="profile" class="row hide-on-small-and-down">
-        <div class="col s4 pull-s1 l3 pull-l2">
-            <div class="card">
-                <div class="card-content">
-                    <!-- User Picture -->
-                    <div class="row">
-                        <div class="col s8 push-s2">
-                            <img class="circle responsive-img"
-                                src="{{ url_for('static', filename='images/pexels-mododeolhar-2475138.jpg') }}"
-                                alt="Silhouette of a woman">
-                        </div>
-                    </div>
-                    <!-- User Username & Bio -->
-                    <div class="row">
-                        <div class="col profile-username s12">
-                            <span class="card-title center-align">NyxHexen</span>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at dapibus elit. Aenean at
-                                est et ex efficitur hendrerit.
-                            </p>
-                        </div>
-                    </div>
-                    <!-- User Languages -->
-                    <div class="row">
-                        <div class="col profile-languages s12">
-                            <span class="card-title center-align">My Superpowers</span>
-                            <div class="user-languages truncate">
-                                <div class="chip">Python</div>
-                                <div class="chip">JavaScript</div>
-                                <div class="chip">HTML</div>
-                                <div class="chip">Sass</div>
-                                <div class="chip">Python</div>
-                            </div>
-                            <div class="card-action">
-                                <a href="#">See All</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
+{% include 'sidenavs.html' %}
+
 <div class="container">
     {% for post in posts %}
     <div class="row">
-        <div class="post col s12 m9 offset-m4 l8 push-l2">
+        {% if post.post_type == "post" %}
+            <div class="post col s12 m9 offset-m4 l8 push-l2">
+        {% else %}
+            <div class="assist post col s12 m9 offset-m4 l8 push-l2">
+        {% endif %}
             <div class="card grey lighten-1">
                 <div class="card-panel z-depth-1">
                     <div class="row valign-wrapper">
-                        <div class="col s2">
-                            <img src="{{ url_for('static', filename='images/pexels-mododeolhar-2475138.jpg') }}" alt=""
-                                class="circle responsive-img"> <!-- notice the "circle" class -->
+                        <div class="col s3 m2">
+                            <img src="{{ url_for('static', filename='images/pexels-mododeolhar-2475138.jpg') }}"
+                                alt="" class="circle responsive-img">
                         </div>
                         <div class="col s10">
                             <div class="row">
-                                <a href="#">NyxHexen</a>
-                                <span class="grey-text">2022-11-09</span>
+                                <a href="#">{{ post.created_by }}</a>
+                                <span class="grey-text">{{ post.create_date }}</span>
                             </div>
-                            <div class="row">
-                                <span class="card-title">{{ post.post_title }}</span>
+                            <div class="row card-title-container">
+                                <span class="card-title flow-text">{{ post.post_title }}</span>
                             </div>
                         </div>
                     </div>
                 </div>
                 <p class="card-content">{{ post.post_content }}</p>
-                <div class="card-content">
-                    <div class="chip black-text">{{ post.code_language }}</div>
-                    <pre class="z-depth-2"><code class="language-python">{{ post.code_content }}</code></pre>
-                </div>
-                <div class="card-action grey lighten-2 z-depth-1">
-                    <div class="waves-effect waves-dark btn-flat vote-button"><i
-                            class="material-icons right green-text">thumb_up</i>150</div>
-                    <div class="waves-effect btn-flat vote-button"><i
-                            class="material-icons right small red-text">thumb_down</i>150</div>
-                    <a class="waves-effect waves-light yellow black-text btn-small right">Reply</a>
-                    <div class="waves-effect btn-flat right"><i
-                            class="material-icons right small grey-text text-darken-2">chat</i><span>11</span> comments
+                {% if post.code_content %}
+                    <div class="card-content">
+                        <div class="chip black-text">{{ post.code_language }}</div>
+                        <pre
+                            class="z-depth-2"><code class="language-{{ post.code_language }}">{{ post.code_content }}</code></pre>
                     </div>
+                {% endif %}
+                <div class="card-action grey lighten-2 z-depth-1">
+                    {% if post.post_type == "post" %}
+                        <div class="waves-effect waves-dark btn-flat vote-button"><i
+                                class="material-icons right green-text">thumb_up</i>{{ post.votes.up|length }}</div>
+                        <div class="waves-effect btn-flat vote-button"><i
+                                class="material-icons right small red-text">thumb_down</i>{{ post.votes.down|length }}</div>
+                        <a class="waves-effect waves-light yellow black-text btn-small right">Reply</a>
+                        <div class="waves-effect btn-flat right"><i
+                                class="material-icons right small grey-text text-darken-2">chat</i><span>{{ post.replies|length }}</span>
+                            comments
+                        </div>
+                    {% else %}
+                        <a class="waves-effect waves-light deep-purple btn">Assist</a>
+                        <div class="waves-effect btn-flat right">
+                            <i class="material-icons small grey-text text-darken-2 right">chat</i>
+                            <span> {{ post.replies|length }} assists</span>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
+            </div>
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-</div>
 {% endblock %}
