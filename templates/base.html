@@ -28,7 +28,7 @@
                 <a href="#" data-target="mobile-menu" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                 <ul class="right hide-on-med-and-down">
                     <li><a href="{{ url_for('home' )}}">Home</a></li>
-                    <li><a href="#">Sign In</a></li>
+                    <li><a href="{{ url_for('signin' )}}">Sign In</a></li>
                     <li><a href="{{ url_for('signup' )}}"
                             class="yellow black-text waves-effect waves-light btn"><strong>Sign Up</strong></a></li>
                 </ul>
@@ -36,12 +36,12 @@
         </nav>
         <ul class="sidenav" id="mobile-menu">
             <li><a href="{{ url_for('home' )}}">Home</a></li>
-            <li><a href="#">Sign In</a></li>
+            <li><a href="{{ url_for('signin' )}}">Sign In</a></li>
             <li><a href="{{ url_for('signup' )}}">SignUp</a></li>
         </ul>
     </header>
     <main>
-        <h1>{{ title }}</h1>
+        <h1 class="visually-hidden">{{ title }}</h1>
         {% block content%}
         {% endblock %}
     </main>
