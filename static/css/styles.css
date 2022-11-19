@@ -78,3 +78,7 @@ fieldset {
 .vote-button {
   padding: 0 8px;
 }
+
+.signin-link {
+  font-size: 1.5rem !important;
+}
