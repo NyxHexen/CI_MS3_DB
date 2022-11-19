@@ -31,6 +31,10 @@ nav {
   margin-bottom: 2rem;
 }
 
+fieldset {
+  border: none;
+}
+
 .card .card-title {
   font-weight: 400;
 }
