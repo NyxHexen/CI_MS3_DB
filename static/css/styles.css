@@ -57,16 +57,18 @@ nav {
   padding-right: 12px;
 }
 
-p.card-content {
-  font-size: 17px;
-}
-
 .post .card-title {
   line-height: 0;
 }
 
 .post p.card-content {
   padding: 12px 24px;
+  font-size: 17px;
+  margin-top: 0;
+}
+
+.post .code-content {
+  padding-top: 0;
 }
 
 .vote-button {
