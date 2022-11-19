@@ -20,7 +20,11 @@ mongo = PyMongo(app)
 @app.route("/")
 def home():
     posts = mongo.db.posts.find()
-    return render_template("home.html", posts=posts)
+    return render_template("home.html",posts=posts)
+
+@app.route("/signup")
+def signup():
+    return render_template("signup.html", title='Sign Up')
 
 
 if __name__ == "__main__":
