@@ -14,7 +14,7 @@ $('.profile-languages .card-action a').click(function () {
 });
 
 // $(window).innerWidth() returns 17px less as a value
-if ($(window).innerWidth() + 17 <= 740) {
+if ($(window).innerWidth() + 17 <= 475) {
   $('.post .card-action span').each(function () {
     let text = $(this).text();
     text = text.replace("comments", "");
