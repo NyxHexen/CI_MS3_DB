@@ -3,12 +3,12 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col s12 m8 push-m2">
+        <div class="col s12 m8 push-m2 l8 push-l2 xl6 push-xl3">
             <div class="row grey lighten-3 z-depth-2">
-                <form class="col s12 m10 push-m1" method="POST" action="">
+                <form class="signin-form col s12 l10 push-l1 center-align" method="POST" action="">
                     <fieldset class="row">
                         {{ form.hidden_tag() }}
-                        <legend class="visually-hidden">Sign Up</legend>
+                        <legend class="deep-purple-text text-darken-3">Sign Up</legend>
                         <div class="input-field col s12 m6">
                             {{ form.f_name }}
                             {{ form.f_name.label }}
@@ -73,7 +73,7 @@
                     </fieldset>
                 </form>
             </div>
-            <span class="yellow-text l2 signin-link">
+            <span class="yellow-text l2 signup-link">
                 Already have an account? <a href="{{ url_for('signin') }}">Sign In!</a>
             </span>
         </div>
