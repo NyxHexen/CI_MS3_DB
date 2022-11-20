@@ -1,12 +1,14 @@
 from flask import (
     flash, render_template,
     redirect, request, session, url_for)
+from devbus import db, app, bcrypt
 from devbus.forms import RegistrationForm, LoginForm
-from devbus import mongo, app, bcrypt
+from devbus.models import User, Post
+
 
 @app.route("/")
 def home():
-    posts = mongo.db.posts.find()
+    posts = Post.objects()
     return render_template("home.html",posts=posts)
 
 
@@ -14,16 +16,12 @@ def home():
 def signup():
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = {"user_type": "user",
-            "username": form.username.data,
-            "password": bcrypt.generate_password_hash(form.password.data).decode('utf-8'),
-            "f_name": form.f_name.data,
-            "l_name": form.l_name.data,
-            "email": form.email.data,
-            "bio": "",
-            "languages": []
-            }
-        mongo.db.users.insert_one(user)
+        user = User(username=form.username.data,
+                    password=bcrypt.generate_password_hash(form.password.data).decode('utf-8'),
+                    f_name=form.f_name.data,
+                    l_name=form.l_name.data,
+                    email=form.email.data)
+        user.save()
         flash("Account created successfully!", "light-green black-text lighten-2")
         return redirect(url_for('signin'))
     return render_template("signup.html", title="Sign Up", form=form)

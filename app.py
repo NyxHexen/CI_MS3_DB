@@ -1,4 +1,4 @@
-from devbus import app, os
+from devbus import os, app
 
 
 if __name__ == "__main__":

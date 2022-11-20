@@ -2,7 +2,7 @@ import re
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, ValidationError
 from wtforms.validators import DataRequired, Length, Email, EqualTo
-from devbus import mongo
+from devbus.models import User
 
 def password_check(password):
     """
@@ -52,12 +52,14 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField('READY!')#
 
     def validate_username(self, username):
-        is_unique_username = mongo.db.users.find_one({'username': username.data}) is None
+        is_unique_username = len(User.objects(username=username.data)) is 0
+        print(is_unique_username)
         if not is_unique_username:
             raise ValidationError('Username is taken. Please pick another.')
 
     def validate_email(self, email):
-        is_unique_email = mongo.db.users.find_one({'email': email.data}) is None
+        is_unique_email = False if User.objects(email=email.data) else True
+        print(is_unique_email)
         if not is_unique_email:
             raise ValidationError('Email is taken. Please use another.')
 
