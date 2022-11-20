@@ -52,14 +52,12 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField('READY!')#
 
     def validate_username(self, username):
-        is_unique_username = len(User.objects(username=username.data)) is 0
-        print(is_unique_username)
+        is_unique_username = len(User.objects(username=username.data)) == 0
         if not is_unique_username:
             raise ValidationError('Username is taken. Please pick another.')
 
     def validate_email(self, email):
-        is_unique_email = False if User.objects(email=email.data) else True
-        print(is_unique_email)
+        is_unique_email = len(User.objects(email=email.data)) == 0
         if not is_unique_email:
             raise ValidationError('Email is taken. Please use another.')
 
@@ -69,7 +67,7 @@ class RegistrationForm(FlaskForm):
             raise ValidationError('Password should contain an uppercase letter, a lowercase letter, a number, and a symbol.')
 
 class LoginForm(FlaskForm):                  
-    id = StringField('Username or Email Address', 
+    email = StringField('Email Address', 
                             validators=[DataRequired()])
     password = PasswordField('Password',
                             validators=[DataRequired(), Length(max=32)])

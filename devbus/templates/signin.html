@@ -10,17 +10,17 @@
                         {{ form.hidden_tag() }}
                         <legend class="deep-purple-text text-darken-3">Sign In</legend>
                         <div class="input-field col s12">
-                            {% if form.id.errors %}
-                                {{ form.id(class="invalid") }}
+                            {% if form.email.errors %}
+                                {{ form.email(class="invalid") }}
                                 <div class="invalid-feedback">
-                                    {% for error in form.id.errors %}
+                                    {% for error in form.email.errors %}
                                         <span class="red-text">{{ error }}</span>
                                     {% endfor %}
                                 </div>
                             {% else %}
-                                {{ form.id }}
+                                {{ form.email }}
                             {% endif %}
-                            {{ form.id.label }}
+                            {{ form.email.label }}
                         </div>
                         <div class="input-field col s12">
                             {% if form.password.errors %}
