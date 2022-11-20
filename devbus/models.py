@@ -15,6 +15,7 @@ class User(Document, UserMixin):
     username = StringField(min_length=6, max_length=16, unique=True)
     email = StringField(unique=True)
     password = StringField()
+    profile_image = StringField(default="")
     bio = StringField(max_length=126, default="")
     languages = ListField(default=[])
 
