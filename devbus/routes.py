@@ -1,6 +1,7 @@
 from flask import (
     flash, render_template,
     redirect, request, session, url_for)
+from flask_login import login_user, current_user
 from devbus import db, app, bcrypt
 from devbus.forms import RegistrationForm, LoginForm
 from devbus.models import User, Post
@@ -14,6 +15,8 @@ def home():
 
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     form = RegistrationForm()
     if form.validate_on_submit():
         user = User(username=form.username.data,
@@ -29,12 +32,15 @@ def signup():
 
 @app.route("/signin", methods=["GET", "POST"])
 def signin():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     form = LoginForm()
     if form.validate_on_submit():
-        if form.id.data == 'admin@devbus.com' and form.password.data == 'password':
-            flash("You have been logged in!", 'light-blue lighten-2')
+        user = User.objects.get(email=form.email.data)
+        if len(user) != 0 and bcrypt.check_password_hash(user.password, form.password.data):
+            login_user(user, remember=form.remember.data)
+            flash(f"Welcome! {user.username}")
             return redirect(url_for('home'))
-        else: 
-            flash('Login Unsuccessful. Please check your username (or email) and password.', 'materialize-red lighten-1')
+        else:
+            flash('Login Unsuccessful. Please check your email or password.', 'materialize-red lighten-1')
     return render_template("signin.html", title="License and Registration", form=form)
-
