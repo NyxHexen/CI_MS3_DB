@@ -9,23 +9,25 @@ def home():
     posts = mongo.db.posts.find()
     return render_template("home.html",posts=posts)
 
+
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     form = RegistrationForm()
     if form.validate_on_submit():
         user = {"user_type": "user",
-                "username": form.username.data,
-                "password": form.password.data,
-                "f_name": form.f_name.data,
-                "l_name": form.l_name.data,
-                "email": form.email.data,
-                "bio": "",
-                "languages": []
-                }
+            "username": form.username.data,
+            "password": bcrypt.generate_password_hash(form.password.data).decode('utf-8'),
+            "f_name": form.f_name.data,
+            "l_name": form.l_name.data,
+            "email": form.email.data,
+            "bio": "",
+            "languages": []
+            }
         mongo.db.users.insert_one(user)
         flash("Account created successfully!", "light-green black-text lighten-2")
         return redirect(url_for('signin'))
     return render_template("signup.html", title="Sign Up", form=form)
+
 
 @app.route("/signin", methods=["GET", "POST"])
 def signin():
