@@ -15,9 +15,13 @@
                     <!-- User Username & Bio -->
                     <div class="row">
                         <div class="col profile-username s12">
-                            <span class="card-title center-align">NyxHexen</span>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at dapibus elit. Aenean at
-                                est et ex efficitur hendrerit.
+                            {% if current_user.f_name %}
+                                <span class="card-title center-align">{{ current_user.f_name}}
+                                    {{ current_user.l_name }}</span>
+                            {% else %}
+                                <span class="card-title center-align">{{ current_user.username }}</span>
+                            {% endif %}
+                            <p>{{ current_user.bio }}
                             </p>
                         </div>
                     </div>
@@ -26,11 +30,9 @@
                         <div class="col profile-languages s12">
                             <span class="card-title center-align">My Superpowers</span>
                             <div class="user-languages truncate">
-                                <div class="chip">Python</div>
-                                <div class="chip">JavaScript</div>
-                                <div class="chip">HTML</div>
-                                <div class="chip">Sass</div>
-                                <div class="chip">Python</div>
+                                {% for language in current_user.languages %}
+                                <div class="chip">{{ language }}</div>
+                                {% endfor %}
                             </div>
                             <div class="card-action">
                                 <a href="#">See All</a>
@@ -43,14 +45,14 @@
     </div>
     <div id="quickmenu" class="row hide-on-med-and-down">
         <div class="col s8 push-s10">
-          <div class="card">
-            <div class="card-content center-align">
-              <span class="card-title">New here?</span>
-              <p>Sign up now to explore all that DevBus has to offer!</p>
-              <br>
-              <a class="waves-effect waves-light btn green">Sign Up</a>
+            <div class="card">
+                <div class="card-content center-align">
+                    <span class="card-title">New here?</span>
+                    <p>Sign up now to explore all that DevBus has to offer!</p>
+                    <br>
+                    <a class="waves-effect waves-light btn green">Sign Up</a>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
+    </div>
 </div>
