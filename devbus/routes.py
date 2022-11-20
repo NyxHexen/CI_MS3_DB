@@ -1,7 +1,7 @@
 from flask import (
     flash, render_template,
     redirect, request, session, url_for)
-from flask_login import login_user, current_user
+from flask_login import login_user, current_user, logout_user, login_required
 from devbus import db, app, bcrypt
 from devbus.forms import RegistrationForm, LoginForm
 from devbus.models import User, Post
@@ -44,3 +44,13 @@ def signin():
         else:
             flash('Login Unsuccessful. Please check your email or password.', 'materialize-red lighten-1')
     return render_template("signin.html", title="License and Registration", form=form)
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('home'))
+
+@app.route("/profile")
+@login_required
+def profile():
+    return render_template("profile.html", title="Profile")
