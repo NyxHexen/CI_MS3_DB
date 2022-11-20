@@ -2,7 +2,7 @@ from flask import (
     flash, render_template,
     redirect, request, session, url_for)
 from devbus.forms import RegistrationForm, LoginForm
-from devbus import mongo, app
+from devbus import mongo, app, bcrypt
 
 @app.route("/")
 def home():
