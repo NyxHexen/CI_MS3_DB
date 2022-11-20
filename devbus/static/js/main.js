@@ -1,8 +1,12 @@
 $(document).ready(function () {
   $('.sidenav').sidenav();
   if ($('.toast')) {
-    $('.toast').each(function(item) {
-      M.toast({html: $(this).text(), classes: $('.toast').attr('class')})
+    $('.toast').each(function() {
+      if ($(this).hasClass('message')) {
+        M.toast({html: $(this).text(), classes: 'light-blue'})
+      } else {
+        M.toast({html: $(this).text(), classes: $('.toast').attr('class')})
+      }
     })
   }
 });
