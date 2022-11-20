@@ -27,10 +27,16 @@
                 <a href="{{ url_for('home' )}}" class="brand-logo">Logo</a>
                 <a href="#" data-target="mobile-menu" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                 <ul class="right hide-on-med-and-down">
-                    <li><a href="{{ url_for('home' )}}">Home</a></li>
-                    <li><a href="{{ url_for('signin' )}}">Sign In</a></li>
-                    <li><a href="{{ url_for('signup' )}}"
-                            class="yellow black-text waves-effect waves-light btn"><strong>Sign Up</strong></a></li>
+                    {% if current_user.is_authenticated %}
+                        <li><a href="{{ url_for('profile')}}">My Profile</a></li>
+                        <li><a href="{{ url_for('logout')}}"
+                            class="yellow black-text waves-effect waves-light btn"><strong>Sign Out</strong></a></li>
+                    {% else %}
+                        <li><a href="{{ url_for('home')}}">Home</a></li>
+                        <li><a href="{{ url_for('signin')}}">Sign In</a></li>
+                        <li><a href="{{ url_for('signup')}}"
+                                class="yellow black-text waves-effect waves-light btn"><strong>Sign Up</strong></a></li>
+                    {% endif %}
                 </ul>
             </div>
         </nav>
@@ -44,8 +50,8 @@
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
-                <div class="visually-hidden">
-                    <span class="toast s6 {{ category }}">{{ message }}</span>
+                    <div class="visually-hidden">
+                    <span class="toast {{ category }}">{{ message }}</span>
                 </div>
                 {% endfor %}
             {% endif %}
