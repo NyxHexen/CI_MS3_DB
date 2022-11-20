@@ -1,5 +1,10 @@
 $(document).ready(function () {
   $('.sidenav').sidenav();
+  if ($('.toast')) {
+    $('.toast').each(function(item) {
+      M.toast({html: $(this).text(), classes: $('.toast').attr('class')})
+    })
+  }
 });
 
 $('.profile-languages .card-action a').click(function () {
