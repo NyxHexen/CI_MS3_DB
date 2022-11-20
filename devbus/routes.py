@@ -36,11 +36,13 @@ def signin():
         return redirect(url_for('home'))
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.objects.get(email=form.email.data)
-        if len(user) != 0 and bcrypt.check_password_hash(user.password, form.password.data):
+        user = User.objects(email=form.email.data).first()
+        print(user)
+        if user is not None and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
-            flash(f"Welcome! {user.username}")
-            return redirect(url_for('home'))
+            next = request.args.get('next')
+            flash(f"Hi, {user.f_name}!" if user.f_name else f"Welcome, {user.username}!")
+            return redirect(next) if next else redirect(url_for('home'))
         else:
             flash('Login Unsuccessful. Please check your email or password.', 'materialize-red lighten-1')
     return render_template("signin.html", title="License and Registration", form=form)
