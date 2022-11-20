@@ -5,7 +5,7 @@ from devbus import login_manager
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.objects(_id=user_id)
+    return User.objects.get(id=user_id)
 
 class User(Document, UserMixin):
     meta = {'collection': 'users'}
