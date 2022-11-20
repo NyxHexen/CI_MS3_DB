@@ -1,3 +1,4 @@
+import boto3, os
 from flask import (
     flash, render_template,
     redirect, request, session, url_for)
@@ -5,6 +6,15 @@ from flask_login import login_user, current_user, logout_user, login_required
 from devbus import db, app, bcrypt
 from devbus.forms import RegistrationForm, LoginForm
 from devbus.models import User, Post
+
+
+# AWS S3 variables
+s3_bucket_name = "ci-ms3-devbus"
+s3_bucket_url = "https://{}.s3.eu-west-1.amazonaws.com/".format(s3_bucket_name)
+client = boto3.client('s3',
+                      aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
+                      aws_secret_access_key=os.environ.get
+                      ("AWS_SECRET_ACCESS_KEY"))
 
 
 @app.route("/")
