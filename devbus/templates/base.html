@@ -28,33 +28,40 @@
                 <a href="#" data-target="mobile-menu" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                 <ul class="right hide-on-med-and-down">
                     {% if current_user.is_authenticated %}
-                        <li><a href="{{ url_for('profile')}}">My Profile</a></li>
-                        <li><a href="{{ url_for('logout')}}"
+                    <li><a href="{{ url_for('profile')}}">My Profile</a></li>
+                    <li><a href="{{ url_for('logout')}}"
                             class="yellow black-text waves-effect waves-light btn"><strong>Sign Out</strong></a></li>
                     {% else %}
-                        <li><a href="{{ url_for('home')}}">Home</a></li>
-                        <li><a href="{{ url_for('signin')}}">Sign In</a></li>
-                        <li><a href="{{ url_for('signup')}}"
-                                class="yellow black-text waves-effect waves-light btn"><strong>Sign Up</strong></a></li>
+                    <li><a href="{{ url_for('home')}}">Home</a></li>
+                    <li><a href="{{ url_for('signin')}}">Sign In</a></li>
+                    <li><a href="{{ url_for('signup')}}"
+                            class="yellow black-text waves-effect waves-light btn"><strong>Sign Up</strong></a></li>
                     {% endif %}
                 </ul>
             </div>
         </nav>
         <ul class="sidenav" id="mobile-menu">
-            <li><a href="{{ url_for('home' )}}">Home</a></li>
+            {% if current_user.is_authenticated %}
+            <li><a href="{{ url_for('profile')}}">My Profile</a></li>
+            <li><a href="{{ url_for('logout')}}" class="yellow black-text waves-effect waves-light btn"><strong>Sign
+                        Out</strong></a></li>
+            {% else %}
+            <li><a href="{{ url_for('home')}}">Home</a></li>
             <li><a href="{{ url_for('signin')}}">Sign In</a></li>
-            <li><a href="{{ url_for('signup')}}">SignUp</a></li>
+            <li><a href="{{ url_for('signup')}}" class="yellow black-text waves-effect waves-light btn"><strong>Sign
+                        Up</strong></a></li>
+            {% endif %}
         </ul>
     </header>
     <main>
         {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="visually-hidden">
-                    <span class="toast {{ category }}">{{ message }}</span>
-                </div>
-                {% endfor %}
-            {% endif %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="visually-hidden">
+            <span class="toast {{ category }}">{{ message }}</span>
+        </div>
+        {% endfor %}
+        {% endif %}
         {% endwith %}
         <h1 class="visually-hidden">{{ title }}</h1>
         {% block content%}
