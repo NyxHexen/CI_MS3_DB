@@ -1,5 +1,7 @@
 $(document).ready(function () {
   $('.sidenav').sidenav();
+  $('select').formSelect()
+
   if ($('.toast')) {
     $('.toast').each(function() {
       if ($(this).hasClass('message')) {
