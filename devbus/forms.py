@@ -1,8 +1,12 @@
 import re
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, ValidationError
+from wtforms import (StringField, PasswordField, SubmitField, 
+                    BooleanField, ValidationError, Field, FileField)
 from wtforms.validators import DataRequired, Length, Email, EqualTo
+from wtforms.widgets import TextArea
+from devbus.routes import current_user
 from devbus.models import User
+
 
 def password_check(password):
     """
@@ -36,7 +40,8 @@ def password_check(password):
 
     return password_ok
 
-class RegistrationForm(FlaskForm):
+
+class SignUpForm(FlaskForm):
     f_name = StringField('First Name (Optional)',
                             validators=[Length(max=16)])
     l_name = StringField('Last Name (Optional)',
@@ -49,7 +54,7 @@ class RegistrationForm(FlaskForm):
                             validators=[DataRequired(), Length(min=8, max=32)])
     confirm_password = PasswordField('Confirm Password',
                             validators=[DataRequired(), Length(max=32), EqualTo('password')])
-    submit = SubmitField('READY!')#
+    submit = SubmitField('READY!')
 
     def validate_username(self, username):
         is_unique_username = len(User.objects(username=username.data)) == 0
@@ -66,10 +71,71 @@ class RegistrationForm(FlaskForm):
         if not is_strong_password:
             raise ValidationError('Password should contain an uppercase letter, a lowercase letter, a number, and a symbol.')
 
-class LoginForm(FlaskForm):                  
+        
+class SignInForm(FlaskForm):                  
     email = StringField('Email Address', 
                             validators=[DataRequired()])
     password = PasswordField('Password',
                             validators=[DataRequired(), Length(max=32)])
     remember = BooleanField('Stay signed in')
     submit = SubmitField('Log In')
+
+class TagListField(Field):
+    """
+    Custom form field, new line separated tags, stores input as a list
+    for storage in DB.
+    """
+    widget = TextArea()
+
+    def _value(self):
+        if self.data:
+            return '\r\n'.join(self.data)
+        else:
+            return ''
+
+    def process_formdata(self, valuelist):
+        if current_user:
+            self.data = current_user.languages
+        elif valuelist:
+            self.data = [x.strip() for x in valuelist[0].split('\r\n')]
+        else:
+            self.data = []
+
+class UpdateProfileForm(FlaskForm):
+    f_name = StringField('First Name',
+                            validators=[Length(max=16)])
+    l_name = StringField('Last Name',
+                            validators=[Length(max=16)])                        
+    username = StringField('Username', 
+                            validators=[Length(min=6, max=16)])
+    email = StringField('Email',
+                            validators=[Email()])
+    bio = StringField('Bio', validators=[Length(max=120)])
+    languages = TagListField('My Superpowers')
+    update_image = FileField()
+    submit = SubmitField('Update')
+
+    def validate_username(self, username):
+        if username.data != current_user.username:
+            is_unique_username = len(User.objects(username=username.data)) == 0
+            if not is_unique_username:
+                raise ValidationError('Username is taken. Please pick another.')
+
+    def validate_email(self, email):
+        if email.data != current_user.email:
+            is_unique_email = len(User.objects(email=email.data)) == 0
+            if not is_unique_email:
+                raise ValidationError('Email is taken. Please use another.')
+     
+        
+class ChangePasswordForm(FlaskForm):
+    password = PasswordField('Password',
+                            validators=[DataRequired(), Length(min=8, max=32)])
+    confirm_password = PasswordField('Confirm Password',
+                            validators=[DataRequired(), Length(max=32), EqualTo('password')])
+    submit = SubmitField('Update')
+
+    def validate_password(self, password):
+        is_strong_password = True if password_check(password.data) else False
+        if not is_strong_password:
+            raise ValidationError('Password should contain an uppercase letter, a lowercase letter, a number, and a symbol.')
