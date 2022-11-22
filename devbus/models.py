@@ -3,9 +3,11 @@ from flask_login import UserMixin
 from mongoengine import *
 from devbus import login_manager
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.objects.get(id=user_id)
+
 
 class User(Document, UserMixin):
     meta = {'collection': 'users'}
@@ -15,9 +17,10 @@ class User(Document, UserMixin):
     username = StringField(min_length=6, max_length=16, unique=True)
     email = StringField(unique=True)
     password = StringField()
-    profile_image = StringField(default="")
+    profile_image = StringField(default="devbus/static/images/pexels-mododeolhar-2475138.jpg")
     bio = StringField(max_length=126, default="")
     languages = ListField(default=[])
+
 
 class Post(Document):
     meta = {'collection': 'posts'}
@@ -25,8 +28,21 @@ class Post(Document):
     post_content = StringField()
     code_content = StringField()
     code_language = StringField()
-    created_date = DateField(default=datetime.utcnow)
+    replies = ListField()
+    votes = DictField() # { 'yes': ListField(), 'no': ListField() }
+    post_type = StringField()
     created_by = StringField()
+    created_date = DateField(default=datetime.utcnow)
+
+
+class Comment(Document):
+    meta = {'collection': 'comments'}
+    content_id = ObjectIdField()
+    comment_content = StringField(required=True)
+    code_language = StringField()
+    code_content = StringField()
     replies = ListField()
     votes = DictField()
-    post_type = StringField()
+    created_by = StringField()
+    created_date = DateField(default=datetime.utcnow)
+    is_verified = BooleanField()
