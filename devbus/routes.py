@@ -1,20 +1,11 @@
-import boto3, os
 from flask import (
     flash, render_template,
     redirect, request, session, url_for)
 from flask_login import login_user, current_user, logout_user, login_required
-from devbus import db, app, bcrypt
+from devbus import app, bcrypt
 from devbus.forms import RegistrationForm, LoginForm
 from devbus.models import User, Post
-
-
-# AWS S3 variables
-s3_bucket_name = "ci-ms3-devbus"
-s3_bucket_url = "https://{}.s3.eu-west-1.amazonaws.com/".format(s3_bucket_name)
-client = boto3.client('s3',
-                      aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
-                      aws_secret_access_key=os.environ.get
-                      ("AWS_SECRET_ACCESS_KEY"))
+from devbus.utils import client
 
 
 @app.route("/")
@@ -29,11 +20,11 @@ def signup():
         return redirect(url_for('home'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data,
-                    password=bcrypt.generate_password_hash(form.password.data).decode('utf-8'),
-                    f_name=form.f_name.data,
-                    l_name=form.l_name.data,
-                    email=form.email.data)
+        user = User(username = form.username.data,
+                    password = bcrypt.generate_password_hash(form.password.data).decode('utf-8'),
+                    f_name = form.f_name.data,
+                    l_name = form.l_name.data,
+                    email = form.email.data)
         user.save()
         flash("Account created successfully!", "light-green black-text lighten-2")
         return redirect(url_for('signin'))
@@ -57,10 +48,12 @@ def signin():
             flash('Login Unsuccessful. Please check your email or password.', 'materialize-red lighten-1')
     return render_template("signin.html", title="License and Registration", form=form)
 
+
 @app.route("/logout")
 def logout():
     logout_user()
     return redirect(url_for('home'))
+
 
 @app.route("/profile")
 @login_required
