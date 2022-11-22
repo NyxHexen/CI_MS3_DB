@@ -1,5 +1,6 @@
 <!-- User Sidenav -->
 <div class="container">
+    {% if current_user.is_authenticated %}
     <div id="profile" class="row hide-on-small-and-down">
         <div class="col s4 pull-s1 l3 pull-l2">
             <div class="card">
@@ -21,8 +22,7 @@
                             {% else %}
                                 <span class="card-title center-align">{{ current_user.username }}</span>
                             {% endif %}
-                            <p>{{ current_user.bio }}
-                            </p>
+                            <p>{{ current_user.bio }}</p>
                         </div>
                     </div>
                     <!-- User Languages -->
@@ -31,7 +31,7 @@
                             <span class="card-title center-align">My Superpowers</span>
                             <div class="user-languages truncate">
                                 {% for language in current_user.languages %}
-                                <div class="chip">{{ language }}</div>
+                                    <div class="chip grey lighten-3">{{ language }}</div>
                                 {% endfor %}
                             </div>
                             <div class="card-action">
@@ -43,15 +43,20 @@
             </div>
         </div>
     </div>
+    {% endif %}
     <div id="quickmenu" class="row hide-on-med-and-down">
         <div class="col s8 push-s10">
             <div class="card">
-                <div class="card-content center-align">
-                    <span class="card-title">New here?</span>
-                    <p>Sign up now to explore all that DevBus has to offer!</p>
-                    <br>
-                    <a class="waves-effect waves-light btn green">Sign Up</a>
-                </div>
+                {% if current_user.is_authenticated %}
+                <!-- Placeholder -->
+                {% else %}
+                    <div class="card-content center-align">
+                        <span class="card-title">New here?</span>
+                        <p>Sign up now to explore all that DevBus has to offer!</p>
+                        <br>
+                        <a class="waves-effect waves-light btn green">Sign Up</a>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
