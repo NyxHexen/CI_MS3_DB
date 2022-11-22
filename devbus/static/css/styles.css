@@ -32,12 +32,13 @@ nav {
   margin-bottom: 2rem;
 }
 
-.login-form,
-.signin-form {
+.signin-form,
+.signup-form {
   margin-top: 2.5rem;
 }
 
-legend {
+.signin-form legend,
+.signup-form legend {
   font-family: 'Bangers', cursive;
   font-size: 4.5rem;
   line-height: 110%;
