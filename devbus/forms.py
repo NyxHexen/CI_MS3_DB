@@ -55,7 +55,6 @@ class SignUpForm(FlaskForm):
                             validators=[DataRequired(), Length(min=8, max=32)])
     confirm_password = PasswordField('Confirm Password',
                             validators=[DataRequired(), Length(max=32), EqualTo('password')])
-    user_image = FileField()
     submit = SubmitField('READY!')
 
     def validate_username(self, username):
@@ -96,9 +95,7 @@ class TagListField(Field):
             return ''
 
     def process_formdata(self, valuelist):
-        if current_user:
-            self.data = current_user.languages
-        elif valuelist:
+        if valuelist:
             self.data = [x.strip() for x in valuelist[0].split('\r\n')]
         else:
             self.data = []
@@ -115,7 +112,7 @@ class UpdateProfileForm(FlaskForm):
     bio = TextAreaField('Bio', validators=[Length(max=120)])
     languages = TagListField('My Superpowers')
     update_image = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
-    submit = SubmitField('Save Changes', id="update_submit", name="update_submit")
+    submit = SubmitField('Save Changes')
 
     def validate_username(self, username):
         if username.data != current_user.username:
