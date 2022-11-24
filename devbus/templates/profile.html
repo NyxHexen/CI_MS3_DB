@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2 class="center-align card-title">Welcome, Nyx Hexen!</h2>
+{% if current_user.f_name %}
+    <h2 class="center-align card-title">Hi, {{ current_user.f_name }}</h2>
+{% else %}
+    <h2 class="center-align card-title">Welcome, {{ current_user.username }}</h2>
+{% endif %}
 <section class="section">
     <div class="container">
         <div class="row">
