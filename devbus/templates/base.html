@@ -54,18 +54,20 @@
         </ul>
     </header>
     <main>
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        {% for category, message in messages %}
-        <div class="visually-hidden">
-            <span class="toast {{ category }}">{{ message }}</span>
+        <div class="container">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="visually-hidden">
+                <span class="toast {{ category }}">{{ message }}</span>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+            <h1 class="visually-hidden">{{ title }}</h1>
+            {% block content%}
+            {% endblock %}
         </div>
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
-        <h1 class="visually-hidden">{{ title }}</h1>
-        {% block content%}
-        {% endblock %}
     </main>
     <footer class="page-footer deep-purple darken-3">
         <div class="container">

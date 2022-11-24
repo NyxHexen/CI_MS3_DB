@@ -2,92 +2,90 @@
 
 {% block content %}
 <section class="section">
-    <div class="container">
-        <div class="row">
-            <div class="col s12 m8 push-m2">
-                <form action="" method="POST" enctype="multipart/form-data" id="update-form" class="card grey lighten-3">
-                    <fieldset class="card-content">
-                        <legend class="card-title center-align">Update Profile</legend>
-                        {{ form.hidden_tag() }}
-                        <div class="row">
-                            <div class="col s12 m5 center-align">
-                                <img class="responsive-img circle"
-                                    src="{{ url_for('static', filename='images/pexels-mododeolhar-2475138.jpg')}}"
-                                    alt="Your profile Picture">
+    <div class="row">
+        <div class="col s12 m8 push-m2">
+            <form action="" method="POST" enctype="multipart/form-data" id="update-form" class="card grey lighten-3">
+                <fieldset class="card-content">
+                    <legend class="card-title center-align">Update Profile</legend>
+                    {{ form.hidden_tag() }}
+                    <div class="row">
+                        <div class="col s12 m5 center-align">
+                            <img class="responsive-img circle"
+                                src="{{ url_for('static', filename='images/pexels-mododeolhar-2475138.jpg')}}"
+                                alt="Your profile Picture">
+                        </div>
+                        <div class="col s12 m7">
+                            <div class="input-field col s12 m6">
+                                {{ form.f_name }}
+                                {{ form.f_name.label }}
                             </div>
-                            <div class="col s12 m7">
-                                <div class="input-field col s12 m6">
-                                    {{ form.f_name }}
-                                    {{ form.f_name.label }}
+                            <div class="input-field col s12 m6">
+                                {{ form.l_name }}
+                                {{ form.l_name.label }}
+                            </div>
+                            <div class="input-field col s12">
+                                {% if form.email.errors %}
+                                {{ form.email(class="invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.email.errors %}
+                                    <span class="red-text">{{ error }}</span>
+                                    {% endfor %}
                                 </div>
-                                <div class="input-field col s12 m6">
-                                    {{ form.l_name }}
-                                    {{ form.l_name.label }}
+                                {% else %}
+                                {{ form.email }}
+                                {% endif %}
+                                {{ form.email.label }}
+                            </div>
+                            <div class="input-field col s12">
+                                {% if form.username.errors %}
+                                {{ form.username(class="invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.username.errors %}
+                                    <span class="red-text">{{ error }}</span>
+                                    {% endfor %}
                                 </div>
-                                <div class="input-field col s12">
-                                    {% if form.email.errors %}
-                                    {{ form.email(class="invalid") }}
-                                    <div class="invalid-feedback">
-                                        {% for error in form.email.errors %}
-                                        <span class="red-text">{{ error }}</span>
-                                        {% endfor %}
+                                {% else %}
+                                {{ form.username }}
+                                {% endif %}
+                                {{ form.username.label }}
+                            </div>
+                            <div class="input-field col s12">
+                                {{ form.bio(class="materialize-textarea") }}
+                                {{ form.bio.label }}
+                            </div>
+                        </div>
+                        <div class="col s12 l5">
+                            <div class="update-image card-panel row z-depth-1">
+                                {{ form.update_image.label }}
+                                <div class="file-field input-field">
+                                    <div class="btn">
+                                        <span>File</span>
+                                        {{ form.update_image }}
                                     </div>
-                                    {% else %}
-                                    {{ form.email }}
+                                    <div class="file-path-wrapper">
+                                        <input class="file-path validate" type="text">
+                                    </div>
+                                    {% if form.update_image.errors %}
+                                    {% for error in form.picture.errors %}
+                                    <span class="red-text">{{ error }}</span>
+                                    {% endfor %}
                                     {% endif %}
-                                    {{ form.email.label }}
-                                </div>
-                                <div class="input-field col s12">
-                                    {% if form.username.errors %}
-                                    {{ form.username(class="invalid") }}
-                                    <div class="invalid-feedback">
-                                        {% for error in form.username.errors %}
-                                        <span class="red-text">{{ error }}</span>
-                                        {% endfor %}
-                                    </div>
-                                    {% else %}
-                                    {{ form.username }}
-                                    {% endif %}
-                                    {{ form.username.label }}
-                                </div>
-                                <div class="input-field col s12">
-                                    {{ form.bio(class="materialize-textarea") }}
-                                    {{ form.bio.label }}
-                                </div>
-                            </div>
-                            <div class="col s12 l5">
-                                <div class="update-image card-panel row z-depth-1">
-                                    {{ form.update_image.label }}
-                                    <div class="file-field input-field">
-                                        <div class="btn">
-                                            <span>File</span>
-                                            {{ form.update_image }}
-                                        </div>
-                                        <div class="file-path-wrapper">
-                                            <input class="file-path validate" type="text">
-                                        </div>
-                                        {% if form.update_image.errors %}
-                                            {% for error in form.picture.errors %}
-                                                <span class="red-text">{{ error }}</span>
-                                            {% endfor %}
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col s12 l7">
-                                <span class="card-title center-align">Languages</span>
-                                <div class="input-field col s12">
-                                    {{ form.languages(class="materialize-textarea") }}
-                                    {{ form.languages.label }}
                                 </div>
                             </div>
                         </div>
-                    </fieldset>
-                    <div class="card-action center-align">
-                        {{ form.submit(class="update-submit waves-effect waves-light btn-large green") }}                        
+                        <div class="col s12 l7">
+                            <span class="card-title center-align">Languages</span>
+                            <div class="input-field col s12">
+                                {{ form.languages(class="materialize-textarea") }}
+                                {{ form.languages.label }}
+                            </div>
+                        </div>
                     </div>
-                </form>
-            </div>
+                </fieldset>
+                <div class="card-action center-align">
+                    {{ form.submit(class="update-submit waves-effect waves-light btn-large green") }}
+                </div>
+            </form>
         </div>
     </div>
 </section>

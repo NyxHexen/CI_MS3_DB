@@ -1,55 +1,53 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col s12 m8 push-m2 l4 push-l4">
-            <div class="row grey lighten-3 z-depth-2">
-                <form class="signin-form col s12 center-align" method="POST">
-                    <fieldset class="row">
-                        {{ form.hidden_tag() }}
-                        <legend class="deep-purple-text text-darken-3">Sign In</legend>
-                        <div class="input-field col s12">
-                            {% if form.email.errors %}
-                                {{ form.email(class="invalid") }}
-                                <div class="invalid-feedback">
-                                    {% for error in form.email.errors %}
-                                        <span class="red-text">{{ error }}</span>
-                                    {% endfor %}
-                                </div>
-                            {% else %}
-                                {{ form.email }}
-                            {% endif %}
-                            {{ form.email.label }}
+<div class="row">
+    <div class="col s12 m8 push-m2 l4 push-l4">
+        <div class="row grey lighten-3 z-depth-2">
+            <form class="signin-form col s12 center-align" method="POST">
+                <fieldset class="row">
+                    {{ form.hidden_tag() }}
+                    <legend class="deep-purple-text text-darken-3">Sign In</legend>
+                    <div class="input-field col s12">
+                        {% if form.email.errors %}
+                        {{ form.email(class="invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.email.errors %}
+                            <span class="red-text">{{ error }}</span>
+                            {% endfor %}
                         </div>
-                        <div class="input-field col s12">
-                            {% if form.password.errors %}
-                                {{ form.password(class="invalid") }}
-                                <div class="invalid-feedback">
-                                    {% for error in form.password.errors %}
-                                        <span class="red-text">{{ error }}</span>
-                                    {% endfor %}
-                                </div>
-                            {% else %}
-                                {{ form.password }}
-                            {% endif %}
-                            {{ form.password.label }}
+                        {% else %}
+                        {{ form.email }}
+                        {% endif %}
+                        {{ form.email.label }}
+                    </div>
+                    <div class="input-field col s12">
+                        {% if form.password.errors %}
+                        {{ form.password(class="invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.password.errors %}
+                            <span class="red-text">{{ error }}</span>
+                            {% endfor %}
                         </div>
-                        <p>
-                            <label>
-                              {{ form.remember(class="checkbox") }}
-                              <span>Stay signed in?</span>
-                            </label>
-                          </p>
-                          <p>
+                        {% else %}
+                        {{ form.password }}
+                        {% endif %}
+                        {{ form.password.label }}
+                    </div>
+                    <p>
+                        <label>
+                            {{ form.remember(class="checkbox") }}
+                            <span>Stay signed in?</span>
+                        </label>
+                    </p>
+                    <p>
                         {{ form.submit(class="waves-effect waves-light btn yellow") }}
-                    </fieldset>
-                </form>
-            </div>
-            <span class="yellow-text l2 signin-link">
-                Don't have an account yet? <a href="{{ url_for('signin') }}">Sign Up!</a> It's free!
-            </span>
+                </fieldset>
+            </form>
         </div>
+        <span class="yellow-text l2 signin-link">
+            Don't have an account yet? <a href="{{ url_for('signin') }}">Sign Up!</a> It's free!
+        </span>
     </div>
 </div>
 {% endblock %}
