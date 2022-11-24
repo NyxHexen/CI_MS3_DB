@@ -19,14 +19,14 @@ $(document).ready(function () {
   }
 });
 
-$('.profile-languages .card-action a').click(function () {
+$('.profile-languages .card-action span').click(function () {
   $('.user-languages').toggleClass('truncate');
   if ($(this).text() == "See All") {
     let text = $(this).text();
-    $(this).text(text.replace("See All", "Hide"))
+    $(this).text(text.replace("Show All", "Hide"))
   } else {
     let text = $(this).text();
-    $(this).text(text.replace("Hide", "See All"))
+    $(this).text(text.replace("Hide", "Show All"))
   }
 });
 
