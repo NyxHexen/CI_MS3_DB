@@ -32,18 +32,24 @@ nav {
   margin-bottom: 2rem;
 }
 
-.update-image {
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
 .signin-form,
 .signup-form {
   margin-top: 2.5rem;
 }
 
+#update-form .row {
+  margin-bottom: 0;
+}
+
+#update-form .card-content {
+  padding-bottom: 0;
+}
+
+h1,
+h2,
 .signin-form legend,
-.signup-form legend {
+.signup-form legend,
+#update-form legend {
   font-family: 'Bangers', cursive;
   font-size: 4.5rem;
   line-height: 110%;
