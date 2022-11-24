@@ -58,9 +58,11 @@
                             </div>
                             <div class="col s12 m8 push-m2">
                                 <span class="card-title center-align">Languages</span>
-                                {% if current_user.languages %}
+                                {% if current_user.languages[0]|length != 0 or current_user.languages|length >= 1 %}
                                     {% for language in current_user.languages %}
-                                    <div class="chip grey darken-1 yellow-text">{{ language }}</div>
+                                        {% if language|length != 0 %}
+                                            <div class="chip grey darken-1 yellow-text">{{ language }}</div>
+                                        {% endif %}
                                     {% endfor %}
                                 {% else %}
                                 <div class="chip grey darken-1 yellow-text">Edit your profile to add language tags!</div>
