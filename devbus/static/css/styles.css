@@ -32,6 +32,11 @@ nav {
   margin-bottom: 2rem;
 }
 
+.update-image {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 .signin-form,
 .signup-form {
   margin-top: 2.5rem;
