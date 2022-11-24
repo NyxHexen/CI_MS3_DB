@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="card col s12 l8 push-l2 grey lighten-2">
+            <div class="card-content">
+                <div class="col s12 m5">
+                    <div class="row">
+                        <img class="responsive-img circle"
+                            src="{{ url_for('static', filename='images/pexels-mododeolhar-2475138.jpg')}}"
+                            alt="Your profile Picture">
+                    </div>
+                    <div class="row center-align">
+                        <span class="card-title">Languages</span>
+                        {% if current_user.languages %}
+                        {% for language in current_user.languages %}
+                        <div class="chip blue black-text">{{ language }}</div>
+                        {% endfor %}
+                        {% endif %}
+                    </div>                    
+                    <div class="row center-align">
+                        <a class="waves-effect waves-light btn green">Change Password</a>
+                    </div>
+                </div>
+                <div class="col s12 m7">
+                    <form id="update_form" class="center-align" method="POST" enctype="multipart/form-data">
+                        <fieldset>
+                            {{ form.hidden_tag() }}
+                            <legend class="deep-purple-text text-darken-3">Your profile</legend>
+                            <div class="row">
+                                <div class="input-field col s12 m6">
+                                    {{ form.f_name(value=current_user.f_name, disabled=True) }}
+                                    {{ form.f_name.label }}
+                                </div>
+                                <div class="input-field col s12 m6">
+                                    {{ form.l_name(value=current_user.l_name, disabled=True) }}
+                                    {{ form.l_name.label }}
+                                </div>
+                                <div class="input-field col s12">
+                                    {% if form.email.errors %}
+                                    {{ form.email(class="invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.email.errors %}
+                                        <span class="red-text">{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                    {% else %}
+                                    {{ form.email(value=current_user.email, disabled=True) }}
+                                    {% endif %}
+                                    {{ form.email.label }}
+                                </div>
+                                <div class="input-field col s12">
+                                    {% if form.username.errors %}
+                                        {{ form.username(class="invalid") }}
+                                            <div class="invalid-feedback">
+                                                {% for error in form.username.errors %}
+                                                    <span class="red-text">{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %}
+                                        {{ form.username(value=current_user.username, disabled=True) }}
+                                    {% endif %}
+                                    {{ form.username.label }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <textarea id="textarea1" class="materialize-textarea"
+                                        placeholder="Tell people who you are!"
+                                        disabled>{{ current_user.bio }}</textarea>
+                                    <label for="textarea1">Bio</label>
+                                </div>
+                            </div>
+                            <div class="row visually-hidden">
+                                <div class="input-field col s12">
+                                    {{ form.languages(class="materialize-textarea") }}
+                                    {{ form.languages.label }}
+                                </div>
+                            </div>
+                            <div class="update-image card-panel row z-depth-1">
+                                {{ form.update_image.label }}
+                                <div class="file-field input-field">
+                                    <div class="btn">
+                                        <span>File</span>
+                                        {{ form.update_image }}
+                                    </div>
+                                    <div class="file-path-wrapper">
+                                        <input class="file-path validate" type="text">
+                                    </div>
+                                    {% if form.update_image.errors %}
+                                        {% for error in form.picture.errors %}
+                                            <span class="red-text">{{ error }}</span>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="row">                                
+                                {{ form.submit(class="waves-effect waves-light btn green center-align update-submit").hidden }}
+                                <button class="waves-effect waves-light btn red" type="reset">Cancel
+                                </button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
