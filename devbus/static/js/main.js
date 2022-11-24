@@ -3,11 +3,17 @@ $(document).ready(function () {
   $('select').formSelect()
 
   if ($('.toast')) {
-    $('.toast').each(function() {
+    $('.toast').each(function () {
       if ($(this).hasClass('message')) {
-        M.toast({html: $(this).text(), classes: 'light-blue'})
+        M.toast({
+          html: $(this).text(),
+          classes: 'light-blue'
+        })
       } else {
-        M.toast({html: $(this).text(), classes: $('.toast').attr('class')})
+        M.toast({
+          html: $(this).text(),
+          classes: $('.toast').attr('class')
+        })
       }
     })
   }

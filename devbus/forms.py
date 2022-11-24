@@ -1,7 +1,8 @@
 import re
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileAllowed
 from wtforms import (StringField, PasswordField, SubmitField, 
-                    BooleanField, ValidationError, Field, FileField)
+                    BooleanField, ValidationError, Field, TextAreaField)
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 from wtforms.widgets import TextArea
 from devbus.routes import current_user
@@ -54,6 +55,7 @@ class SignUpForm(FlaskForm):
                             validators=[DataRequired(), Length(min=8, max=32)])
     confirm_password = PasswordField('Confirm Password',
                             validators=[DataRequired(), Length(max=32), EqualTo('password')])
+    user_image = FileField()
     submit = SubmitField('READY!')
 
     def validate_username(self, username):
@@ -110,10 +112,10 @@ class UpdateProfileForm(FlaskForm):
                             validators=[Length(min=6, max=16)])
     email = StringField('Email',
                             validators=[Email()])
-    bio = StringField('Bio', validators=[Length(max=120)])
+    bio = TextAreaField('Bio', validators=[Length(max=120)])
     languages = TagListField('My Superpowers')
-    update_image = FileField()
-    submit = SubmitField('Update')
+    update_image = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
+    submit = SubmitField('Save Changes', id="update_submit", name="update_submit")
 
     def validate_username(self, username):
         if username.data != current_user.username:
