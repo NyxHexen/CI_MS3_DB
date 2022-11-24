@@ -55,17 +55,25 @@ def logout():
     return redirect(url_for('home'))
 
 
-@app.route("/profile", methods=["GET", "POST"])
+@app.route("/profile", methods=["GET"])
 @login_required
 def profile():
+    form = UpdateProfileForm()
+    return render_template("profile.html", title="Profile", form=form)
+
+
+@app.route("/edit_profile", methods=["GET", "POST"])
+@login_required
+def edit_profile():
     form = UpdateProfileForm()
     if form.validate_on_submit():
         current_user.username = form.username.data
         current_user.email = form.email.data
         current_user.f_name = form.f_name.data
         current_user.l_name = form.l_name.data
-        current_user.languages = form.languages.data
+        current_user.languages = form.languages.data.sort()
         current_user.bio = form.bio.data
         current_user.save()
         flash('Got it! Your profile has been updated.', 'message')
-    return render_template("profile.html", title="Profile", form=form)
+        return redirect(url_for('profile'))
+    return render_template("edit_profile.html", title="Edit Profile", form=form)
