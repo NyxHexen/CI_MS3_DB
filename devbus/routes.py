@@ -38,7 +38,6 @@ def signin():
     form = SignInForm()
     if form.validate_on_submit():
         user = User.objects(email=form.email.data).first()
-        print(user)
         if user is not None and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
             next = request.args.get('next')
@@ -55,7 +54,7 @@ def logout():
     return redirect(url_for('home'))
 
 
-@app.route("/profile", methods=["GET"])
+@app.route("/profile")
 @login_required
 def profile():
     form = UpdateProfileForm()
@@ -67,13 +66,15 @@ def profile():
 def edit_profile():
     form = UpdateProfileForm()
     if form.validate_on_submit():
-        current_user.username = form.username.data
-        current_user.email = form.email.data
-        current_user.f_name = form.f_name.data
-        current_user.l_name = form.l_name.data
-        current_user.languages = form.languages.data.sort()
-        current_user.bio = form.bio.data
+        form.populate_obj(current_user)
         current_user.save()
         flash('Got it! Your profile has been updated.', 'message')
-        return redirect(url_for('profile'))
+        return redirect('/profile')
+    elif request.method == "GET":
+        form.username.data = current_user.username
+        form.email.data = current_user.email
+        form.f_name.data = current_user.f_name
+        form.l_name.data = current_user.l_name
+        form.languages.data = current_user.languages
+        form.bio.data = current_user.bio
     return render_template("edit_profile.html", title="Edit Profile", form=form)
