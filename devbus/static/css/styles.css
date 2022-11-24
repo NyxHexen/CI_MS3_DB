@@ -47,13 +47,21 @@ nav {
 
 h1,
 h2,
-.signin-form legend,
-.signup-form legend,
-#update-form legend {
+.brand-logo,
+legend {
   font-family: 'Bangers', cursive;
-  font-size: 4.5rem;
-  line-height: 110%;
+  letter-spacing: .25rem;
+  
+}
+
+legend {
+  font-size: 3.5rem;
   margin: 2.4rem 0 1.4rem 0;
+  line-height: 110%;
+}
+
+.brand-logo {
+  font-size: 3.5rem !important;
 }
 
 fieldset {
