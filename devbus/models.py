@@ -17,7 +17,7 @@ class User(Document, UserMixin):
     username = StringField(min_length=6, max_length=16, unique=True)
     email = StringField(unique=True)
     password = StringField()
-    profile_image = StringField(default="devbus/static/images/pexels-mododeolhar-2475138.jpg")
+    profile_image = StringField(default="https://ci-ms3-devbus.s3.eu-west-1.amazonaws.com/default.jpg")
     bio = StringField(max_length=126, default="")
     languages = ListField(default=[])
 
