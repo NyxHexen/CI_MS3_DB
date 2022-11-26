@@ -11,7 +11,7 @@
                     <div class="row">
                         <div class="col s12 m5 center-align">
                             <img class="responsive-img circle"
-                                src="{{ url_for('static', filename='images/pexels-mododeolhar-2475138.jpg')}}"
+                                src="{{ current_user.profile_image }}"
                                 alt="Your profile Picture">
                         </div>
                         <div class="col s12 m7">
@@ -56,16 +56,16 @@
                         </div>
                         <div class="col s12 l5">
                             <div class="update-image card-panel row z-depth-1">
-                                {{ form.update_image.label }}
+                                {{ form.profile_image.label }}
                                 <div class="file-field input-field">
                                     <div class="btn">
                                         <span>File</span>
-                                        {{ form.update_image }}
+                                        {{ form.profile_image }}
                                     </div>
                                     <div class="file-path-wrapper">
                                         <input class="file-path validate" type="text">
                                     </div>
-                                    {% if form.update_image.errors %}
+                                    {% if form.profile_image.errors %}
                                     {% for error in form.picture.errors %}
                                     <span class="red-text">{{ error }}</span>
                                     {% endfor %}
