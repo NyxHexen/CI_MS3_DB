@@ -1,4 +1,6 @@
-import boto3, os
+import boto3, os, secrets
+from botocore.exceptions import ClientError
+
 
 # AWS S3 variables
 s3_bucket_name = "ci-ms3-devbus"
@@ -8,3 +10,23 @@ client = boto3.client('s3',
                       aws_secret_access_key=os.environ.get
                       ("AWS_SECRET_ACCESS_KEY"))
 
+
+def upload_image(file):
+    """
+    Store a file on the AWS S3 bucket using boto3.
+    The function renames the file to a random hex and
+    tries to upload it to the bucket. If successful, returns
+    the link to the image to be stored in DB.
+    """
+    random_hex = secrets.token_hex(8)
+    _, file_ext = os.path.splitext(file.filename)
+    file.filename = random_hex + file_ext
+    try:
+        # Not passing in object_name as we've already renamed the file
+        # so the upload_file function will default object_name to the filename.
+        client.upload_file(file, s3_bucket_name)
+    except ClientError:
+        raise Exception("There was a problem uploading the image to the AWS S3 bucket")
+    
+    image_url = s3_bucket_url + file.filename
+    return image_url

@@ -5,7 +5,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 from devbus import app, bcrypt
 from devbus.forms import SignUpForm, SignInForm, UpdateProfileForm
 from devbus.models import User, Post
-from devbus.utils import client
+from devbus.utils import upload_image
 
 
 @app.route("/")
@@ -66,6 +66,7 @@ def profile():
 def edit_profile():
     form = UpdateProfileForm()
     if form.validate_on_submit():
+        form.update_image.data = upload_image(form.update_image.data)
         form.populate_obj(current_user)
         current_user.save()
         flash('Got it! Your profile has been updated.', 'message')
