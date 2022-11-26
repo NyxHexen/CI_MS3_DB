@@ -66,8 +66,10 @@ def profile():
 def edit_profile():
     form = UpdateProfileForm()
     if form.validate_on_submit():
-        form.update_image.data = upload_image(form.update_image.data)
         form.populate_obj(current_user)
+        if form.profile_image.data:
+            image_url = upload_image(form.profile_image.data)
+            current_user.profile_image = image_url
         current_user.save()
         flash('Got it! Your profile has been updated.', 'message')
         return redirect('/profile')
