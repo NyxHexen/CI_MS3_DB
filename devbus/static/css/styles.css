@@ -32,6 +32,11 @@ nav {
   margin-bottom: 2rem;
 }
 
+img.responsive-img {
+  aspect-ratio: 1/1;
+  object-fit: cover;
+}
+
 .signin-form,
 .signup-form {
   margin-top: 2.5rem;
