@@ -111,7 +111,7 @@ class UpdateProfileForm(FlaskForm):
                             validators=[Email()])
     bio = TextAreaField('Bio', validators=[Length(max=120)])
     languages = TagListField('My Superpowers')
-    update_image = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
+    profile_image = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
     submit = SubmitField('Save Changes')
 
     def validate_username(self, username):
