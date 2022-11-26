@@ -1,4 +1,5 @@
 import re
+from PIL import Image
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import (StringField, PasswordField, SubmitField, 
@@ -81,6 +82,7 @@ class SignInForm(FlaskForm):
     remember = BooleanField('Stay signed in')
     submit = SubmitField('Log In')
 
+    
 class TagListField(Field):
     """
     Custom form field, new line separated tags, stores input as a list
@@ -100,6 +102,7 @@ class TagListField(Field):
         else:
             self.data = []
 
+            
 class UpdateProfileForm(FlaskForm):
     f_name = StringField('First Name',
                             validators=[Length(max=16)])
@@ -125,6 +128,13 @@ class UpdateProfileForm(FlaskForm):
             is_unique_email = len(User.objects(email=email.data)) == 0
             if not is_unique_email:
                 raise ValidationError('Email is taken. Please use another.')
+    
+    def validate_profile_image(self, profile_image):
+        if profile_image.data:
+            image = Image.open(profile_image.data)
+            image_w, image_h = image.size
+            if image_w < 350 or image_h < 350:
+                raise ValidationError('Image must be 350px by 350px at least.')
      
         
 class ChangePasswordForm(FlaskForm):
