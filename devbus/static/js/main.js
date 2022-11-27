@@ -38,3 +38,11 @@ if ($(window).innerWidth() + 17 <= 475) {
     $(this).text(text)
   });
 }
+
+$('.collection-item').hover( function() {
+  $(this).removeClass('deep-purple-text text-darken-3')
+  $(this).addClass('deep-purple darken-3 active')
+}, function() {
+  $(this).removeClass('deep-purple darken-3 active')
+  $(this).addClass('deep-purple-text text-darken-3')
+})
