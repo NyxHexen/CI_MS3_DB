@@ -37,6 +37,10 @@ img.responsive-img {
   object-fit: cover;
 }
 
+.fa-solid {
+  line-height: inherit !important;
+}
+
 .signin-form,
 .signup-form {
   margin-top: 2.5rem;

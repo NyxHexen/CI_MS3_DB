@@ -18,6 +18,8 @@
     {% else %}
     <title>DevBus | If StackOverflow and Twitter had a child.</title>
     {% endif %}
+    <!-- FontAwesome Script -->
+    <script src="https://kit.fontawesome.com/f05b6615ad.js" crossorigin="anonymous"></script>
 </head>
 
 <body class="grey darken-3">
@@ -30,7 +32,7 @@
                     {% if current_user.is_authenticated %}
                     <li><a href="{{ url_for('profile')}}">My Profile</a></li>
                     <li><a href="{{ url_for('logout')}}"
-                            class="yellow black-text waves-effect waves-light btn"><strong>Sign Out</strong></a></li>
+                            class="yellow black-text waves-effect waves-light btn"><i class="fa-solid fa-right-to-bracket"></i></a></li>
                     {% else %}
                     <li><a href="{{ url_for('home')}}">Home</a></li>
                     <li><a href="{{ url_for('signin')}}">Sign In</a></li>
