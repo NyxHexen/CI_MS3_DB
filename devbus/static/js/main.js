@@ -1,6 +1,7 @@
 $(document).ready(function () {
   $('.sidenav').sidenav();
-  $('select').formSelect()
+  $('select').formSelect();
+  $('.tooltipped').tooltip();
 
   if ($('.toast')) {
     $('.toast').each(function () {
