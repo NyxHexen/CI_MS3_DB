@@ -36,7 +36,8 @@ img.responsive-img {
   object-fit: cover;
 }
 
-.fa-solid {
+.fa-solid,
+.fa-regular {
   line-height: inherit !important;
 }
 

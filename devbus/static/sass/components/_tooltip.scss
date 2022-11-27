@@ -3,8 +3,9 @@
   font-size: 1rem;
   z-index: 2000;
   background-color: transparent;
+  border-color: #000;
   border-radius: 2px;
-  color: #fff;
+  color: #000;
   min-height: 36px;
   line-height: 120%;
   opacity: 0;
@@ -16,7 +17,10 @@
   top: 0;
   pointer-events: none;
   visibility: hidden;
-  background-color: #323232;
+  background-color: #fff;
+  box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14),
+              0 1px 10px 0 rgba(0,0,0,0.12),
+              0 2px 4px -1px rgba(0,0,0,0.3);
 }
 
 .backdrop {
