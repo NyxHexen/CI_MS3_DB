@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Compiled and minified Materialize CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <!-- Material Icons CSS -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- PrismJS CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/prism.css')}}">
-    <!-- Own JS -->
+    <!-- Materialize CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/materialize.css')}}">
+    <!-- Own CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css')}}">
     {% if title %}
     <title>{{ title }} | DevBus</title>
@@ -24,7 +24,7 @@
 
 <body class="grey darken-3">
     <header>
-        <nav class="deep-purple darken-3">
+        <nav>
             <div class="container nav-wrapper">
                 <a href="{{ url_for('home' )}}" class="brand-logo">DevBus</a>
                 <a href="#" data-target="mobile-menu" class="sidenav-trigger"><i class="material-icons">menu</i></a>
@@ -32,12 +32,12 @@
                     {% if current_user.is_authenticated %}
                     <li><a href="{{ url_for('profile')}}">My Profile</a></li>
                     <li><a href="{{ url_for('logout')}}"
-                            class="yellow black-text waves-effect waves-light btn tooltipped" data-position="bottom" data-tooltip="Sign Out"><i class="fa-solid fa-right-to-bracket"></i></a></li>
+                            class="waves-effect waves-light btn tooltipped" data-position="bottom" data-tooltip="Sign Out"><i class="fa-solid fa-right-to-bracket"></i></a></li>
                     {% else %}
                     <li><a href="{{ url_for('home')}}">Home</a></li>
                     <li><a href="{{ url_for('signin')}}">Sign In</a></li>
                     <li><a href="{{ url_for('signup')}}"
-                            class="yellow black-text waves-effect waves-light btn"><strong>Sign Up</strong></a></li>
+                            class="waves-effect waves-light btn">Sign Up</a></li>
                     {% endif %}
                 </ul>
             </div>
@@ -45,13 +45,13 @@
         <ul class="sidenav" id="mobile-menu">
             {% if current_user.is_authenticated %}
             <li><a href="{{ url_for('profile')}}">My Profile</a></li>
-            <li><a href="{{ url_for('logout')}}" class="yellow black-text waves-effect waves-light btn"><strong>Sign
-                        Out</strong></a></li>
+            <li><a href="{{ url_for('logout')}}" class="waves-effect waves-light btn">Sign
+                        Out</a></li>
             {% else %}
             <li><a href="{{ url_for('home')}}">Home</a></li>
             <li><a href="{{ url_for('signin')}}">Sign In</a></li>
-            <li><a href="{{ url_for('signup')}}" class="yellow black-text waves-effect waves-light btn"><strong>Sign
-                        Up</strong></a></li>
+            <li><a href="{{ url_for('signup')}}" class="waves-effect waves-light btn">Sign
+                        Up</a></li>
             {% endif %}
         </ul>
     </header>
@@ -71,7 +71,7 @@
             {% endblock %}
         </div>
     </main>
-    <footer class="page-footer deep-purple darken-3">
+    <footer class="page-footer">
         <div class="container">
             <div class="row">
                 <div class="col l6 s12">

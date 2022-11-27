@@ -40,13 +40,13 @@
                     <div class="waves-effect btn-flat vote-button"><i
                             class="material-icons right small red-text">thumb_down</i>{{ post.votes.down|length }}
                     </div>
-                    <a class="waves-effect waves-light yellow black-text btn-small right">Reply</a>
+                    <a class="waves-effect waves-light btn right">Reply</a>
                     <div class="waves-effect btn-flat right"><i
                             class="material-icons right small grey-text text-darken-2">chat</i><span>{{ post.replies|length }}
                             comments</span>
                     </div>
                     {% else %}
-                    <a class="waves-effect waves-light deep-purple btn">Assist</a>
+                    <a class="waves-effect waves-light deep-purple darken-3 btn white-text">Assist</a>
                     <div class="waves-effect btn-flat right">
                         <i class="material-icons small grey-text text-darken-2 right">chat</i>
                         <span> {{ post.replies|length }} assists</span>
