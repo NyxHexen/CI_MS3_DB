@@ -28,17 +28,20 @@
             <div class="container nav-wrapper">
                 <a href="{{ url_for('home' )}}" class="brand-logo">DevBus</a>
                 <a href="#" data-target="mobile-menu" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-                <ul class="right hide-on-med-and-down">
-                    {% if current_user.is_authenticated %}
-                    <li><a href="{{ url_for('profile')}}">My Profile</a></li>
+                {% if current_user.is_authenticated %}
+                <ul class="right">
                     <li><a href="{{ url_for('logout')}}"
-                            class="waves-effect waves-light btn tooltipped" data-position="bottom" data-tooltip="Sign Out"><i class="fa-solid fa-right-to-bracket"></i></a></li>
-                    {% else %}
+                        class="waves-effect waves-light btn tooltipped" data-position="bottom" data-tooltip="Sign Out"><i class="fa-solid fa-right-to-bracket"></i></a></li>
+                </ul>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="{{ url_for('profile')}}">My Profile</a></li>
+                {% else %}
+                <ul class="right hide-on-med-and-down">
                     <li><a href="{{ url_for('home')}}">Home</a></li>
                     <li><a href="{{ url_for('signin')}}">Sign In</a></li>
                     <li><a href="{{ url_for('signup')}}"
                             class="waves-effect waves-light btn">Sign Up</a></li>
-                    {% endif %}
+                {% endif %}
                 </ul>
             </div>
         </nav>
