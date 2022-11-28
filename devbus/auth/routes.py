@@ -87,5 +87,11 @@ def forgot_password():
     form = ForgotPwdForm()
     if form.validate_on_submit():
         user = User.objects.get(email=form.email.data)
-        print(user.generate_pw_token())
     return render_template("forgot_password.html", title="Forgotten Password?", form=form)
+
+
+@auth.route("/reset_password/<token>")
+def reset_password(token):
+    if current_user.is_authenticated: 
+        return redirect("home")
+    return render_template("reset_password.html", title="Reset Password")
