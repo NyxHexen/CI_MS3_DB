@@ -137,7 +137,13 @@ class UpdateProfileForm(FlaskForm):
                 raise ValidationError('Image must be 350px by 350px at least.')
      
         
-class ChangePasswordForm(FlaskForm):
+class ForgotPwdForm(FlaskForm):
+    email = StringField('Email',
+                            validators=[Email()])
+    submit = SubmitField('Update')
+        
+
+class NewPwdForm(FlaskForm):
     password = PasswordField('Password',
                             validators=[DataRequired(), Length(min=8, max=32)])
     confirm_password = PasswordField('Confirm Password',
