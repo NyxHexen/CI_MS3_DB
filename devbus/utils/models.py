@@ -1,7 +1,8 @@
 from datetime import datetime
 from flask_login import UserMixin
 from mongoengine import *
-from devbus import login_manager
+from itsdangerous import URLSafeTimedSerializer
+from devbus import login_manager, app
 
 
 @login_manager.user_loader
@@ -20,6 +21,15 @@ class User(Document, UserMixin):
     profile_image = StringField(default="https://ci-ms3-devbus.s3.eu-west-1.amazonaws.com/default.jpg")
     bio = StringField(max_length=126, default="")
     languages = ListField(default=[])
+
+    def generate_pwd_token(self):
+        s = URLSafeTimedSerializer(app.config['SECRET_KEY'], 'reset')
+        return s.dumps(str(self.id))
+    
+    def verify_pwd_token(self, token, max_age=300):
+        s = URLSafeTimedSerializer(app.config['SECRET_KEY'], 'reset')
+        return s.loads(token, max_age=max_age) == str(self.id)
+
 
 
 class Post(Document):
