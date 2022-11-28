@@ -1,6 +1,6 @@
 import boto3, os, secrets, io
 from botocore.exceptions import ClientError
-from PIL import Image, ImageDraw
+from PIL import Image
 
 # AWS S3 variables
 s3_bucket_name = "ci-ms3-devbus"

@@ -2,12 +2,12 @@ import re
 from PIL import Image
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
+from flask_login import current_user
 from wtforms import (StringField, PasswordField, SubmitField, 
                     BooleanField, ValidationError, Field, TextAreaField)
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 from wtforms.widgets import TextArea
-from devbus.routes import current_user
-from devbus.models import User
+from devbus.utils.models import User
 
 
 def password_check(password):

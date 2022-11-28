@@ -1,23 +1,19 @@
 from flask import (
     flash, render_template,
-    redirect, request, session, url_for)
+    redirect, request, url_for, Blueprint)
 from flask_login import login_user, current_user, logout_user, login_required
-from devbus import app, bcrypt
-from devbus.forms import SignUpForm, SignInForm, UpdateProfileForm
-from devbus.models import User, Post
-from devbus.utils import upload_image
+from devbus import bcrypt
+from devbus.auth.forms import SignUpForm, SignInForm, UpdateProfileForm
+from devbus.auth.utils import upload_image
+from devbus.utils.models import User
 
 
-@app.route("/")
-def home():
-    posts = Post.objects()
-    return render_template("home.html",posts=posts)
+auth = Blueprint('auth', '__name__')
 
-
-@app.route("/signup", methods=["GET", "POST"])
+@auth.route("/signup", methods=["GET", "POST"])
 def signup():
     if current_user.is_authenticated:
-        return redirect(url_for('home'))
+        return redirect(url_for('main.home'))
     form = SignUpForm()
     if form.validate_on_submit():
         user = User(username = form.username.data,
@@ -27,14 +23,14 @@ def signup():
                     email = form.email.data)
         user.save()
         flash("Account created successfully!", "light-green black-text lighten-2")
-        return redirect(url_for('signin'))
+        return redirect(url_for('auth.signin'))
     return render_template("signup.html", title="Sign Up", form=form)
 
 
-@app.route("/signin", methods=["GET", "POST"])
+@auth.route("/signin", methods=["GET", "POST"])
 def signin():
     if current_user.is_authenticated:
-        return redirect(url_for('home'))
+        return redirect(url_for('main.home'))
     form = SignInForm()
     if form.validate_on_submit():
         user = User.objects(email=form.email.data).first()
@@ -42,26 +38,26 @@ def signin():
             login_user(user, remember=form.remember.data)
             next = request.args.get('next')
             flash(f"Hi, {user.f_name}!" if user.f_name else f"Welcome, {user.username}!")
-            return redirect(next) if next else redirect(url_for('home'))
+            return redirect(next) if next else redirect(url_for('main.home'))
         else:
             flash('Login Unsuccessful. Please check your email or password.', 'materialize-red lighten-1')
     return render_template("signin.html", title="License and Registration", form=form)
 
 
-@app.route("/logout")
+@auth.route("/logout")
 def logout():
     logout_user()
-    return redirect(url_for('home'))
+    return redirect(url_for('main.home'))
 
 
-@app.route("/profile")
+@auth.route("/profile")
 @login_required
 def profile():
     form = UpdateProfileForm()
     return render_template("profile.html", title="Profile", form=form)
 
 
-@app.route("/edit_profile", methods=["GET", "POST"])
+@auth.route("/edit_profile", methods=["GET", "POST"])
 @login_required
 def edit_profile():
     form = UpdateProfileForm()

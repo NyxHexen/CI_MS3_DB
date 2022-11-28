@@ -17,6 +17,12 @@ app.secret_key = os.environ.get("SECRET_KEY")
 db = MongoEngine(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
-login_manager.login_view = 'signin'
+login_manager.login_view = 'auth.signin'
 
-from devbus import routes
+from devbus.auth.routes import auth
+from devbus.main.routes import main
+from devbus.posts.routes import posts
+
+app.register_blueprint(auth)
+app.register_blueprint(main)
+app.register_blueprint(posts)
