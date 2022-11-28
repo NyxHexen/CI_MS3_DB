@@ -140,7 +140,7 @@ class UpdateProfileForm(FlaskForm):
 class ForgotPwdForm(FlaskForm):
     email = StringField('Email',
                             validators=[Email()])
-    submit = SubmitField('Update')
+    submit = SubmitField('Reset')
         
 
 class NewPwdForm(FlaskForm):
@@ -148,7 +148,7 @@ class NewPwdForm(FlaskForm):
                             validators=[DataRequired(), Length(min=8, max=32)])
     confirm_password = PasswordField('Confirm Password',
                             validators=[DataRequired(), Length(max=32), EqualTo('password')])
-    submit = SubmitField('Update')
+    submit = SubmitField('Update Password')
 
     def validate_password(self, password):
         is_strong_password = True if password_check(password.data) else False
