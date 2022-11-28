@@ -2,8 +2,9 @@ from flask import (
     flash, render_template,
     redirect, request, url_for, Blueprint)
 from flask_login import login_user, current_user, logout_user, login_required
+from itsdangerous import TimedSerializer
 from devbus import bcrypt
-from devbus.auth.forms import SignUpForm, SignInForm, UpdateProfileForm
+from devbus.auth.forms import SignUpForm, SignInForm, UpdateProfileForm, ForgotPwdForm
 from devbus.auth.utils import upload_image
 from devbus.utils.models import User
 
@@ -77,3 +78,14 @@ def edit_profile():
         form.languages.data = current_user.languages
         form.bio.data = current_user.bio
     return render_template("edit_profile.html", title="Edit Profile", form=form)
+
+
+@auth.route("/forgot_password", methods=["GET", "POST"])
+def forgot_password():
+    if current_user.is_authenticated: 
+        return redirect("home")
+    form = ForgotPwdForm()
+    if form.validate_on_submit():
+        user = User.objects.get(email=form.email.data)
+        print(user.generate_pw_token())
+    return render_template("forgot_password.html", title="Forgotten Password?", form=form)
