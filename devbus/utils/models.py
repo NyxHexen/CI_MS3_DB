@@ -3,6 +3,7 @@ from flask_login import UserMixin
 from mongoengine import *
 from itsdangerous import URLSafeTimedSerializer
 from devbus import login_manager, app
+from devbus.auth.routes import current_user
 
 
 @login_manager.user_loader
@@ -32,6 +33,27 @@ class User(Document, UserMixin):
         return s.loads(token, max_age=max_age)
 
 
+class CommentOfComment(EmbeddedDocument):
+    comment_content = StringField(required=True)
+    code_language = StringField()
+    code_content = StringField()
+    votes = DictField()
+    created_by = StringField()
+    created_date = DateField(default=datetime.utcnow)
+    is_verified = BooleanField()
+
+
+class Comment(Document):
+    meta = {'collection': 'comments'}
+    comment_content = StringField(required=True)
+    code_language = StringField()
+    code_content = StringField()
+    comments = ListField(EmbeddedDocumentField(CommentOfComment))
+    votes = DictField()
+    created_by = StringField()
+    created_date = DateField(default=datetime.utcnow)
+    is_verified = BooleanField()
+
 
 class Post(Document):
     meta = {'collection': 'posts'}
@@ -39,21 +61,8 @@ class Post(Document):
     post_content = StringField()
     code_content = StringField()
     code_language = StringField()
-    replies = ListField()
+    comments = ListField(LazyReferenceField(Comment))
     votes = DictField() # { 'yes': ListField(), 'no': ListField() }
     post_type = StringField()
-    created_by = StringField()
+    created_by = ReferenceField(User)
     created_date = DateField(default=datetime.utcnow)
-
-
-class Comment(Document):
-    meta = {'collection': 'comments'}
-    content_id = ObjectIdField()
-    comment_content = StringField(required=True)
-    code_language = StringField()
-    code_content = StringField()
-    replies = ListField()
-    votes = DictField()
-    created_by = StringField()
-    created_date = DateField(default=datetime.utcnow)
-    is_verified = BooleanField()
