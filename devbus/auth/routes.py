@@ -1,10 +1,12 @@
+import os
 from flask import (
     flash, render_template,
     redirect, request, url_for, Blueprint)
 from flask_login import login_user, current_user, logout_user, login_required
 from itsdangerous import TimedSerializer
-from devbus import bcrypt
-from devbus.auth.forms import SignUpForm, SignInForm, UpdateProfileForm, ForgotPwdForm
+from devbus import bcrypt, app
+from devbus.auth.forms import (
+    SignUpForm, SignInForm, UpdateProfileForm, ForgotPwdForm, NewPwdForm)
 from devbus.auth.utils import upload_image
 from devbus.utils.models import User
 
@@ -87,11 +89,16 @@ def forgot_password():
     form = ForgotPwdForm()
     if form.validate_on_submit():
         user = User.objects.get(email=form.email.data)
+        if user is not None:
+            token = user.generate_pwd_token()
+            return render_template("forgot_password.html", title="Forgotten Password?", form=form, token=token) # delete before pushing
+            # url_for('auth.reset_password', token=token, _external=True) print the link to the token
     return render_template("forgot_password.html", title="Forgotten Password?", form=form)
 
 
 @auth.route("/reset_password/<token>")
 def reset_password(token):
+    form = NewPwdForm()
     if current_user.is_authenticated: 
         return redirect("home")
-    return render_template("reset_password.html", title="Reset Password")
+    return render_template("reset_password.html", title="Reset Password", form=form)
