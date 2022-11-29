@@ -23,12 +23,13 @@ class User(Document, UserMixin):
     languages = ListField(default=[])
 
     def generate_pwd_token(self):
-        s = URLSafeTimedSerializer(app.config['SECRET_KEY'], 'reset')
+        s = URLSafeTimedSerializer(app.config['SECRET_KEY'], 'reset_pwd')
         return s.dumps(str(self.id))
     
-    def verify_pwd_token(self, token, max_age=300):
-        s = URLSafeTimedSerializer(app.config['SECRET_KEY'], 'reset')
-        return s.loads(token, max_age=max_age) == str(self.id)
+    @staticmethod
+    def verify_pwd_token(token, max_age=1800):
+        s = URLSafeTimedSerializer(app.config['SECRET_KEY'], 'reset_pwd')
+        return s.loads(token, max_age=max_age)
 
 
 
