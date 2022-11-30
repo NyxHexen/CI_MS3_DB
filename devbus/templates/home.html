@@ -14,11 +14,11 @@
              <div class="post card grey lighten-1">
                 <div class="card-panel z-depth-1 valign-wrapper">
                     <div class="col s3 m2">
-                        <img src="{{ url_for('static', filename='images/pexels-mododeolhar-2475138.jpg') }}" alt=""
+                        <img src="{{ post.created_by.profile_image }}" alt=""
                             class="circle responsive-img">
                     </div>
                     <div class="col s10">
-                        <a href="#">{{ post.created_by }}</a>
+                        <a href="#">{{ post.created_by.username }}</a>
                         <span class="grey-text">{{ post.created_date }}</span>
                         <div class="card-title-container">
                             <span class="card-title flow-text">{{ post.post_title }}</span>
@@ -49,7 +49,7 @@
                     <a class="waves-effect waves-light deep-purple darken-3 btn white-text">Assist</a>
                     <div class="waves-effect btn-flat right">
                         <i class="material-icons small grey-text text-darken-2 right">chat</i>
-                        <span> {{ post.replies|length }} assists</span>
+                        <span> {{ post.comments|length }} assists</span>
                     </div>
                     {% endif %}
                 </div>
