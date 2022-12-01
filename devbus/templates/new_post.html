@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col s12 m10 offset-m1 l8 offset-l2 grey lighten-3">
+        <div class="row">
+            <form id="new_post" class="col s12 center-align" method="POST">
+                <fieldset class="row">
+                    {{ form.hidden_tag() }}
+                    <legend class="deep-purple-text text-darken-3">New Post</legend>
+                    {% for subfield in form.post_type %}
+                    <div class="col s3">
+                        <p>
+                            <label>
+                                {{ subfield }}
+                                <span>{{ subfield.object_data | capitalize }}</span>
+                            </label>
+                        </p>
+                    </div>
+                    {% endfor %}
+                    <div class="input-field col s12">
+                        {% if form.post_title.errors %}
+                        {{ form.post_title(class="invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.post_title.errors %}
+                            <span class="red-text">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.post_title }}
+                        {% endif %}
+                        {{ form.post_title.label }}
+                    </div>
+                    <div class="input-field col s12">
+                        {% if form.post_content.errors %}
+                        {{ form.post_content(class="materialize-textarea invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.post_content.errors %}
+                            <span class="red-text">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.post_content(class="materialize-textarea") }}
+                        {% endif %}
+                        {{ form.post_content.label }}
+                    </div>
+                    <div class="input-field col s6 visually-hidden code-switch">
+                        {{ form.code_language(class="autocomplete") }}
+                        {{ form.code_language.label }}
+                    </div>
+                    <div class="input-field col s6 offset-s6">
+                        <span>Code Area</span>
+                        <div class="switch">
+                            <label>
+                                Off
+                                <input type="checkbox" id="code_switch" name="code_switch">
+                                <span class="lever"></span>
+                                On
+                            </label>
+                        </div>
+                    </div>
+                    <div class="input-field col s12 visually-hidden code-switch">
+                        {% if form.code_content.errors %}
+                        {{ form.code_content(class="materialize-textarea grey darken-4 white-text invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.code_content.errors %}
+                            <span class="red-text">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.code_content(class="materialize-textarea grey darken-4 white-text") }}
+                        {% endif %}
+                        {{ form.code_content.label(class="visually-hidden") }}
+                    </div>
+                    <div class="input-field col s12">
+                        {{ form.submit(class="waves-effect waves-light btn yellow") }}
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
