@@ -40,10 +40,25 @@ if ($(window).innerWidth() + 17 <= 475) {
   });
 }
 
-$('.collection-item').hover( function() {
+$('.collection-item').hover(function () {
   $(this).removeClass('deep-purple-text text-darken-3')
   $(this).addClass('deep-purple darken-3 active')
-}, function() {
+}, function () {
   $(this).removeClass('deep-purple darken-3 active')
   $(this).addClass('deep-purple-text text-darken-3')
+})
+
+$('#new_post .switch label').on('mouseup', function () {
+  if ($('#code_switch').is(':checked')) {
+    $('.code-switch').each(function () {
+      $(this).addClass('visually-hidden')
+    })
+    $('#new_post .switch').parent().addClass('offset-s6')
+  } else if (!$('#code_switch').is(':checked')) {
+    console.log("3")
+    $('.code-switch').each(function () {
+      $(this).removeClass('visually-hidden')
+    })
+    $('#new_post .switch').parent().removeClass('offset-s6')
+  }
 })
