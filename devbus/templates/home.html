@@ -21,7 +21,7 @@
                         <a href="#">{{ post.created_by.username }}</a>
                         <span class="grey-text">{{ post.created_date }}</span>
                         <div class="card-title-container">
-                            <span class="card-title flow-text">{{ post.post_title }}</span>
+                            <a href="{{ url_for('posts.view_post', id=post.id)}}" class="card-title flow-text black-text">{{ post.post_title }}</a>
                         </div>
                     </div>
                 </div>
@@ -41,16 +41,16 @@
                             class="material-icons right small red-text">thumb_down</i>{{ post.votes.down|length }}
                     </div>
                     <a class="waves-effect waves-light btn right">Reply</a>
-                    <div class="waves-effect btn-flat right"><i
-                            class="material-icons right small grey-text text-darken-2">chat</i><span>{{ post.comments|length }}
+                    <a href="{{ url_for('posts.view_post', id=post.id)}}" class="waves-effect btn-flat grey-text text-darken-2 right"><i
+                            class="material-icons right small">chat</i><span>{{ post.comments|length }}
                             comments</span>
-                    </div>
+                    </a>
                     {% else %}
                     <a class="waves-effect waves-light deep-purple darken-3 btn white-text">Assist</a>
-                    <div class="waves-effect btn-flat right">
-                        <i class="material-icons small grey-text text-darken-2 right">chat</i>
-                        <span> {{ post.comments|length }} assists</span>
-                    </div>
+                    <a href="{{ url_for('posts.view_post', id=post.id)}}" class="waves-effect btn-flat grey-text text-darken-2 right">
+                        <i class="material-icons smallright">chat</i>
+                        <span>{{ post.comments|length }} assists</span>
+                    </a>
                     {% endif %}
                 </div>
             </div>
