@@ -40,7 +40,6 @@ class CommentOfComment(EmbeddedDocument):
     votes = DictField(default={"up": 0, "down": 0})
     created_by = ReferenceField(User)
     created_date = DateField(default=datetime.utcnow)
-    is_verified = BooleanField()
 
 
 class Comment(Document):
