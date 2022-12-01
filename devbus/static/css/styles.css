@@ -134,3 +134,7 @@ fieldset {
 .signup-link {
   font-size: 1.2rem !important;
 }
+
+#new_post .materialize-textarea {
+  padding-left: 10px;
+}
