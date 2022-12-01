@@ -118,6 +118,10 @@ fieldset {
   margin-top: 0;
 }
 
+.post .card-action a.btn-flat {
+  margin-right: 0 !important;
+}
+
 .post .code-content {
   padding-top: 0;
 }
