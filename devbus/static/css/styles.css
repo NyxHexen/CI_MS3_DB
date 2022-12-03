@@ -81,8 +81,21 @@ fieldset {
   font-weight: 400;
 }
 
+.card-panel {
+  margin-bottom: 0.5rem;
+}
+
+.comment-user-info.card-panel {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
 .chip {
   font-size: 15px;
+}
+
+.switch label .lever {
+  margin: 0 4px;
 }
 
 #profile,
