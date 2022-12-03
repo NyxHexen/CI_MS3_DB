@@ -87,9 +87,9 @@
     </div>
     {% endfor %}
 </div>
-
+{% if form %}
 <div class="row">
-    <form id="new_comment" class="col s12 m10 push-m1 l8 push-l2 center-align content" method="POST">
+    <form id="new_comment" class="col s12 m10 push-m1 l8 push-l2 center-align new" method="POST">
         <fieldset class="card valign-wrapper">
             {{ form.hidden_tag() }}
             <legend class="visually-hidden">Post Comment</legend>
@@ -142,4 +142,5 @@
         </fieldset>
     </form>
 </div>
+{% endif %}
 {% endblock %}
