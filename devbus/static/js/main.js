@@ -36,6 +36,7 @@ if ($(window).innerWidth() + 17 <= 475) {
   $('.post .card-action span').each(function () {
     let text = $(this).text();
     text = text.replace("comments", "");
+    text = text.replace("assists", "")
     $(this).text(text)
   });
 }
@@ -48,17 +49,18 @@ $('.collection-item').hover(function () {
   $(this).addClass('deep-purple-text text-darken-3')
 })
 
-$('#new_post .switch label').on('mouseup', function () {
+$('.content .switch label').on('mouseup', function () {
   if ($('#code_switch').is(':checked')) {
     $('.code-switch').each(function () {
       $(this).addClass('visually-hidden')
     })
-    $('#new_post .switch').parent().addClass('offset-s6')
+    if (!$(this).hasClass("comment")) {
+      $('.content .switch').parent().addClass('offset-s6')
+    }
   } else if (!$('#code_switch').is(':checked')) {
-    console.log("3")
     $('.code-switch').each(function () {
       $(this).removeClass('visually-hidden')
     })
-    $('#new_post .switch').parent().removeClass('offset-s6')
+    $('.content .switch').parent().removeClass('offset-s6')
   }
 })
