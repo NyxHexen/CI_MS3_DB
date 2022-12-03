@@ -55,12 +55,12 @@ $('.content .switch label').on('mouseup', function () {
       $(this).addClass('visually-hidden')
     })
     if (!$(this).hasClass("comment")) {
-      $('.content .switch').parent().addClass('offset-s6')
+      $('.new-post .switch').parent().addClass('offset-s6')
     }
   } else if (!$('#code_switch').is(':checked')) {
     $('.code-switch').each(function () {
       $(this).removeClass('visually-hidden')
     })
-    $('.content .switch').parent().removeClass('offset-s6')
+    $('.new-post .switch').parent().removeClass('offset-s6')
   }
 })
