@@ -76,7 +76,7 @@
             <div class="col s8 m9 xl10">
                 <div class="input-field col s12">
                     {% if form.comment_content.errors %}
-                    {{ form.comment_content(class="materialize-textarea invalid", style="height: 150px;") }}
+                    {{ form.comment_content(class="materialize-textarea invalid") }}
                     <div class="invalid-feedback">
                         {% for error in form.comment_content.errors %}
                         <span class="red-text">{{ error }}</span>
