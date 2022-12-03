@@ -143,6 +143,10 @@ fieldset {
   padding: 0 8px;
 }
 
+i.right {
+  margin-left: 5px;
+}
+
 .signin-link,
 .signup-link {
   font-size: 1.2rem !important;
