@@ -13,9 +13,11 @@ def view_post(id):
     post = Post.objects.get(id=id)
     form = NewCommentForm()
     if form.validate_on_submit():
-        comment = Comment()
+        comment = Comment(created_by=current_user.id)
         form.populate_obj(comment)
         comment.save()
+        post.comments.append(comment)
+        post.save()
         return redirect(f"/post/{id}")
     return render_template("view_post.html", post=post, form=form)
 
