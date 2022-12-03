@@ -35,13 +35,14 @@
                 <a class="waves-effect waves-light btn right">Reply</a>
                 <div class="waves-effect btn-flat right">
                     <i class="material-icons right small grey-text text-darken-2">chat</i>
-                    <span>{{ post.comments|length }} comments</span>
+                    <span>{{ post.comments|length }}
+                        {% if post.comments|length == 1 %} comment {% else %} comments {% endif %}</span>
                 </div>
                 {% else %}
                 <a class="waves-effect waves-light deep-purple darken-3 btn white-text">Assist</a>
                 <div class="waves-effect btn-flat right">
                     <i class="material-icons small grey-text text-darken-2 right">chat</i>
-                    <span>{{ post.comments|length }} assists</span>
+                    <span>{{ post.comments|length }} {% if post.comments|length == 1 %} assist {% else %} assists {% endif %}</span>
                 </div>
                 {% endif %}
             </div>
