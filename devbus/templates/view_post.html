@@ -2,50 +2,111 @@
 
 {% block content %}
 <div class="row">
-        <div class="col s12 m10 push-m1 l8 push-l2">
-             <div class="post card grey lighten-1">
-                <div class="card-panel z-depth-1 valign-wrapper">
-                    <div class="col s3 m2">
-                        <img src="{{ post.created_by.profile_image }}" alt="User's profile picture"
-                            class="circle responsive-img">
-                    </div>
-                    <div class="col s10">
-                        <a href="#">{{ post.created_by.username }}</a>
-                        <span class="grey-text">{{ post.created_date }}</span>
-                        <div class="card-title-container">
-                            <span class="card-title flow-text">{{ post.post_title }}</span>
-                        </div>
+    <div class="col s12 m10 push-m1 l8 push-l2">
+        <div class="post card grey lighten-1">
+            <div class="card-panel z-depth-1 valign-wrapper">
+                <div class="col s3 m2">
+                    <img src="{{ post.created_by.profile_image }}" alt="User's profile picture"
+                        class="circle responsive-img">
+                </div>
+                <div class="col s10">
+                    <a href="#">{{ post.created_by.username }}</a>
+                    <span class="grey-text">{{ post.created_date }}</span>
+                    <div class="card-title-container">
+                        <span class="card-title flow-text">{{ post.post_title }}</span>
                     </div>
                 </div>
-                <p class="card-content">{{ post.post_content }}</p>
-                {% if post.code_content %}
-                <div class="card-content code-content">
-                    <div class="chip black-text">{{ post.code_language }}</div>
-                    <pre
-                        class="z-depth-2"><code class="language-{{ post.code_language }}">{{ post.code_content }}</code></pre>
+            </div>
+            <p class="card-content">{{ post.post_content }}</p>
+            {% if post.code_content %}
+            <div class="card-content code-content">
+                <div class="chip black-text">{{ post.code_language }}</div>
+                <pre
+                    class="z-depth-2"><code class="language-{{ post.code_language }}">{{ post.code_content }}</code></pre>
+            </div>
+            {% endif %}
+            <div class="card-action grey lighten-2 z-depth-1">
+                {% if post.post_type == "post" %}
+                <div class="waves-effect waves-dark btn-flat vote-button"><i
+                        class="material-icons right green-text">thumb_up</i>{{ post.votes.up|length }}</div>
+                <div class="waves-effect btn-flat vote-button"><i
+                        class="material-icons right small red-text">thumb_down</i>{{ post.votes.down|length }}
+                </div>
+                <a class="waves-effect waves-light btn right">Reply</a>
+                <div class="waves-effect btn-flat right">
+                    <i class="material-icons right small grey-text text-darken-2">chat</i>
+                    <span>{{ post.comments|length }} comments</span>
+                </div>
+                {% else %}
+                <a class="waves-effect waves-light deep-purple darken-3 btn white-text">Assist</a>
+                <div class="waves-effect btn-flat right">
+                    <i class="material-icons small grey-text text-darken-2 right">chat</i>
+                    <span>{{ post.comments|length }} assists</span>
                 </div>
                 {% endif %}
-                <div class="card-action grey lighten-2 z-depth-1">
-                    {% if post.post_type == "post" %}
-                    <div class="waves-effect waves-dark btn-flat vote-button"><i
-                            class="material-icons right green-text">thumb_up</i>{{ post.votes.up|length }}</div>
-                    <div class="waves-effect btn-flat vote-button"><i
-                            class="material-icons right small red-text">thumb_down</i>{{ post.votes.down|length }}
-                    </div>
-                    <a class="waves-effect waves-light btn right">Reply</a>
-                    <div class="waves-effect btn-flat right"><i
-                            class="material-icons right small grey-text text-darken-2">chat</i><span>{{ post.comments|length }}
-                            comments</span>
-                    </div>
-                    {% else %}
-                    <a class="waves-effect waves-light deep-purple darken-3 btn white-text">Assist</a>
-                    <div class="waves-effect btn-flat right">
-                        <i class="material-icons small grey-text text-darken-2 right">chat</i>
-                        <span> {{ post.comments|length }} assists</span>
-                    </div>
-                    {% endif %}
-                </div>
             </div>
         </div>
     </div>
-    {% endblock %}
+</div>
+<div class="row">
+    <div class="col s12 m10 push-m1 l8 push-l2">
+        {% for comment in comments %}
+
+        {% endfor %}
+    </div>
+</div>
+<div class="row">
+    <form id="new_comment" class="col s12 m10 push-m1 l8 push-l2 center-align content" method="POST">
+        <fieldset class="card valign-wrapper">
+            {{ form.hidden_tag() }}
+            <legend class="visually-hidden">Post Comment</legend>
+            <div class="col s4 m3 xl2 grey lighten-1 card-panel comment-user-info">
+                <img src="{{ post.created_by.profile_image }}" alt="User's profile picture"
+                    class="circle responsive-img">
+                <span>Code Area</span>
+                <div class="switch">
+                    <label class="comment deep-purple-text">
+                        O
+                        <input type="checkbox" id="code_switch" name="code_switch">
+                        <span class="lever"></span>
+                        I
+                    </label>
+                </div>
+            </div>
+            <div class="col s8 m9 xl10">
+                <div class="input-field col s12">
+                    {% if form.comment_content.errors %}
+                    {{ form.comment_content(class="materialize-textarea invalid", style="height: 150px;") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.comment_content.errors %}
+                        <span class="red-text">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.comment_content(class="materialize-textarea") }}
+                    {% endif %}
+                    {{ form.comment_content.label }}
+                </div>
+                <div class="input-field col s12 visually-hidden code-switch">
+                    {{ form.code_language(class="autocomplete") }}
+                    {{ form.code_language.label }}
+                </div>
+                <div class="input-field col s12 visually-hidden code-switch">
+                    {% if form.code_content.errors %}
+                    {{ form.code_content(class="materialize-textarea grey darken-4 white-text invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.code_content.errors %}
+                        <span class="red-text">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.code_content(class="materialize-textarea grey darken-4 white-text") }}
+                    {% endif %}
+                    {{ form.code_content.label(class="visually-hidden") }}
+                </div>
+                {{ form.submit(class="waves-effect waves-light btn yellow") }}
+            </div>
+        </fieldset>
+    </form>
+</div>
+{% endblock %}
