@@ -48,7 +48,7 @@
                     {% else %}
                     <a class="waves-effect waves-light deep-purple darken-3 btn white-text">Assist</a>
                     <a href="{{ url_for('posts.view_post', id=post.id)}}" class="waves-effect btn-flat grey-text text-darken-2 right">
-                        <i class="material-icons smallright">chat</i>
+                        <i class="material-icons small right">chat</i>
                         <span>{{ post.comments|length }} assists</span>
                     </a>
                     {% endif %}
