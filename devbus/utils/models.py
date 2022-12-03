@@ -35,9 +35,7 @@ class User(Document, UserMixin):
 
 class CommentOfComment(EmbeddedDocument):
     comment_content = StringField(required=True)
-    code_language = StringField()
-    code_content = StringField()
-    votes = DictField(default={"up": 0, "down": 0})
+    votes = DictField(default={"up": ListField(StringField()), "down": ListField(StringField())})
     created_by = ReferenceField(User)
     created_date = DateField(default=datetime.utcnow)
 
@@ -48,7 +46,7 @@ class Comment(Document):
     code_language = StringField()
     code_content = StringField()
     comments = ListField(EmbeddedDocumentField(CommentOfComment))
-    votes = DictField(default={"up": 0, "down": 0})
+    votes = DictField(default={"up": ListField(StringField()), "down": ListField(StringField())})
     created_by = ReferenceField(User)
     created_date = DateField(default=datetime.utcnow)
     is_verified = BooleanField(default=False)
@@ -61,7 +59,7 @@ class Post(Document):
     code_content = StringField()
     code_language = StringField()
     comments = ListField(ReferenceField(Comment))
-    votes = DictField(default={"up": 0, "down": 0})
+    votes = DictField(default={"up": ListField(StringField()), "down": ListField(StringField())})
     post_type = StringField()
     created_by = ReferenceField(User)
     created_date = DateField(default=datetime.utcnow)
