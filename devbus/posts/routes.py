@@ -11,6 +11,13 @@ posts = Blueprint('posts', '__name__')
 @login_required
 def view_post(id):
     post = Post.objects.get(id=id)
+    return render_template("view_post.html", post=post)
+
+
+@posts.route("/post/<id>/new_comment", methods=["GET", "POST"])
+@login_required
+def new_comment(id):
+    post = Post.objects.get(id=id)
     form = NewCommentForm()
     if form.validate_on_submit():
         comment = Comment(created_by=current_user.id)
