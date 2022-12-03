@@ -40,13 +40,13 @@
                     <div class="waves-effect btn-flat vote-button"><i
                             class="material-icons right small red-text">thumb_down</i>{{ post.votes.down|length }}
                     </div>
-                    <a href="{{ url_for('posts.view_post', id=post.id)}}" class="waves-effect waves-light btn right">Reply</a>
+                    <a href="{{ url_for('posts.new_comment', id=post.id)}}" class="waves-effect waves-light btn right">Reply</a>
                     <a href="{{ url_for('posts.view_post', id=post.id)}}" class="waves-effect btn-flat grey-text text-darken-2 right"><i
                             class="material-icons right small">chat</i><span>{{ post.comments|length }}
                             {% if post.comments|length == 1 %} comment {% else %} comments {% endif %}</span>
                     </a>
                     {% else %}
-                    <a class="waves-effect waves-light deep-purple darken-3 btn white-text">Assist</a>
+                    <a href="{{ url_for('posts.new_comment', id=post.id)}}" class="waves-effect waves-light deep-purple darken-3 btn white-text">Assist</a>
                     <a href="{{ url_for('posts.view_post', id=post.id)}}" class="waves-effect btn-flat grey-text text-darken-2 right">
                         <i class="material-icons small right">chat</i>
                         <span>{{ post.comments|length }} {% if post.comments|length == 1 %} assist {% else %} assists {% endif %}</span>
