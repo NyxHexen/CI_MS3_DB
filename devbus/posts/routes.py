@@ -7,14 +7,14 @@ from devbus.posts.forms import NewPostForm, NewCommentForm
 posts = Blueprint('posts', '__name__')
 
 
-@posts.route("/post/<id>", methods=["GET", "POST"])
+@posts.route("/posts/<id>", methods=["GET", "POST"])
 @login_required
 def view_post(id):
     post = Post.objects.get(id=id)
     return render_template("view_post.html", post=post)
 
 
-@posts.route("/post/<id>/new_comment", methods=["GET", "POST"])
+@posts.route("/posts/<id>/new_comment", methods=["GET", "POST"])
 @login_required
 def new_comment(id):
     post = Post.objects.get(id=id)
