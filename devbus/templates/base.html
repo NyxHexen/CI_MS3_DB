@@ -26,40 +26,75 @@
     <header>
         <nav>
             <div class="container nav-wrapper">
-                <a href="{{ url_for('main.home' )}}" class="brand-logo">DevBus</a>
-                <a href="#" data-target="mobile-menu" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                <a href="{{ url_for('main.home' )}}" class="brand-logo hide-on-small-only">DevBus</a>
+                <a href="{{ url_for('main.home' )}}" class="brand-logo hide-on-med-and-up">DB</a>
+                <a data-target="mobile-menu" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                <a data-target="search-field--container" class="autocomplete-trigger hide-on-med-and-up right"
+                    data-position="bottom">
+                    <i class="material-icons">search</i>
+                    <span class="hide">Show/Hide Search</span>
+                </a>
                 {% if current_user.is_authenticated %}
                 <ul class="right">
                     <li><a href="{{ url_for('auth.logout')}}"
-                        class="waves-effect waves-light btn tooltipped" data-position="bottom" data-tooltip="Sign Out"><i class="fa-solid fa-right-to-bracket"></i></a></li>
+                            class="hide-on-small-only waves-effect waves-light btn-small tooltipped"
+                            data-position="bottom" data-tooltip="Sign Out"><i
+                                class="fa-solid fa-right-to-bracket"></i></a></li>
                 </ul>
                 <ul class="right hide-on-med-and-down">
+                    <li><a data-target="search-field--container" class="autocomplete-trigger" data-position="left"
+                           ><i class="material-icons">search</i><span class="hide">Show/Hide
+                                Search</span></a></li>
                     <li><a href="{{ url_for('auth.profile')}}">My Profile</a></li>
-                {% else %}
-                <ul class="right hide-on-med-and-down">
-                    <li><a href="{{ url_for('main.home')}}">Home</a></li>
-                    <li><a href="{{ url_for('auth.signin')}}">Sign In</a></li>
-                    <li><a href="{{ url_for('auth.signup')}}"
-                            class="waves-effect waves-light btn">Sign Up</a></li>
-                {% endif %}
-                </ul>
+                    {% else %}
+                    <ul class="right hide-on-med-and-down">
+                        <li><a data-target="search-field--container" class="autocomplete-trigger"><i
+                                    class="material-icons">search</i><span class="hide">Show Search Field</span></a>
+                        </li>
+                        <li><a href="{{ url_for('main.home')}}">Home</a></li>
+                        <li><a href="{{ url_for('auth.signin')}}">Sign In</a></li>
+                        <li><a href="{{ url_for('auth.signup')}}" class="waves-effect waves-light btn">Sign Up</a></li>
+                        {% endif %}
+                    </ul>
             </div>
         </nav>
         <ul class="sidenav" id="mobile-menu">
             {% if current_user.is_authenticated %}
             <li><a href="{{ url_for('auth.profile')}}">My Profile</a></li>
+            <li><a href="{{ url_for('auth.edit_profile')}}">Edit
+                    Profile</a></li>
+            <div class="divider"></div>
+            <li><a href="{{ url_for('posts.new_post')}}">Create
+                    New Post</a></li>
+            <li><a href="#">View My Posts</a></li>
+            <li><a href="#">View My Comments</a></li>
+            <div class="divider"></div>
             <li><a href="{{ url_for('auth.logout')}}" class="waves-effect waves-light btn">Sign
-                        Out</a></li>
+                    Out</a></li>
             {% else %}
             <li><a href="{{ url_for('main.home')}}">Home</a></li>
             <li><a href="{{ url_for('auth.signin')}}">Sign In</a></li>
             <li><a href="{{ url_for('auth.signup')}}" class="waves-effect waves-light btn">Sign
-                        Up</a></li>
+                    Up</a></li>
             {% endif %}
         </ul>
     </header>
     <main>
         <div class="container">
+            <div class="row search-field--container">
+                <div class="col s10 push-s1 l6 push-l3 scale-transition scale-out" id="search-field">
+                    <div class="row z-depth-5 valign-wrapper">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">search</i>
+                            <input type="text" id="autocomplete-input" class="autocomplete">
+                            <label for="autocomplete-input">Looking for something?</label>
+                        </div>
+                        <div class="col">
+                            <i class="material-icons" data-target="search-field--container">close</i>
+                        </div>
+                    </div>
+                </div>
+            </div>
             {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
             {% for category, message in messages %}

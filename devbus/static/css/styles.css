@@ -60,7 +60,7 @@ h2,
 legend {
   font-family: 'Bangers', cursive;
   letter-spacing: .15rem;
-  
+
 }
 
 legend {
@@ -75,6 +75,56 @@ legend {
 
 fieldset {
   border: none;
+}
+
+#search-field {
+  position: absolute;
+  top: 5vh;
+}
+
+#search-field>* {
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.55);
+  border-radius: 16px;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: background-color .3s ease;
+}
+
+#search-field.scale-transition {
+  z-index: 9099;
+  -ms-transform-origin-y: 25%;
+  -webkit-transform-origin-y: 25%;
+}
+
+#search-field.scale-transition.scale-out {
+  z-index: -9;
+  -ms-transform-origin-y: 25%;
+  -webkit-transform-origin-y: 25%;
+}
+
+.search-field--container {
+  margin-bottom: 0;
+}
+
+.dropdown-content {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 0 0 16px 16px;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.dropdown-content li > span {
+  color:#4d4d4d
+}
+
+.autocomplete-content li .highlight {
+  color: #4527a0;
+}
+
+.dropdown-content li:hover, .dropdown-content li.active {
+  background-color: hsla(0, 0%, 30%, 0.75);
 }
 
 .card {
@@ -116,7 +166,7 @@ fieldset {
   margin-bottom: 0;
 }
 
-.post .card-panel{
+.post .card-panel {
   padding: 12px;
 }
 
@@ -152,7 +202,7 @@ fieldset {
   color: black !important;
 }
 
-.vote-button:hover > i {
+.vote-button:hover>i {
   transform: scale(1.3);
   transition: transform 0.3s ease;
 }

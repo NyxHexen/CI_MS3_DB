@@ -2,6 +2,15 @@ $(document).ready(function () {
   $('.sidenav').sidenav();
   $('select').formSelect();
   $('.tooltipped').tooltip();
+  $('input.autocomplete').autocomplete({
+    data: {
+      "Apple": null,
+      "Angel": null,
+      "Alex": null,
+      "Microsoft": null,
+      "Google": 'https://placehold.it/250x250'
+    },
+  });
 
   if ($('.toast')) {
     $('.toast').each(function () {
@@ -111,4 +120,15 @@ $(function () {
       });
     })
   })
+})
+
+$('[data-target="search-field--container"]').on('mousedown', function(){
+  $('#search-field').toggleClass('scale-out')
+})
+
+$("#search-field .autocomplete")
+  .on('focusin', function(){
+  $("#search-field").children('.row').css("background-color", "rgba(255, 255, 255, 0.80)")
+}).on('focusout', function(){
+  $("#search-field").children('.row').css("background-color", "rgba(255, 255, 255, 0.55)")
 })
