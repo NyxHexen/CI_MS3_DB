@@ -145,6 +145,16 @@ fieldset {
 
 .vote-button {
   padding: 0 8px;
+  color: black !important;
+}
+
+.vote-button:hover {
+  color: black !important;
+}
+
+.vote-button:hover > i {
+  transform: scale(1.3);
+  transition: transform 0.3s ease;
 }
 
 i.right {
