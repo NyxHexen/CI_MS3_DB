@@ -60,3 +60,55 @@ $('.new .switch label').on('mouseup', function () {
     })
   }
 })
+
+$(function () {
+  $('.vote-button').each(function () {
+    $(this).on('click', function (e) {
+      e.preventDefault();
+      let thisElem = $(this)
+      let thisCounter = $(this).children('span');
+      let siblingCounter = thisElem.siblings('.vote-button').children('span')
+      let thisCounterCurrentNum = parseInt(thisCounter.text());
+      let siblingCounterCurrentNum = parseInt(siblingCounter.text());
+      $.ajax({
+        url: $(this).attr('href'),
+        type: 'POST',
+        success: function (response) {
+          // If user is not logged in (server returns false), redirect to login page and trigger a toast
+          if (!response) {
+            return window.location.replace(window.location.protocol + "//" + window.location.host + "/signin")
+          } else {
+            // Deconstruct; if button pressed is upvote assign response.length_up as thisCounterNewNum
+            // and response_length_up as siblingCounterNewNum. If button pressed is down vote - reverse logic.
+            [thisCounterNewNum,
+              siblingCounterNewNum
+            ] = thisElem.attr('href').match('/up') ? [response.length_up, response.length_down] : [response.length_down, response.length_up]
+            // Check current state of vote buttons
+            if (thisCounterCurrentNum < thisCounterNewNum && siblingCounterCurrentNum == siblingCounterNewNum) {
+              // If User hasn't voted before
+              thisCounter.siblings('i').removeClass('text-lighten-2').addClass('accent-4');
+              // In case the user has voted in a previous session, check if sibling
+              // has appropriate styling
+              if (siblingCounter.siblings('i').hasClass('accent-4')) {
+                siblingCounter.siblings('i').removeClass('accent-4').addClass('text-lighten-2');
+              }
+            } else if (thisCounterCurrentNum > thisCounterNewNum && siblingCounterCurrentNum == siblingCounterNewNum) {
+              // If User has voted before and is removing all votes
+              thisCounter.siblings('i').removeClass('accent-4').addClass('text-lighten-2');
+            } else if (thisCounterCurrentNum < thisCounterNewNum && siblingCounterCurrentNum > siblingCounterNewNum) {
+              // If User has voted before and is changing their choice to alternative vote
+              thisCounter.siblings('i').removeClass('text-lighten-2').addClass('accent-4');
+              siblingCounter.siblings('i').removeClass('accent-4').addClass('text-lighten-2');
+            }
+            // Update variable values from response
+            thisCounter.text(thisCounterNewNum)
+            siblingCounter.text(siblingCounterNewNum)
+          }
+        },
+        error: function (error) {
+          console.log(error);
+        }
+      });
+    })
+  })
+})
