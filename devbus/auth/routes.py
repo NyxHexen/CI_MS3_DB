@@ -68,7 +68,7 @@ def edit_profile():
         if form.profile_image.data is not None:
             img_url = upload_image(form.profile_image.data)
             current_user.profile_image = img_url
-        elif current_user.profile_image is None:
+        elif form.profile_image.data is None:
             """
             populate_obj method is destructive, so to ensure that the member's picture
             doesn't get overwritten to the default one every time they update their profile
