@@ -25,7 +25,7 @@ def new_comment(id):
         comment.save()
         post.comments.append(comment)
         post.save()
-        return redirect(f"/post/{id}")
+        return redirect(f"/posts/{id}")
     return render_template("view_post.html", post=post, form=form)
 
 
@@ -38,8 +38,27 @@ def new_post():
         form.populate_obj(post)
         post.created_by = current_user.id
         post.save()
-        return redirect(f"/post/{post.id}")
+        return redirect(f"/posts/{post.id}")
     return render_template("new_post.html", form=form)
+
+
+@posts.route("/posts/<id>/edit_post", methods=["GET", "POST"])
+@login_required
+def edit_post(id):
+    post = Post.objects.get(id=id)
+    form = NewPostForm()
+    if form.validate_on_submit():
+        form.populate_obj(post)
+        post.created_by = current_user.id
+        post.save()
+        return redirect(f"/posts/{post.id}")
+    elif request.method == "GET":
+        form.post_title.data = post.post_title
+        form.post_content.data = post.post_content
+        form.code_language.data = post.code_language
+        form.code_content.data = post.code_content
+        form.post_type.data = post.post_type
+    return render_template("edit_post.html", form=form, post=post )
 
 
 @posts.route("/_update_votes/<id>/<vote>", methods=["GET", "POST"])
@@ -47,7 +66,9 @@ def update_votes(id, vote):
     if current_user.is_authenticated is False:
         flash("You must be signed in to do that!", "red")
         return jsonify(False)
-    content = Post.objects(id=id).first()
+    post_set = Post.objects(id=id).first()
+    comment_set = Comment.objects(id=id).first()
+    content = post_set if post_set is not None else comment_set
     if current_user in content.votes["up"] and vote == "up":
         # If the user has upvoted before, and is pressing upvote btn again
         content.votes["up"].remove(current_user)

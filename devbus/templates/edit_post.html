@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <form id="edit_post" class="col s12 m8 offset-m2 l6 offset-l3 grey lighten-3 center-align new" method="POST">
+        <fieldset class="row">
+            <a id="delete_post" class="waves-effect waves-light btn-small red white-text right"><i class="fa-solid fa-trash-can"></i><span class="hide">Delete Post</span></a>
+            {{ form.hidden_tag() }}
+            <legend class="deep-purple-text text-darken-3">Edit Post</legend>
+            {% for subfield in form.post_type %}
+            <div class="col s6 m3">
+                <p>
+                    <label>
+                        {% if post.post_type == "assist" and subfield.id == "post_type-1" %}
+                        {{ subfield(checked=True)  }}
+                        {% else %}
+                        {{ subfield  }}
+                        {% endif %}
+                        <span>{{ subfield.object_data | capitalize }}</span>
+                    </label>
+                </p>
+            </div>
+            {% endfor %}
+            <div class="col s12 m6 center">
+                <span>Code Area</span>
+                <div class="switch">
+                    <label>
+                        Off
+                        <input type="checkbox" id="code_switch" name="code_switch" {% if post.code_content %} checked {% endif%}>
+                        <span class="lever"></span>
+                        On
+                    </label>
+                </div>
+            </div>
+            <div class="input-field col s12">
+                {% if form.post_title.errors %}
+                {{ form.post_title(class="invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.post_title.errors %}
+                    <span class="red-text">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.post_title }}
+                {% endif %}
+                {{ form.post_title.label }}
+            </div>
+            <div class="input-field col s12">
+                {% if form.post_content.errors %}
+                {{ form.post_content(class="materialize-textarea invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.post_content.errors %}
+                    <span class="red-text">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.post_content(class="materialize-textarea") }}
+                {% endif %}
+                {{ form.post_content.label }}
+            </div>
+            <div class="input-field col s6 {% if not post.code_content %} visually-hidden {% endif%} code-switch">
+                {{ form.code_language(class="autocomplete") }}
+                {{ form.code_language.label }}
+            </div>
+            <div class="input-field col s12 {% if not post.code_content %} visually-hidden {% endif%} code-switch">
+                {% if form.code_content.errors %}
+                {{ form.code_content(class="materialize-textarea grey darken-4 white-text invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.code_content.errors %}
+                    <span class="red-text">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.code_content(class="materialize-textarea grey darken-4 white-text") }}
+                {% endif %}
+                {{ form.code_content.label(class="visually-hidden") }}
+            </div>
+            <div class="input-field col s12">
+                {{ form.submit(class="waves-effect waves-light btn yellow") }}
+                <a href="{{ url_for('posts.view_post', id=post.id)}}" class="waves-effect waves-light btn red white-text">Cancel</a>
+            </div>
+        </fieldset>
+    </form>
+</div>
+{% endblock %}
