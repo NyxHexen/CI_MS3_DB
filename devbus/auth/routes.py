@@ -65,9 +65,16 @@ def edit_profile():
     form = UpdateProfileForm()
     if form.validate_on_submit():
         form.populate_obj(current_user)
-        if form.profile_image.data:
-            image_url = upload_image(form.profile_image.data)
-            current_user.profile_image = image_url
+        if form.profile_image.data is not None:
+            img_url = upload_image(form.profile_image.data)
+            current_user.profile_image = img_url
+        elif current_user.profile_image is None:
+            """
+            populate_obj method is destructive, so to ensure that the member's picture
+            doesn't get overwritten to the default one every time they update their profile
+            we must re-assign it's value from db before it is saved.
+            """
+            current_user.profile_image = User.objects.get(id=current_user.id).profile_image
         current_user.save()
         flash('Got it! Your profile has been updated.', 'message')
         return redirect('/profile')
@@ -78,6 +85,7 @@ def edit_profile():
         form.l_name.data = current_user.l_name
         form.languages.data = current_user.languages
         form.bio.data = current_user.bio
+        form.profile_image.data = current_user.profile_image
     return render_template("edit_profile.html", title="Edit Profile", form=form)
 
 
