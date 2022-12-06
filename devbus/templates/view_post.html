@@ -101,12 +101,26 @@
             </div>
             {% endif %}
             <div class="col s12 card-action">
-                <div class="waves-effect btn-flat vote-button">
-                    <i class="material-icons right green-text">thumb_up</i>{{ post.votes.up|length }}
-                </div>
-                <div class="waves-effect btn-flat vote-button">
-                    <i class="material-icons right small red-text">thumb_down</i>{{ post.votes.down|length }}
-                </div>
+                <a href="{{ url_for('posts.update_votes', id=comment.id, vote='up') }}"
+                        class="waves-effect waves-dark btn-flat vote-button">
+                        <i
+                            class="material-icons right green-text {% if current_user in comment.votes.up %} accent-4 {% else %} text-lighten-2 {% endif %}">
+                            thumb_up
+                        </i>
+                        <span>
+                            {{ comment.votes.up|length }}
+                        </span>
+                    </a>
+                    <a href="{{ url_for('posts.update_votes', id=comment.id, vote='down') }}"
+                        class="waves-effect btn-flat vote-button">
+                        <i
+                            class="material-icons right small red-text {% if current_user in comment.votes.down %} accent-4 {% else %} text-lighten-2 {% endif %}">
+                            thumb_down
+                        </i>
+                        <span>
+                            {{ comment.votes.down|length }}
+                        </span>
+                    </a>
                 <a class="waves-effect waves-light btn-flat right">Reply</a>
                 <div class="waves-effect btn-flat right">
                     <i class="material-icons right small grey-text text-darken-2">chat</i>
