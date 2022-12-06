@@ -52,6 +52,8 @@ def resize_image(file):
     elif image_h > image_w:
         image_diff = (image_h - image_w) / 2
         cropped_image = image.crop((0, image_diff, image_w, image_h - image_diff))
+    else:
+        cropped_image = None
 
     # Set size tuple to which image should be resized to
     # Resize the image to dimensions from size var
