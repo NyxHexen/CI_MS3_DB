@@ -1,5 +1,4 @@
 import os
-from bson.objectid import ObjectId
 from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_mongoengine import MongoEngine
