@@ -50,7 +50,16 @@
                                 {{ form.username.label }}
                             </div>
                             <div class="input-field col s12">
+                                {% if form.bio.errors %}
+                                {{ form.bio(class="materialize-textarea invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.bio.errors %}
+                                    <span class="red-text">{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
                                 {{ form.bio(class="materialize-textarea") }}
+                                {% endif %}
                                 {{ form.bio.label }}
                             </div>
                         </div>
