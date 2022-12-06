@@ -85,7 +85,7 @@ fieldset {
 #search-field>* {
   /* From https://css.glass */
   background: rgba(255, 255, 255, 0.55);
-  border-radius: 16px;
+  border-radius: 2px;
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   border: 1px solid rgba(255, 255, 255, 0.3);
@@ -110,7 +110,7 @@ fieldset {
 
 .dropdown-content {
   background: rgba(255, 255, 255, 0.85);
-  border-radius: 0 0 16px 16px;
+  border-radius: 2px;
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
 }
@@ -238,6 +238,20 @@ i.right {
   font-size: 1.2rem !important;
 }
 
+#edit_post {
+  position: relative;
+}
+
 #new_post .materialize-textarea {
   padding-left: 10px;
+}
+
+a[data-tooltip="Edit Post"] {
+  margin-right: 5px;
+}
+
+#delete_post {
+  position: absolute;
+  top: 20px;
+  right: 20px;
 }
