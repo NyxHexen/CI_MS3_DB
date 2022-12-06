@@ -27,43 +27,53 @@
             {% endif %}
             <div class="card-action grey lighten-2 z-depth-1">
                 {% if post.post_type == "post" %}
-                <a href="{{ url_for('posts.update_votes', id=post.id, vote='up') }}"
-                    class="waves-effect waves-dark btn-flat vote-button">
-                    <i
-                        class="material-icons right green-text {% if current_user not in post.votes.up %} text-lighten-2 {% endif %}">
-                        thumb_up
-                    </i>
-                    <span>
-                        {{ post.votes.up|length }}
-                    </span>
-                </a>
-                <a href="{{ url_for('posts.update_votes', id=post.id, vote='down') }}"
-                    class="waves-effect btn-flat vote-button">
-                    <i
-                        class="material-icons right small red-text {% if current_user not in post.votes.down %} text-lighten-2 {% endif %}">
-                        thumb_down
-                    </i>
-                    <span>
-                        {{ post.votes.down|length }}
-                    </span>
-                </a>
-                <a href="{{ url_for('posts.new_comment', id=post.id)}}"
-                    class="waves-effect waves-light btn right">Reply</a>
-                <a href="{{ url_for('posts.view_post', id=post.id)}}"
-                    class="waves-effect btn-flat grey-text text-darken-2 right"><i
-                        class="material-icons right small">chat</i><span>{{ post.comments|length }}
-                        {% if post.comments|length == 1 %} comment {% else %} comments {% endif %}</span>
-                </a>
-                {% else %}
-                <a href="{{ url_for('posts.new_comment', id=post.id)}}"
-                    class="waves-effect waves-light deep-purple darken-3 btn white-text">Assist</a>
-                <a href="{{ url_for('posts.view_post', id=post.id)}}"
-                    class="waves-effect btn-flat grey-text text-darken-2 right">
-                    <i class="material-icons small right">chat</i>
-                    <span>{{ post.comments|length }} {% if post.comments|length == 1 %} assist {% else %} assists
-                        {% endif %}</span>
-                </a>
-                {% endif %}
+                    <a href="{{ url_for('posts.update_votes', id=post.id, vote='up') }}"
+                        class="waves-effect waves-dark btn-flat vote-button">
+                        <i
+                            class="material-icons right green-text {% if current_user in post.votes.up %} accent-4 {% else %} text-lighten-2 {% endif %}">
+                            thumb_up
+                        </i>
+                        <span>
+                            {{ post.votes.up|length }}
+                        </span>
+                    </a>
+                    <a href="{{ url_for('posts.update_votes', id=post.id, vote='down') }}"
+                        class="waves-effect btn-flat vote-button">
+                        <i
+                            class="material-icons right small red-text {% if current_user in post.votes.down %} accent-4 {% else %} text-lighten-2 {% endif %}">
+                            thumb_down
+                        </i>
+                        <span>
+                            {{ post.votes.down|length }}
+                        </span>
+                    </a>
+                    <a href="{{ url_for('posts.new_comment', id=post.id)}}"
+                        class="waves-effect waves-light btn right">Reply</a>
+                        {% if current_user == post.created_by %}
+                        <a href="{{ url_for('posts.edit_post', id=post.id)}}"
+                            class="waves-effect waves-light materialize-red lighten-1 btn white-text tooltipped right"
+                            data-position="left" data-tooltip="Edit Post"><i class="fa-solid fa-file-pen"></i></a>
+                        {% endif %}
+                    <a href="{{ url_for('posts.view_post', id=post.id)}}"
+                        class="waves-effect btn-flat grey-text text-darken-2 right"><i
+                            class="material-icons right small">chat</i><span>{{ post.comments|length }}
+                            {% if post.comments|length == 1 %} comment {% else %} comments {% endif %}</span>
+                    </a>
+                    {% else %}
+                    <a href="{{ url_for('posts.new_comment', id=post.id)}}"
+                        class="waves-effect waves-light deep-purple darken-3 btn white-text">Assist</a>
+                        {% if current_user == post.created_by %}
+                        <a href="{{ url_for('posts.edit_post', id=post.id)}}"
+                            class="waves-effect waves-light materialize-red white-text lighten-1 btn tooltipped"
+                            data-position="right" data-tooltip="Edit Post"><i class="fa-solid fa-file-pen"></i></a>
+                        {% endif %}
+                    <a href="{{ url_for('posts.view_post', id=post.id)}}"
+                        class="waves-effect btn-flat grey-text text-darken-2 right">
+                        <i class="material-icons small right">chat</i>
+                        <span>{{ post.comments|length }} {% if post.comments|length == 1 %} assist {% else %} assists
+                            {% endif %}</span>
+                    </a>
+                    {% endif %}
             </div>
         </div>
     </div>

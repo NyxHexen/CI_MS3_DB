@@ -57,6 +57,11 @@
                     </a>
                     <a href="{{ url_for('posts.new_comment', id=post.id)}}"
                         class="waves-effect waves-light btn right">Reply</a>
+                        {% if current_user == post.created_by %}
+                        <a href="{{ url_for('posts.edit_post', id=post.id)}}"
+                            class="waves-effect waves-light materialize-red lighten-1 btn white-text tooltipped right"
+                            data-position="left" data-tooltip="Edit Post"><i class="fa-solid fa-file-pen"></i></a>
+                        {% endif %}
                     <a href="{{ url_for('posts.view_post', id=post.id)}}"
                         class="waves-effect btn-flat grey-text text-darken-2 right"><i
                             class="material-icons right small">chat</i><span>{{ post.comments|length }}
@@ -65,6 +70,11 @@
                     {% else %}
                     <a href="{{ url_for('posts.new_comment', id=post.id)}}"
                         class="waves-effect waves-light deep-purple darken-3 btn white-text">Assist</a>
+                        {% if current_user == post.created_by %}
+                        <a href="{{ url_for('posts.edit_post', id=post.id)}}"
+                            class="waves-effect waves-light materialize-red white-text lighten-1 btn tooltipped"
+                            data-position="right" data-tooltip="Edit Post"><i class="fa-solid fa-file-pen"></i></a>
+                        {% endif %}
                     <a href="{{ url_for('posts.view_post', id=post.id)}}"
                         class="waves-effect btn-flat grey-text text-darken-2 right">
                         <i class="material-icons small right">chat</i>
