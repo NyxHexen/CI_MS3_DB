@@ -4,7 +4,7 @@
 <div class="row">
     <form id="edit_post" class="col s12 m8 offset-m2 l6 offset-l3 grey lighten-3 center-align new" method="POST">
         <fieldset class="row">
-            <a id="delete_post" class="waves-effect waves-light btn-small red white-text right"><i class="fa-solid fa-trash-can"></i><span class="hide">Delete Post</span></a>
+            <a href="#delete_post" class="waves-effect waves-light btn-small red white-text right modal-trigger"><i class="fa-solid fa-trash-can"></i><span class="hide">Delete Post</span></a>
             {{ form.hidden_tag() }}
             <legend class="deep-purple-text text-darken-3">Edit Post</legend>
             {% for subfield in form.post_type %}
@@ -81,5 +81,18 @@
             </div>
         </fieldset>
     </form>
+</div>
+{% endblock %}
+
+{% block modals %}
+<div id="delete_post" class="modal">
+    <div class="modal-content">
+        <h4>Confirm Deletion</h4>
+        <p>Are you sure you want to delete this post?</p>
+    </div>
+    <div class="modal-footer center">
+        <a href="{{ url_for('posts.delete_post', id=post.id)}}" class="waves-effect waves-green btn-flat">Yes</a>
+        <a class="modal-close waves-effect waves-green btn-flat">No</a>
+    </div>
 </div>
 {% endblock %}

@@ -88,3 +88,12 @@ def update_votes(id, vote):
         content.votes[vote].append(current_user)
     content.save()
     return jsonify(length_up = len(content.votes["up"]), length_down = len(content.votes["down"]))
+
+
+@posts.route("/posts/<id>/delete")
+@login_required
+def delete_post(id):
+    post = Post.objects.get(id=id)
+    post.delete()
+    flash('Your post has been deleted!', "green")
+    return redirect('/')
