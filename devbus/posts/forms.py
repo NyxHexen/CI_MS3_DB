@@ -22,3 +22,9 @@ class NewCommentForm(FlaskForm):
     code_language = StringField()
     code_content = TextAreaField()
     submit = SubmitField('POST')
+
+class NewSubCommentForm(FlaskForm):
+    comment_content = TextAreaField()
+    code_language = StringField()
+    code_content = TextAreaField()
+    submit = SubmitField('POST')
