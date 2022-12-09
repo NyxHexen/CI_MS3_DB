@@ -17,7 +17,7 @@
                         <img src="{{ post.created_by.profile_image }}" alt="" class="circle responsive-img">
                     </div>
                     <div class="col s10">
-                        <a href="#">{{ post.created_by.username }}</a>
+                        <a href="/{{ post.created_by.username }}">{{ post.created_by.username }}</a>
                         <span class="grey-text">{{ post.created_date }}</span>
                         <div class="card-title-container">
                             <a href="{{ url_for('posts.view_post', id=post.id) }}"
