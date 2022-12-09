@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="section">
+    <div class="row">
+        <div class="col s12 m10 offset-m1 offset-l1 xl8 offset-xl2">
+            <div class="card grey lighten-2">
+                <div class="card-content">
+                    <div class="row">
+                        <div class="col s8 offset-s2 m4 center-align">
+                            <img class="responsive-img circle" src="{{ user.profile_image }}"
+                                alt="Your profile Picture">
+                        </div>
+                        <div class="col s12 m8">
+                            <div class="input-field col s12">
+                                <span class="user-field-title grey-text text-darken-3">Username</span><br>
+                                <p class="user-field-content z-depth-1">{{ user.username }}</p>
+                            </div>
+                            <div class="input-field col s12">
+                                <span class="user-field-title grey-text text-darken-3">Bio</span><br>
+                                {% if user.bio | length != 0 %}
+                                <p class="user-field-content z-depth-1">{{ user.bio }}</p>
+                                {% else %}
+                                <p class="user-field-content grey-text">Nothing here yet...</p>
+                                {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="input-field col s12 m8 offset-m2 center-align">
+                            <span class="card-title center-align">Languages</span>
+                            {% if user.languages[0]|length != 0 or user.languages|length >= 1 %}
+                            {% for language in user.languages %}
+                            <div class="chip deep-purple-text text-darken-3 z-depth-1">{{ language }}</div>
+                            {% endfor %}
+                            {% else %}
+                            <div class="input-field col s12 grey-text center-align">
+                                {% if user.f_name %} {{ user.f_name }} {% else %} {{ user.username }} {% endif %} has
+                                not yet added any languages.
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="divider"></div>
+    <h2 class="center-align white-text">{{ user.username }}'s Posts</h2>
+    <div id="user_posts" class="row">
+        <div class="col s12">
+            {% for post in posts %}
+            {% if loop.index % 2 == 0 %}
+            <div class="col s12 m6 xl5">
+                {% else %}
+                <div class="col s12 m6 xl5 offset-xl1">
+                    {% endif %}
+                    <div class="card horizontal grey lighten-2 valign-wrapper">
+                        <div class="card-stacked">
+                            <div class="card-content">
+                                <span class="card-title">{{ post.post_title}}</span>
+                                {% if post.code_content %}
+                                <p class="chip deep-purple darken-3 white-text">Has Code</p>
+                                {% else %}
+                                <p class="chip green">No Code</p>
+                                {% endif %}
+                            </div>
+                            <div class="card-action">
+                                {% if post.post_type == "post" %}
+                                <span class="btn-flat">
+                                    <i class="material-icons right small green-text">
+                                        thumb_up
+                                    </i>{{ post.votes.up | length}}</span>
+                                <span class="btn-flat">
+                                    <i class="material-icons right small red-text">
+                                        thumb_down
+                                    </i>{{ post.votes.down | length}}</span>
+                                {% endif %}
+                                <a href="#" class="btn-flat red-text right">View Post</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+</section>
+
+{% endblock %}
