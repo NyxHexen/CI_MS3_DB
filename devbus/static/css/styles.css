@@ -227,11 +227,14 @@ a.right,
 i.right {
   margin-left: 5px;
   margin-right: 0 !important;
-  padding: 0;
 }
 
 #user_posts .btn-flat {
   padding: 0 8px;
+}
+
+#user_posts a.right {
+  padding: 0;
 }
 
 .comment img {
