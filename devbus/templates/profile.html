@@ -8,7 +8,7 @@
 {% endif %}
 <section class="section">
     <div class="row">
-        <div class="col s12 l10 push-l1 xl8 push-xl2">
+        <div class="col s12 l10 push-l1 xl6 push-xl3">
             <div class="card grey lighten-3">
                 <div class="card-content">
                     <div class="row">
@@ -58,12 +58,12 @@
                                 <label for="bio">Bio</label>
                             </div>
                         </div>
-                        <div class="col s12 m8 push-m2">
+                        <div class="col s12 m8 push-m2 center">
                             <span class="card-title center-align">Languages</span>
                             {% if current_user.languages[0]|length != 0 or current_user.languages|length >= 1 %}
                             {% for language in current_user.languages %}
                             {% if language|length != 0 %}
-                            <div class="chip grey darken-1 yellow-text">{{ language }}</div>
+                            <div class="chip deep-purple-text text-darken-3 z-depth-1">{{ language }}</div>
                             {% endif %}
                             {% endfor %}
                             {% else %}
