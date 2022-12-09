@@ -168,6 +168,10 @@ fieldset {
   margin-left: 5%;
 }
 
+.card-content.profile {
+  padding-bottom: 0;
+}
+
 .user-field-title {
   font-size: 1.5em;
 }
@@ -246,8 +250,7 @@ i.right {
 }
 
 .comment .card .card-action {
-  padding-top: 0;
-  padding-right: 0;
+  padding: 3px
 }
 
 .comment .card a.btn-flat {
