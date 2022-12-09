@@ -1,7 +1,7 @@
 <!-- User Sidenav -->
 {% if current_user.is_authenticated %}
 <div id="profile" class="row hide-on-small-and-down">
-    <div class="col m4 l3 xl2 push-xl1">
+    <div class="col m5 pull-m1 l4 pull-l2">
         <div class="card">
             <div class="card-content">
                 <!-- User Picture -->
@@ -23,27 +23,13 @@
                         <p>{{ current_user.bio }}</p>
                     </div>
                 </div>
-                <!-- User Languages -->
-                <div class="row">
-                    <div class="col profile-languages s12">
-                        <span class="card-title center-align">My Superpowers</span>
-                        <div class="user-languages truncate">
-                            {% for language in current_user.languages %}
-                            <div class="chip grey lighten-3">{{ language }}</div>
-                            {% endfor %}
-                        </div>
-                        <div class="card-action">
-                            <span class="btn-flat deep-purple-text">Show All</span>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 </div>
 {% endif %}
 <div id="quickmenu" class="row hide-on-med-and-down">
-    <div class="col s3 push-s7 xl2 push-xl7">
+    <div class="col offset-l9">
         {% if current_user.is_authenticated %}
         <div class="card card-content">
             <div class="collection">
