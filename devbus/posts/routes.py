@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, request, jsonify, flash
 from flask_login import login_required, current_user
-from devbus.utils.models import Post, Comment
-from devbus.posts.forms import NewPostForm, NewCommentForm
+from devbus.utils.models import Post, Comment, CommentOfComment
+from devbus.posts.forms import NewPostForm, NewCommentForm, NewSubCommentForm
 
 
 posts = Blueprint('posts', '__name__')
@@ -14,7 +14,15 @@ def view_post(id):
     return render_template("view_post.html", post=post)
 
 
-@posts.route("/posts/<id>/new_comment", methods=["GET", "POST"])
+@posts.route("/posts/<post_id>/<comment_id>", methods=["GET", "POST"])
+@login_required
+def view_comment(post_id, comment_id):
+    post = Post.objects.get(id=post_id)
+    comment = Comment.objects.get(id=comment_id)
+    return render_template("view_comment.html", post=post, comment=comment)
+
+
+@posts.route("/posts/<id>/reply", methods=["GET", "POST"])
 @login_required
 def new_comment(id):
     post = Post.objects.get(id=id)
@@ -28,6 +36,20 @@ def new_comment(id):
         return redirect(f"/posts/{id}")
     return render_template("view_post.html", post=post, form=form)
 
+
+@posts.route("/posts/<post_id>/<comment_id>/reply", methods=["GET", "POST"])
+@login_required
+def new_subcomment(post_id, comment_id):
+    post = Post.objects.get(id=post_id)
+    comment = Comment.objects.get(id=comment_id)
+    sub_form = NewSubCommentForm()
+    if sub_form.validate_on_submit():
+        sub_comment = CommentOfComment(created_by=current_user.id)
+        sub_form.populate_obj(sub_comment)
+        comment.comments.append(sub_comment)
+        comment.save()
+        return redirect(f"/posts/{post_id}/{comment_id}")
+    return render_template("view_comment.html", post=post, comment=comment, sub_form=sub_form)
 
 @posts.route("/new_post", methods=["GET", "POST"])
 @login_required
