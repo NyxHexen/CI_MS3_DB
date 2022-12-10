@@ -240,7 +240,7 @@ i.right {
   margin-top: 14px;
 }
 
-.subcomment .card .card-content,
+.subcomment .card .card-content:not(:last-child),
 .comment .card .card-content {
   padding: 14px 14px 0;
 }
@@ -260,6 +260,10 @@ i.right {
 
 .subcomment .card {
   margin: 0.5rem 0 0;
+}
+
+.subcomment .card .card-content:last-child {
+  padding: 14px;
 }
 
 .subcomment img {
