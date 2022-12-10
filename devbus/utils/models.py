@@ -3,7 +3,6 @@ from flask_login import UserMixin
 from mongoengine import *
 from itsdangerous import URLSafeTimedSerializer
 from devbus import login_manager, app
-from devbus.auth.routes import current_user
 
 
 @login_manager.user_loader
