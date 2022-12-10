@@ -138,8 +138,8 @@ def reset_password(token):
 def delete_user(id):
     logout_user()
     user = User.objects(id=id).first()
-    Post.objects(created_by=id).delete
-    Comment.objects(created_by=user.id).delete
+    Post.objects(created_by=id).delete()
+    Comment.objects(created_by=user.id).delete()
     post_comments = Post.objects(comments=comment.id)
     for comment in post_comments:
         comment.delete()
