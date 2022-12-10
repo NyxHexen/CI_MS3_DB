@@ -1,10 +1,10 @@
 from flask import Blueprint, render_template, redirect, request, jsonify, flash
 from flask_login import login_required, current_user
-from devbus.utils.models import Post, Comment, CommentOfComment
+from devbus.utils.models import Post, Comment, Subcomment
 from devbus.posts.forms import NewPostForm, NewCommentForm, NewSubCommentForm
 
 
-posts = Blueprint('posts', '__name__')
+posts = Blueprint("posts", "__name__")
 
 
 @posts.route("/posts/<id>", methods=["GET", "POST"])
@@ -61,12 +61,35 @@ def new_subcomment(post_id, comment_id):
     comment = Comment.objects.get(id=comment_id)
     sub_form = NewSubCommentForm()
     if sub_form.validate_on_submit():
-        sub_comment = CommentOfComment(created_by=current_user.id)
+        sub_comment = Subcomment(created_by=current_user.id)
         sub_form.populate_obj(sub_comment)
         comment.comments.append(sub_comment)
+        sub_comment.save()
         comment.save()
         return redirect(f"/posts/{post_id}/{comment_id}")
-    return render_template("view_comment.html", post=post, comment=comment, sub_form=sub_form)
+    return render_template(
+        "view_comment.html", post=post, comment=comment, sub_form=sub_form
+    )
+
+
+@posts.route("/posts/<post_id>/<comment_id>/<subcomment_id>/edit_subreply", methods=["GET", "POST"])
+@login_required
+def edit_subcomment(post_id, comment_id, subcomment_id):
+    post = Post.objects.get(id=post_id)
+    comment = Comment.objects.get(id=comment_id)
+    subcomment = Comment.objects.get(comments=subcomment_id)
+    form = NewSubCommentForm()
+    if form.validate_on_submit():
+        form.populate_obj(subcomment)
+        comment.save()
+        return redirect(f"/posts/{post_id}/{comment_id}")
+    return render_template(
+        "edit_subcomment.html",
+        post=post,
+        comment=comment,
+        subcomment=subcomment,
+        form=form,
+    )
 
 
 @posts.route("/new_post", methods=["GET", "POST"])
@@ -98,7 +121,7 @@ def edit_post(id):
         form.code_language.data = post.code_language
         form.code_content.data = post.code_content
         form.post_type.data = post.post_type
-    return render_template("edit_post.html", form=form, post=post )
+    return render_template("edit_post.html", form=form, post=post)
 
 
 @posts.route("/_update_votes/<id>/<vote>", methods=["GET", "POST"])
@@ -127,7 +150,9 @@ def update_votes(id, vote):
         # If the user has never voted before
         content.votes[vote].append(current_user)
     content.save()
-    return jsonify(length_up = len(content.votes["up"]), length_down = len(content.votes["down"]))
+    return jsonify(
+        length_up=len(content.votes["up"]), length_down=len(content.votes["down"])
+    )
 
 
 @posts.route("/posts/<id>/delete")
@@ -135,5 +160,5 @@ def update_votes(id, vote):
 def delete_post(id):
     post = Post.objects.get(id=id)
     post.delete()
-    flash('Your post has been deleted!', "green")
-    return redirect('/')
+    flash("Your post has been deleted!", "green")
+    return redirect("/")
