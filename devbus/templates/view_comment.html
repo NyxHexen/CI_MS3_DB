@@ -90,7 +90,8 @@
                 <a href="{{ url_for('main.view_user', username=comment.created_by.username) }}">{{ comment.created_by.username }}</a>
                 <span class="grey-text">{{ comment.created_date }}</span>
                 {% if current_user == comment.created_by %}
-                <a href="{{ url_for('posts.edit_comment', post_id=post.id, comment_id=comment.id)}}" class="btn-flat blue-text">EDIT</a>
+                <a href="{{ url_for('posts.edit_comment', post_id=post.id, comment_id=comment.id)}}" class="crud-btn btn-flat blue-text">EDIT</a>
+                <a href="#" class="crud-btn btn-flat red-text">DELETE</a>
                 {% endif %}
             </div>
             <div class="col s12 m8 card-content">
@@ -144,7 +145,8 @@
                 <a href="{{ url_for('main.view_user', username=post.created_by.username) }}">{{ subcomment.created_by.username }}</a>
                 <span class="grey-text">{{ subcomment.created_date }}</span>
                 {% if current_user == subcomment.created_by %}
-                <a href="{{ url_for('posts.edit_subcomment', post_id=post.id, comment_id=comment.id, subcomment_id=subcomment.id) }}" class="btn-flat blue-text">EDIT</a>
+                <a href="{{ url_for('posts.edit_subcomment', post_id=post.id, comment_id=comment.id, subcomment_id=subcomment.id) }}" class="crud-btn btn-flat blue-text">EDIT</a>
+                <a href="#" class="crud-btn btn-flat red-text">DELETE</a>
                 {% endif %}
             </div>
             <div class="col s12 m10 card-content">

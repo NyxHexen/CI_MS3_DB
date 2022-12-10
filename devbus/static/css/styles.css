@@ -236,6 +236,10 @@ i.right {
   padding: 0;
 }
 
+a.crud-btn {
+  padding: 0 4px;
+}
+
 .comment img {
   margin-top: 14px;
 }
