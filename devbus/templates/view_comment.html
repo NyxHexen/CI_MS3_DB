@@ -135,7 +135,7 @@
     </div>
     {% for subcomment in comment.comments %}
     <div class="subcomment col s11 offset-s1 m9 offset-m2 l7 offset-l3">
-        <div class="card col grey lighten-2">
+        <div class="card col s12 grey lighten-2">
             <div class="col hide-on-small-only m2 comment-user-info center-align">
                 <img src="{{ subcomment.created_by.profile_image }}" alt="User's profile picture"
                     class="circle responsive-img">
@@ -155,11 +155,12 @@
     {% endfor %}
 </div>
 {% if sub_form %}
+<div class="divider"></div>
 <div class="row">
     <form id="new_subcomment" class="col s11 offset-s1 m9 offset-m2 l7 offset-l3 center-align new" method="POST">
         <fieldset class="card valign-wrapper">
             {{ sub_form.hidden_tag() }}
-            <legend class="visually-hidden">Comment SubComment</legend>
+            <legend class="visually-hidden">SubComment</legend>
             <div class="col s4 m3 xl2 grey lighten-1 card-panel comment-user-info">
                 <img src="{{ current_user.profile_image }}" alt="User's profile picture" class="circle responsive-img">
             </div>
@@ -182,7 +183,5 @@
         </fieldset>
     </form>
 </div>
-{% else %}
-<div class="divider"></div>
 {% endif %}
 {% endblock %}
