@@ -32,7 +32,8 @@ class User(Document, UserMixin):
         return s.loads(token, max_age=max_age)
 
 
-class CommentOfComment(EmbeddedDocument):
+class Subcomment(Document):
+    meta = {'collection': 'comments'}
     comment_content = StringField(required=True)
     votes = DictField(default={"up": [], "down": []})
     created_by = ReferenceField(User)
@@ -44,7 +45,7 @@ class Comment(Document):
     comment_content = StringField(required=True)
     code_language = StringField()
     code_content = StringField()
-    comments = ListField(EmbeddedDocumentField(CommentOfComment))
+    comments = ListField(ReferenceField(Subcomment))
     votes = DictField(default={"up": [], "down": []})
     created_by = ReferenceField(User)
     created_date = DateField(default=datetime.utcnow)
