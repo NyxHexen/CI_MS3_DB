@@ -137,9 +137,12 @@ def reset_password(token):
 @login_required
 def delete_user(id):
     logout_user()
-    Post.objects(created_by=id).delete()
-    Comment.objects(created_by=id).delete()
-    Comment.objects(comments__created_by=id).delete()
-    User.objects.get(id=id).delete()
+    user = User.objects(id=id).first()
+    Post.objects(created_by=id).delete
+    Comment.objects(created_by=user.id).delete
+    post_comments = Post.objects(comments=comment.id)
+    for comment in post_comments:
+        comment.delete()
+    user.delete()
     flash('Sorry to see you go! Your account has now been deleted.', 'deep-purple darken-4')
     return redirect("/")
