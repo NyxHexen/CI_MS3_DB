@@ -54,11 +54,15 @@
     <div id="user_posts" class="row">
         <div class="col s12">
             {% for post in posts %}
-            {% if loop.index % 2 == 0 %}
-            <div class="col s12 m6 xl5">
+                {% if loop.index % 2 == 0 %}
+                    <div class="col s12 m6 xl5">
                 {% else %}
-                <div class="col s12 m6 xl5 offset-xl1">
+                    {% if ( posts | length ) % 2 != 0 and loop.index == ( posts | length ) %}
+                    <div class="col s12 m6 offset-m3 xl5">
+                    {% else %}
+                    <div class="col s12 m6 xl5 offset-xl4">
                     {% endif %}
+                {% endif %}
                     <div class="card horizontal grey lighten-2 valign-wrapper">
                         <div class="card-stacked">
                             <div class="card-content">
