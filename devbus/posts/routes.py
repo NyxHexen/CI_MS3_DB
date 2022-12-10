@@ -37,6 +37,23 @@ def new_comment(id):
     return render_template("view_post.html", post=post, form=form)
 
 
+@posts.route("/posts/<post_id>/<comment_id>/edit_reply", methods=["GET", "POST"])
+@login_required
+def edit_comment(post_id, comment_id):
+    post = Post.objects.get(id=post_id)
+    comment = Comment.objects.get(id=comment_id)
+    form = NewCommentForm()
+    if form.validate_on_submit():
+        form.populate_obj(comment)
+        comment.save()
+        return redirect(f"/posts/{post_id}")
+    elif request.method == "GET":
+        form.comment_content.data = comment.comment_content
+        form.code_language.data = comment.code_language
+        form.code_content.data = comment.code_content
+    return render_template("edit_comment.html", post=post, comment=comment, form=form)
+
+
 @posts.route("/posts/<post_id>/<comment_id>/reply", methods=["GET", "POST"])
 @login_required
 def new_subcomment(post_id, comment_id):
@@ -50,6 +67,7 @@ def new_subcomment(post_id, comment_id):
         comment.save()
         return redirect(f"/posts/{post_id}/{comment_id}")
     return render_template("view_comment.html", post=post, comment=comment, sub_form=sub_form)
+
 
 @posts.route("/new_post", methods=["GET", "POST"])
 @login_required
