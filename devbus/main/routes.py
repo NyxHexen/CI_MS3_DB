@@ -12,7 +12,7 @@ def home():
 def view_user(username):
     try: 
         user = User.objects.get(username=username)
-        posts = Post.objects(created_by=username)
+        posts = Post.objects(created_by=user.id) if user is not None else None
         return render_template("view_user.html", user=user, posts=posts)
     except DoesNotExist:
         flash("User you are looking for does not exist or has been deactivated", "red")
