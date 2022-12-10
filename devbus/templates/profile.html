@@ -70,6 +70,7 @@
 <div id="delete_user" class="modal">
     <form id="delete_user_form" method="POST">
         <fieldset>
+            {{ form.hidden_tag() }}
             <div class="modal-content">
                 <h4>Confirm Deletion</h4>
                 <p>Are you sure you want to delete your account?</p>
