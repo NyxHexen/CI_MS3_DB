@@ -10,7 +10,7 @@
                         class="circle responsive-img">
                 </div>
                 <div class="col s10">
-                    <a href="#">{{ post.created_by.username }}</a>
+                    <a href="{{ url_for('main.view_user', username=post.created_by.username) }}">{{ post.created_by.username }}</a>
                     <span class="grey-text">{{ post.created_date }}</span>
                     <div class="card-title-container">
                         <span class="card-title flow-text">{{ post.post_title }}</span>
@@ -88,7 +88,7 @@
                     class="circle responsive-img">
             </div>
             <div class="col s12 m8 card-content">
-                <a href="#">{{ comment.created_by.username }}</a>
+                <a href="{{ url_for('main.view_user', username=comment.created_by.username) }}">{{ comment.created_by.username }}</a>
                 <span class="grey-text">{{ comment.created_date }}</span>
             </div>
             <div class="col s12 m8 card-content">
@@ -122,44 +122,14 @@
                         {{ comment.votes.down|length }}
                     </span>
                 </a>
-                <a class="waves-effect waves-light btn-flat right">Reply</a>
-                <div class="waves-effect btn-flat right">
+                <a href="{{ url_for('posts.new_subcomment', post_id=post.id, comment_id=comment.id)}}" class="waves-effect waves-light btn-flat right">Reply</a>
+                <a href="{{ url_for('posts.view_comment', post_id=post.id, comment_id=comment.id) }}" class="waves-effect btn-flat right">
                     <i class="material-icons right small grey-text text-darken-2">chat</i>
                     <span>{{ comment.comments|length }}</span>
-                </div>
+                </a>
             </div>
         </div>
     </div>
-    {% if sub_form %}
-    <div class="row">
-        <form id="new_subcomment" class="col s11 offset-s1 m9 offset-m2 l7 offset-l3 center-align new" method="POST">
-            <fieldset class="card valign-wrapper">
-                {{ sub_form.hidden_tag() }}
-                <legend class="visually-hidden">Comment SubComment</legend>
-                <div class="col s4 m3 xl2 grey lighten-1 card-panel comment-user-info">
-                    <img src="{{ current_user.profile_image }}" alt="User's profile picture"
-                        class="circle responsive-img">
-                </div>
-                <div class="col s8 m9 xl10">
-                    <div class="input-field col s12">
-                        {% if sub_form.comment_content.errors %}
-                        {{ sub_form.comment_content(class="materialize-textarea invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in sub_form.comment_content.errors %}
-                            <span class="red-text">{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                        {% else %}
-                        {{ sub_form.comment_content(class="materialize-textarea") }}
-                        {% endif %}
-                        {{ sub_form.comment_content.label }}
-                    </div>
-                    {{ sub_form.submit(class="waves-effect waves-light btn yellow") }}
-                </div>
-            </fieldset>
-        </form>
-    </div>
-    {% endif %}
     {% endfor %}
 </div>
 <div class="divider"></div>
@@ -213,7 +183,7 @@
                     {% endif %}
                     {{ form.code_content.label(class="visually-hidden") }}
                 </div>
-                {{ form.submit(class="waves-effect waves-light btn yellow") }}
+                {{ form.submit(class="waves-effect waves-light btn-small yellow") }}
             </div>
         </fieldset>
     </form>
