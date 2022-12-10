@@ -245,6 +245,7 @@ i.right {
   margin-top: 14px;
 }
 
+.subcomment .card .card-content,
 .comment .card .card-content {
   padding: 14px 14px 0;
 }
@@ -260,6 +261,14 @@ i.right {
 .comment .card div.btn-flat:not(.vote-button) {
   padding-left: 0;
   padding-right: 0;
+}
+
+.subcomment .card {
+  margin: 0.5rem 0 0;
+}
+
+.subcomment img {
+  margin: 14px 0;
 }
 
 .signin-link,
