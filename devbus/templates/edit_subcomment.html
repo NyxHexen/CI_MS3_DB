@@ -79,24 +79,21 @@
         </div>
     </div>
 </div>
-<div class="divider"></div>
 <div class="row">
-    {% for comment in post.comments %}
     <div class="comment col s12 m10 offset-m1 l8 offset-l2">
         <div class="card col grey lighten-2">
             <div class="col hide-on-small-only m2 comment-user-info center-align">
                 <img src="{{ comment.created_by.profile_image }}" alt="User's profile picture"
                     class="circle responsive-img">
             </div>
-            <div class="col s12 m10 card-content">
-                <a
-                    href="{{ url_for('main.view_user', username=comment.created_by.username) }}">{{ comment.created_by.username }}</a>
+            <div class="col s12 m8 card-content">
+                <a href="{{ url_for('main.view_user', username=comment.created_by.username) }}">{{ comment.created_by.username }}</a>
                 <span class="grey-text">{{ comment.created_date }}</span>
                 {% if current_user == comment.created_by %}
                 <a href="{{ url_for('posts.edit_comment', post_id=post.id, comment_id=comment.id)}}" class="btn-flat blue-text">EDIT</a>
                 {% endif %}
             </div>
-            <div class="col s12 m10 card-content">
+            <div class="col s12 m8 card-content">
                 <p>{{ comment.comment_content }}</p>
             </div>
             {% if comment.code_language and comment.code_content %}
@@ -129,70 +126,39 @@
                 </a>
                 <a href="{{ url_for('posts.new_subcomment', post_id=post.id, comment_id=comment.id)}}"
                     class="waves-effect waves-light btn-flat right">Reply</a>
-                <a href="{{ url_for('posts.view_comment', post_id=post.id, comment_id=comment.id) }}"
-                    class="waves-effect btn-flat right">
+                <div class="waves-effect btn-flat right">
                     <i class="material-icons right small grey-text text-darken-2">chat</i>
-                    <span>{{ comment.comments | length }}</span>
-                </a>
+                    <span>{{ comment.comments|length }}</span>
+                </div>
             </div>
         </div>
     </div>
-    {% endfor %}
-</div>
-<div class="divider"></div>
-{% if form %}
-<div class="row">
-    <form id="new_comment" class="col s12 m10 offset-m1 l8 offset-l2 center-align new" method="POST">
-        <fieldset class="card valign-wrapper">
-            {{ form.hidden_tag() }}
-            <legend class="visually-hidden">Post Comment</legend>
-            <div class="col s4 m3 xl2 grey lighten-1 card-panel comment-user-info">
-                <img src="{{ current_user.profile_image }}" alt="User's profile picture" class="circle responsive-img">
-                <span>Code Area</span>
-                <div class="switch">
-                    <label class="comment deep-purple-text">
-                        O
-                        <input type="checkbox" id="code_switch" name="code_switch">
-                        <span class="lever"></span>
-                        I
-                    </label>
+    <div class="row">
+        <form id="new_subcomment" class="col s11 offset-s1 m9 offset-m2 l7 offset-l3 center-align new" method="POST">
+            <fieldset class="card valign-wrapper">
+                {{ form.hidden_tag() }}
+                <legend class="visually-hidden">Comment SubComment</legend>
+                <div class="col s4 m3 xl2 grey lighten-1 card-panel comment-user-info">
+                    <img src="{{ current_user.profile_image }}" alt="User's profile picture" class="circle responsive-img">
                 </div>
-            </div>
-            <div class="col s8 m9 xl10">
-                <div class="input-field col s12">
-                    {% if form.comment_content.errors %}
-                    {{ form.comment_content(class="materialize-textarea invalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in form.comment_content.errors %}
-                        <span class="red-text">{{ error }}</span>
-                        {% endfor %}
+                <div class="col s8 m9 xl10">
+                    <div class="input-field col s12">
+                        {% if form.comment_content.errors %}
+                        {{ form.comment_content(class="materialize-textarea invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.comment_content.errors %}
+                            <span class="red-text">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.comment_content(class="materialize-textarea") }}
+                        {% endif %}
+                        {{ form.comment_content.label }}
                     </div>
-                    {% else %}
-                    {{ form.comment_content(class="materialize-textarea") }}
-                    {% endif %}
-                    {{ form.comment_content.label }}
+                    {{ form.submit(class="waves-effect waves-light btn-small yellow") }}
                 </div>
-                <div class="input-field col s12 visually-hidden code-switch">
-                    {{ form.code_language(class="autocomplete") }}
-                    {{ form.code_language.label }}
-                </div>
-                <div class="input-field col s12 visually-hidden code-switch">
-                    {% if form.code_content.errors %}
-                    {{ form.code_content(class="materialize-textarea grey darken-4 white-text invalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in form.code_content.errors %}
-                        <span class="red-text">{{ error }}</span>
-                        {% endfor %}
-                    </div>
-                    {% else %}
-                    {{ form.code_content(class="materialize-textarea grey darken-4 white-text") }}
-                    {% endif %}
-                    {{ form.code_content.label(class="visually-hidden") }}
-                </div>
-                {{ form.submit(class="waves-effect waves-light btn-small yellow") }}
-            </div>
-        </fieldset>
-    </form>
+            </fieldset>
+        </form>
+    </div>
 </div>
-{% endif %}
 {% endblock %}
