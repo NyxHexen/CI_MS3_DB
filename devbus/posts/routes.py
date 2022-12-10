@@ -14,6 +14,25 @@ def view_post(id):
     return render_template("view_post.html", post=post)
 
 
+@posts.route("/posts/<id>/edit_post", methods=["GET", "POST"])
+@login_required
+def edit_post(id):
+    post = Post.objects.get(id=id)
+    form = NewPostForm()
+    if form.validate_on_submit():
+        form.populate_obj(post)
+        post.created_by = current_user.id
+        post.save()
+        return redirect(f"/posts/{post.id}")
+    elif request.method == "GET":
+        form.post_title.data = post.post_title
+        form.post_content.data = post.post_content
+        form.code_language.data = post.code_language
+        form.code_content.data = post.code_content
+        form.post_type.data = post.post_type
+    return render_template("edit_post.html", form=form, post=post)
+
+
 @posts.route("/posts/<post_id>/<comment_id>", methods=["GET", "POST"])
 @login_required
 def view_comment(post_id, comment_id):
@@ -77,12 +96,14 @@ def new_subcomment(post_id, comment_id):
 def edit_subcomment(post_id, comment_id, subcomment_id):
     post = Post.objects.get(id=post_id)
     comment = Comment.objects.get(id=comment_id)
-    subcomment = Comment.objects.get(comments=subcomment_id)
+    subcomment = Comment.objects.get(id=subcomment_id)
     form = NewSubCommentForm()
     if form.validate_on_submit():
         form.populate_obj(subcomment)
-        comment.save()
+        subcomment.save()
         return redirect(f"/posts/{post_id}/{comment_id}")
+    elif request.method == "GET":
+        form.comment_content.data = subcomment.comment_content
     return render_template(
         "edit_subcomment.html",
         post=post,
@@ -103,25 +124,6 @@ def new_post():
         post.save()
         return redirect(f"/posts/{post.id}")
     return render_template("new_post.html", form=form)
-
-
-@posts.route("/posts/<id>/edit_post", methods=["GET", "POST"])
-@login_required
-def edit_post(id):
-    post = Post.objects.get(id=id)
-    form = NewPostForm()
-    if form.validate_on_submit():
-        form.populate_obj(post)
-        post.created_by = current_user.id
-        post.save()
-        return redirect(f"/posts/{post.id}")
-    elif request.method == "GET":
-        form.post_title.data = post.post_title
-        form.post_content.data = post.post_content
-        form.code_language.data = post.code_language
-        form.code_content.data = post.code_content
-        form.post_type.data = post.post_type
-    return render_template("edit_post.html", form=form, post=post)
 
 
 @posts.route("/_update_votes/<id>/<vote>", methods=["GET", "POST"])
