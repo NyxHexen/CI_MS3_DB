@@ -50,6 +50,7 @@
     </div>
     <div class="divider"></div>
     <h2 class="center-align white-text">{{ user.username }}'s Posts</h2>
+    {% if posts %}
     <div id="user_posts" class="row">
         <div class="col s12">
             {% for post in posts %}
@@ -87,6 +88,8 @@
                 {% endfor %}
             </div>
         </div>
+        {% endif %}
+    </div>
 </section>
 
 {% endblock %}
