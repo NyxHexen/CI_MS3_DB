@@ -203,6 +203,11 @@ fieldset {
   padding-top: 0;
 }
 
+:not(pre)>code[class*=language-], pre[class*=language-] {
+  max-height: 80vh;
+  overflow: auto;
+}
+
 .vote-button {
   padding: 0 8px;
   color: black !important;
