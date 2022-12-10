@@ -10,7 +10,8 @@
                         class="circle responsive-img">
                 </div>
                 <div class="col s10">
-                    <a href="{{ url_for('main.view_user', username=post.created_by.username) }}">{{ post.created_by.username }}</a>
+                    <a
+                        href="{{ url_for('main.view_user', username=post.created_by.username) }}">{{ post.created_by.username }}</a>
                     <span class="grey-text">{{ post.created_date }}</span>
                     <div class="card-title-container">
                         <span class="card-title flow-text">{{ post.post_title }}</span>
@@ -88,7 +89,8 @@
                     class="circle responsive-img">
             </div>
             <div class="col s12 m8 card-content">
-                <a href="{{ url_for('main.view_user', username=comment.created_by.username) }}">{{ comment.created_by.username }}</a>
+                <a
+                    href="{{ url_for('main.view_user', username=comment.created_by.username) }}">{{ comment.created_by.username }}</a>
                 <span class="grey-text">{{ comment.created_date }}</span>
             </div>
             <div class="col s12 m8 card-content">
@@ -122,8 +124,10 @@
                         {{ comment.votes.down|length }}
                     </span>
                 </a>
-                <a href="{{ url_for('posts.new_subcomment', post_id=post.id, comment_id=comment.id)}}" class="waves-effect waves-light btn-flat right">Reply</a>
-                <a href="{{ url_for('posts.view_comment', post_id=post.id, comment_id=comment.id) }}" class="waves-effect btn-flat right">
+                <a href="{{ url_for('posts.new_subcomment', post_id=post.id, comment_id=comment.id)}}"
+                    class="waves-effect waves-light btn-flat right">Reply</a>
+                <a href="{{ url_for('posts.view_comment', post_id=post.id, comment_id=comment.id) }}"
+                    class="waves-effect btn-flat right">
                     <i class="material-icons right small grey-text text-darken-2">chat</i>
                     <span>{{ comment.comments|length }}</span>
                 </a>
@@ -140,8 +144,7 @@
             {{ form.hidden_tag() }}
             <legend class="visually-hidden">Post Comment</legend>
             <div class="col s4 m3 xl2 grey lighten-1 card-panel comment-user-info">
-                <img src="{{ post.created_by.profile_image }}" alt="User's profile picture"
-                    class="circle responsive-img">
+                <img src="{{ current_user.profile_image }}" alt="User's profile picture" class="circle responsive-img">
                 <span>Code Area</span>
                 <div class="switch">
                     <label class="comment deep-purple-text">
