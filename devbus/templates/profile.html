@@ -54,8 +54,10 @@
                     <a class="waves-effect waves-light btn red white-text">Change Password</a>
                     <a href="{{ url_for('auth.edit_profile') }}" class="waves-effect waves-light btn">Update
                         Profile</a>
-                    <a href="#delete_user" class="waves-effect waves-light btn-small modal-trigger red right white-text tooltipped" data-position="left" data-tooltip="Delete Account"><i
-                            class="fa-solid fa-trash-can"></i><span class="hide">Delete User</span></a>
+                    <a href="#delete_user"
+                        class="waves-effect waves-light btn-small modal-trigger red right white-text tooltipped"
+                        data-position="left" data-tooltip="Delete Account"><i class="fa-solid fa-trash-can"></i><span
+                            class="hide">Delete User</span></a>
                 </div>
             </div>
         </div>
@@ -66,19 +68,23 @@
 
 {% block modals %}
 <div id="delete_user" class="modal">
-    <form id="delete_user_form" action="" method="post"></form>
-    <fieldset>
-        <div class="modal-content">
-            <h4>Confirm Deletion</h4>
-            <p>Are you sure you want to delete your account?</p>
-            <p><em>To continue, please enter your password in the field below and press "Yes". Alternatively, please
-                    navigate away or click "No"</em></p>
-            {{ form.password }}
-        </div>
-        <div class="modal-footer center">
-            {{ form.submit(class="waves-effect waves-green btn-flat") }}
-            <a class="modal-close waves-effect waves-green btn-flat">No</a>
-        </div>
-    </fieldset>
+    <form id="delete_user_form" method="POST">
+        <fieldset>
+            <div class="modal-content">
+                <h4>Confirm Deletion</h4>
+                <p>Are you sure you want to delete your account?</p>
+                <p><em>To continue, please enter your password in the field below and press "Yes". Alternatively, please
+                        navigate away or click "No"</em></p>
+                <div class="input-field col s12">
+                    {{ form.password }}
+                    {{ form.password.label }}
+                </div>
+            </div>
+            <div class="modal-footer center">
+                {{ form.submit(class="waves-effect waves-green btn-flat") }}
+                <a class="modal-close waves-effect waves-green btn-flat">No</a>
+            </div>
+        </fieldset>
+    </form>
 </div>
 {% endblock %}

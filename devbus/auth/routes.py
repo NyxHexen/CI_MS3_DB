@@ -8,7 +8,7 @@ from devbus.auth.forms import (
     SignUpForm, SignInForm, UpdateProfileForm,
     DeleteAccountForm, ForgotPwdForm, NewPwdForm)
 from devbus.auth.utils import upload_image
-from devbus.utils.models import User
+from devbus.utils.models import User, Post, Comment
 
 
 auth = Blueprint('auth', '__name__')
@@ -53,11 +53,15 @@ def logout():
     return redirect("/")
 
 
-@auth.route("/profile")
+@auth.route("/profile", methods=["GET", "POST"])
 @login_required
 def profile():
     user = User.objects.get(id = current_user.id)
     form = DeleteAccountForm()
+    if form.is_submitted() and bcrypt.check_password_hash(user.password, form.password.data):
+        return redirect(f"/profile/_{current_user.id}/delete_user")
+    elif form.is_submitted() and not bcrypt.check_password_hash(user.password, form.password.data):
+        flash("Incorrect password. Please try again.", 'red')
     return render_template("profile.html", title="Profile", user=user, form=form)
 
 
@@ -127,3 +131,15 @@ def reset_password(token):
         flash("Your password has been reset! You can now login.", "green")
         return redirect("/signin")
     return render_template("reset_password.html", title="Reset Password", form=form)
+
+
+@auth.route("/profile/_<id>/delete_user", methods=["GET", "POST"])
+@login_required
+def delete_user(id):
+    logout_user()
+    Post.objects(created_by=id).delete()
+    Comment.objects(created_by=id).delete()
+    Comment.objects(comments__created_by=id).delete()
+    User.objects.get(id=id).delete()
+    flash('Sorry to see you go! Your account has now been deleted.', 'deep-purple darken-4')
+    return redirect("/")
