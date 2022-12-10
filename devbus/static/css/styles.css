@@ -158,16 +158,6 @@ fieldset {
   position: fixed;
 }
 
-#quickmenu {
-  right: 0;
-  min-width: 100%;
-}
-
-#profile .card {
-  width: 90%;
-  margin-left: 5%;
-}
-
 .card-content.profile {
   padding-bottom: 0;
 }
@@ -312,21 +302,8 @@ a[data-tooltip="Edit Post"] {
 
 
 /* --------------------------------------------------------------------------- MEDIA QUERIES */
-
 @media only screen and (min-width: 993px) {
   #quickmenu .col.offset-l9 {
     margin-left: 73%;
-  }
-}
-
-@media only screen and (min-width: 1201px) {
-  #profile {
-    padding-left: 2.5vw;
-  }
-}
-
-@media only screen and (min-width : 1501px) {
-  #profile .card {
-    width: 100%;
   }
 }

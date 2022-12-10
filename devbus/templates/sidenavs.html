@@ -1,7 +1,7 @@
 <!-- User Sidenav -->
 {% if current_user.is_authenticated %}
-<div id="profile" class="row hide-on-small-and-down">
-    <div class="col m5 pull-m1 l4 pull-l2">
+<div id="profile" class="row hide-on-small-and-down container">
+    <div class="col m5 pull-m1 l4 pull-l2 xl3 pull-xl1">
         <div class="card">
             <div class="card-content">
                 <!-- User Picture -->
@@ -13,14 +13,17 @@
                 </div>
                 <!-- User Username & Bio -->
                 <div class="row">
-                    <div class="col profile-username s12">
+                    <div class="col profile-username s12 center-align">
                         {% if current_user.f_name %}
-                        <span class="card-title center-align">{{ current_user.f_name}}
+                        <span class="card-title">{{ current_user.f_name}}
                             {{ current_user.l_name }}</span>
+                        <p class="center-align">@{{ current_user.username }}</p>
                         {% else %}
-                        <span class="card-title center-align">{{ current_user.username }}</span>
+                        <span class="card-title">{{ current_user.username }}</span>
                         {% endif %}
-                        <p>{{ current_user.bio }}</p>
+                        <div class="divider"></div>
+                        <!-- <p>{% if current_user.bio %} {{ current_user.bio }} {% else %} You {% endif %}</p> -->
+                        <p>{% if current_user.bio %} {{ current_user.bio }} {% else %} You haven't added anything here yet... {% endif %}</p>
                     </div>
                 </div>
             </div>
@@ -28,8 +31,8 @@
     </div>
 </div>
 {% endif %}
-<div id="quickmenu" class="row hide-on-med-and-down">
-    <div class="col offset-l9">
+<div id="quickmenu" class="row hide-on-med-and-down container">
+    <div class="col offset-l10">
         {% if current_user.is_authenticated %}
         <div class="card card-content">
             <div class="collection">
