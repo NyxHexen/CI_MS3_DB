@@ -154,3 +154,8 @@ class NewPwdForm(FlaskForm):
         is_strong_password = True if password_check(password.data) else False
         if not is_strong_password:
             raise ValidationError('Password should contain an uppercase letter, a lowercase letter, a number, and a symbol.')
+
+class DeleteAccountForm(FlaskForm):
+    password = PasswordField('Password',
+                            validators=[DataRequired()])
+    submit = SubmitField('Yes')

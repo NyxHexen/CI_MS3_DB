@@ -5,7 +5,8 @@ from flask import (
 from flask_login import login_user, current_user, logout_user, login_required
 from devbus import bcrypt, app
 from devbus.auth.forms import (
-    SignUpForm, SignInForm, UpdateProfileForm, ForgotPwdForm, NewPwdForm)
+    SignUpForm, SignInForm, UpdateProfileForm,
+    DeleteAccountForm, ForgotPwdForm, NewPwdForm)
 from devbus.auth.utils import upload_image
 from devbus.utils.models import User
 
@@ -55,8 +56,9 @@ def logout():
 @auth.route("/profile")
 @login_required
 def profile():
-    form = UpdateProfileForm()
-    return render_template("profile.html", title="Profile", form=form)
+    user = User.objects.get(id = current_user.id)
+    form = DeleteAccountForm()
+    return render_template("profile.html", title="Profile", user=user, form=form)
 
 
 @auth.route("/edit_profile", methods=["GET", "POST"])

@@ -8,78 +8,77 @@
 {% endif %}
 <section class="section">
     <div class="row">
-        <div class="col s12 l10 push-l1 xl6 push-xl3">
+        <div class="col s12 m10 offset-m1 offset-l1 xl8 offset-xl2">
             <div class="card grey lighten-3">
                 <div class="card-content profile">
                     <div class="row">
-                        <div class="col s8 push-s2 m5 center-align">
-                            <img class="responsive-img circle"
-                                src="{{ current_user.profile_image }}"
+                        <div class="col s8 offset-s2 m4 center-align">
+                            <img class="responsive-img circle" src="{{ user.profile_image }}"
                                 alt="Your profile Picture">
                         </div>
-                        <div class="col s12 m7">
-                            <div class="input-field col s12 m6">
-                                {{ form.f_name(value=current_user.f_name, disabled=True) }}
-                                {{ form.f_name.label }}
-                            </div>
-                            <div class="input-field col s12 m6">
-                                {{ form.l_name(value=current_user.l_name, disabled=True) }}
-                                {{ form.l_name.label }}
+                        <div class="col s12 m8">
+                            <div class="input-field col s12">
+                                <span class="user-field-title grey-text text-darken-3">Name</span><br>
+                                <p class="user-field-content z-depth-1">{{ user.f_name }} {{ user.l_name }}</p>
                             </div>
                             <div class="input-field col s12">
-                                {% if form.email.errors %}
-                                {{ form.email(class="invalid") }}
-                                <div class="invalid-feedback">
-                                    {% for error in form.email.errors %}
-                                    <span class="red-text">{{ error }}</span>
-                                    {% endfor %}
-                                </div>
+                                <span class="user-field-title grey-text text-darken-3">Username</span><br>
+                                <p class="user-field-content z-depth-1">{{ user.username }}</p>
+                            </div>
+                            <div class="input-field col s12">
+                                <span class="user-field-title grey-text text-darken-3">Bio</span><br>
+                                {% if user.bio | length != 0 %}
+                                <p class="user-field-content z-depth-1">{{ user.bio }}</p>
                                 {% else %}
-                                {{ form.email(value=current_user.email, disabled=True) }}
+                                <p class="user-field-content grey-text">Nothing here yet...</p>
                                 {% endif %}
-                                {{ form.email.label }}
-                            </div>
-                            <div class="input-field col s12">
-                                {% if form.username.errors %}
-                                {{ form.username(class="invalid") }}
-                                <div class="invalid-feedback">
-                                    {% for error in form.username.errors %}
-                                    <span class="red-text">{{ error }}</span>
-                                    {% endfor %}
-                                </div>
-                                {% else %}
-                                {{ form.username(value=current_user.username, disabled=True) }}
-                                {% endif %}
-                                {{ form.username.label }}
-                            </div>
-                            <div class="input-field col s12">
-                                <textarea id="bio" class="materialize-textarea" placeholder="Tell people who you are!"
-                                    disabled>{{ current_user.bio }}</textarea>
-                                <label for="bio">Bio</label>
+                                </p>
                             </div>
                         </div>
-                        <div class="col s12 m8 push-m2 center">
+                        <div class="input-field col s12 m8 offset-m2 center-align">
                             <span class="card-title center-align">Languages</span>
-                            {% if current_user.languages[0]|length != 0 or current_user.languages|length >= 1 %}
-                            {% for language in current_user.languages %}
-                            {% if language|length != 0 %}
+                            {% if user.languages[0]|length != 0 or user.languages|length >= 1 %}
+                            {% for language in user.languages %}
                             <div class="chip deep-purple-text text-darken-3 z-depth-1">{{ language }}</div>
-                            {% endif %}
                             {% endfor %}
                             {% else %}
-                            <div class="chip grey darken-1 yellow-text">Edit your profile to add language tags!</div>
+                            <div class="input-field col s12 grey-text center-align">
+                                {% if user.f_name %} {{ user.f_name }} {% else %} {{ user.username }} {% endif %} has
+                                not yet added any languages.
+                            </div>
                             {% endif %}
                         </div>
                     </div>
                 </div>
                 <div class="card-action center-align">
                     <a class="waves-effect waves-light btn red white-text">Change Password</a>
-                    <a href="{{ url_for('auth.edit_profile') }}"
-                        class="waves-effect waves-light btn">Update Profile</a>
+                    <a href="{{ url_for('auth.edit_profile') }}" class="waves-effect waves-light btn">Update
+                        Profile</a>
+                    <a href="#delete_user" class="waves-effect waves-light btn-small modal-trigger red right white-text tooltipped" data-position="left" data-tooltip="Delete Account"><i
+                            class="fa-solid fa-trash-can"></i><span class="hide">Delete User</span></a>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
+{% endblock %}
+
+{% block modals %}
+<div id="delete_user" class="modal">
+    <form id="delete_user_form" action="" method="post"></form>
+    <fieldset>
+        <div class="modal-content">
+            <h4>Confirm Deletion</h4>
+            <p>Are you sure you want to delete your account?</p>
+            <p><em>To continue, please enter your password in the field below and press "Yes". Alternatively, please
+                    navigate away or click "No"</em></p>
+            {{ form.password }}
+        </div>
+        <div class="modal-footer center">
+            {{ form.submit(class="waves-effect waves-green btn-flat") }}
+            <a class="modal-close waves-effect waves-green btn-flat">No</a>
+        </div>
+    </fieldset>
+</div>
 {% endblock %}
