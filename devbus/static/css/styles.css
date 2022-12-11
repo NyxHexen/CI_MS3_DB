@@ -204,7 +204,7 @@ fieldset {
 }
 
 :not(pre)>code[class*=language-], pre[class*=language-] {
-  max-height: 80vh;
+  max-height: 60vh;
   overflow: auto;
 }
 
