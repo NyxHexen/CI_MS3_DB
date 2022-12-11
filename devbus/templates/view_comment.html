@@ -146,7 +146,7 @@
                 <span class="grey-text">{{ subcomment.created_date }}</span>
                 {% if current_user == subcomment.created_by %}
                 <a href="{{ url_for('posts.edit_subcomment', post_id=post.id, comment_id=comment.id, subcomment_id=subcomment.id) }}" class="crud-btn btn-flat blue-text">EDIT</a>
-                <a href="#" class="crud-btn btn-flat red-text">DELETE</a>
+                <a href="{{ url_for('posts.delete_subcomment', comment_id=comment.id, subcomment_id=subcomment.id) }}" class="crud-btn btn-flat red-text">DELETE</a>
                 {% endif %}
             </div>
             <div class="col s12 m10 card-content">

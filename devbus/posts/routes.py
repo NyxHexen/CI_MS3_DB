@@ -177,3 +177,13 @@ def delete_comment(comment_id):
     comment.delete()
     flash("Your comment has been deleted!", "green")
     return redirect("/")
+
+@posts.route("/<comment_id>/<subcomment_id>/delete_subcomment")
+@login_required
+def delete_subcomment(comment_id, subcomment_id):
+    comment = Comment.objects.get(id=comment_id)
+    subcomment = Comment.objects.get(id=subcomment_id)
+    comment.update(pull__comments=subcomment.id)
+    subcomment.delete()
+    flash("Your comment has been deleted!", "green")
+    return redirect("/")
