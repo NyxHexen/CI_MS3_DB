@@ -23,6 +23,7 @@ def edit_post(id):
         form.populate_obj(post)
         post.created_by = current_user.id
         post.save()
+        flash("Your post has been edited!", 'message')
         return redirect(f"/posts/{post.id}")
     elif request.method == "GET":
         form.post_title.data = post.post_title
@@ -52,6 +53,7 @@ def new_comment(id):
         comment.save()
         post.comments.append(comment)
         post.save()
+        flash("Your comment has been posted!", 'message')
         return redirect(f"/posts/{id}")
     return render_template("view_post.html", post=post, form=form)
 
@@ -65,6 +67,7 @@ def edit_comment(post_id, comment_id):
     if form.validate_on_submit():
         form.populate_obj(comment)
         comment.save()
+        flash("Your comment has been edited!", 'message')
         return redirect(f"/posts/{post_id}")
     elif request.method == "GET":
         form.comment_content.data = comment.comment_content
@@ -85,6 +88,7 @@ def new_subcomment(post_id, comment_id):
         comment.comments.append(sub_comment)
         sub_comment.save()
         comment.save()
+        flash("Your comment has been posted!", 'message')
         return redirect(f"/posts/{post_id}/{comment_id}")
     return render_template(
         "view_comment.html", post=post, comment=comment, sub_form=sub_form
@@ -101,6 +105,7 @@ def edit_subcomment(post_id, comment_id, subcomment_id):
     if form.validate_on_submit():
         form.populate_obj(subcomment)
         subcomment.save()
+        flash("Your comment has been edited!", 'message')
         return redirect(f"/posts/{post_id}/{comment_id}")
     elif request.method == "GET":
         form.comment_content.data = subcomment.comment_content
@@ -122,6 +127,7 @@ def new_post():
         form.populate_obj(post)
         post.created_by = current_user.id
         post.save()
+        flash("Your post has been created!", 'message')
         return redirect(f"/posts/{post.id}")
     return render_template("new_post.html", form=form)
 
