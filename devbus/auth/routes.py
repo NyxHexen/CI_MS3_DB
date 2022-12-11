@@ -60,7 +60,7 @@ def profile():
     form = DeleteAccountForm()
     if form.validate_on_submit() and bcrypt.check_password_hash(user.password, form.password.data):
         return redirect(f"/profile/_{current_user.id}/delete_user")
-    else:
+    elif form.validate_on_submit() and not bcrypt.check_password_hash(user.password, form.password.data):
         flash("Incorrect password. Please try again.", 'red')
     return render_template("profile.html", title="Profile", user=user, form=form)
 
@@ -138,11 +138,18 @@ def reset_password(token):
 def delete_user(id):
     logout_user()
     user = User.objects(id=id).first()
-    Post.objects(created_by=id).delete()
-    Comment.objects(created_by=user.id).delete()
-    post_comments = Post.objects(comments=comment.id)
-    for comment in post_comments:
+    posts = Post.objects(created_by=id)
+    comments = Comment.objects(created_by=user.id)
+    for comment in comments:
+        print(comment)
+        comments_ref = Post.objects(comments=comment)
+        subcomments_ref = Comment.objects(comments=comment)
+        if comments_ref is not None:
+            comments_ref.update(pull__comments=comment)
+        if subcomments_ref is not None:
+            subcomments_ref.update(pull__comments=comment.id)
         comment.delete()
+    posts.delete()
     user.delete()
-    flash('Sorry to see you go! Your account has now been deleted.', 'deep-purple darken-4')
+    flash('Sorry to see you go! Your account has now been deleted.', 'yellow')
     return redirect("/")
