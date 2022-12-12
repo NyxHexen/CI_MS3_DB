@@ -21,15 +21,17 @@ def view_user(username):
 
 
 @main.route("/search", methods=["GET", "POST"])
+@main.route("/search/<filter>/<arg>", methods=["GET", "POST"])
 @login_required
-def search_results():
-    arg = request.form.get('search_field')
-    filter = request.form.get('filter_select')
+def search_results(arg="", filter="user"):
+    if (arg == "" and filter == "user"):
+        arg = request.form.get('search_field')
+        filter = request.form.get('filter_select')
     match filter:
-        case "username":
+        case "user":
             users = User.objects(username__icontains=arg)
             posts = Post.objects(created_by__in=users)
-        case "language":
+        case "lang":
             posts = Post.objects(code_language__icontains=arg)
         case _:
             posts = Post.objects()
@@ -38,11 +40,11 @@ def search_results():
 
 @main.route("/_search/<filter>/<arg>", methods=["GET", "POST"])
 @login_required
-def search(filter, arg=None):
+def search(arg=None, filter="user"):
     match filter:
-        case "username":
+        case "user":
             items = User.objects(username__icontains=arg)
-        case "language":
+        case "lang":
             items = Post.objects(code_language__icontains=arg)
         case _:
             return jsonify(False)

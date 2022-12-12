@@ -140,11 +140,11 @@ $("#autocomplete-input")
           return 
         }
         for (key in response.items) {
-          if (filter == "username") {
+          if (filter == "user") {
             username = response.items[key].username
             profile_image_url = response.items[key].profile_image
             newData[username] = profile_image_url
-          } else if (filter == "language") {
+          } else if (filter == "lang") {
             newData[response.items[key].code_language] = null
           }
         }
@@ -155,7 +155,10 @@ $("#autocomplete-input")
         $('input.autocomplete').autocomplete('open')
       },
       error: function (error) {
-        console.log(error);
+        if (error.response == "404"){
+          console.log("Hurray!")
+        }
+        newData
       }
     });
   })
