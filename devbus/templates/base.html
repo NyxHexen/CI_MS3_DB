@@ -80,18 +80,28 @@
     <main>
         <div class="container">
             <div class="row search-field--container">
-                <div class="col s10 push-s1 l6 push-l3 scale-transition scale-out" id="search-field">
-                    <div class="row z-depth-5 valign-wrapper">
-                        <div class="input-field col s12">
-                            <i class="material-icons prefix">search</i>
-                            <input type="text" id="autocomplete-input" class="autocomplete">
+                <form class="col s10 push-s1 l6 push-l3 scale-transition scale-out" id="search" method="POST" action="{{ url_for('main.search_results')}}">
+                    <fieldset class="row z-depth-5 valign-wrapper">
+                        <div class="input-field col s1">
+                            <button type="submit" class="btn yellow"><i class="material-icons">search</i></button>
+                        </div>
+                        <div class="input-field col s6 m8">
+                            <input type="text" name="search_field" id="autocomplete-input" class="autocomplete">
                             <label for="autocomplete-input">Looking for something?</label>
                         </div>
-                        <div class="col">
+                        <div class="input-field col s3">
+                            <select id="filter_select" name="filter_select">
+                              <option value="username" disabled selected>Filter By</option>
+                              <option value="username">username</option>
+                              <option value="language">language</option>
+                            </select>
+                            <label>Filter</label>
+                          </div>
+                        <div class="input-field col s1">
                             <i class="material-icons" data-target="search-field--container">close</i>
                         </div>
-                    </div>
-                </div>
+                    </fieldset>
+                </form>
             </div>
             {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
