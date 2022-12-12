@@ -77,12 +77,12 @@ fieldset {
   border: none;
 }
 
-#search-field {
+#search {
   position: absolute;
   top: 5vh;
 }
 
-#search-field>* {
+#search>* {
   /* From https://css.glass */
   background: rgba(255, 255, 255, 0.55);
   border-radius: 2px;
@@ -92,13 +92,13 @@ fieldset {
   transition: background-color .3s ease;
 }
 
-#search-field.scale-transition {
+#search.scale-transition {
   z-index: 9099;
   -ms-transform-origin-y: 25%;
   -webkit-transform-origin-y: 25%;
 }
 
-#search-field.scale-transition.scale-out {
+#search.scale-transition.scale-out {
   z-index: -9;
   -ms-transform-origin-y: 25%;
   -webkit-transform-origin-y: 25%;
