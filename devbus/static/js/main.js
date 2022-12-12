@@ -3,15 +3,6 @@ $(document).ready(function () {
   $('select').formSelect();
   $('.tooltipped').tooltip();
   $('.modal').modal();
-  $('input.autocomplete').autocomplete({
-    data: {
-      "Apple": null,
-      "Angel": null,
-      "Alex": null,
-      "Microsoft": null,
-      "Google": 'https://placehold.it/250x250'
-    },
-  });
 
   if ($('.toast')) {
     $('.toast').each(function () {
@@ -123,13 +114,48 @@ $(function () {
   })
 })
 
-$('[data-target="search-field--container"]').on('mousedown', function(){
-  $('#search-field').toggleClass('scale-out')
+$('[data-target="search-field--container"]').on('mousedown', function () {
+  $('#search').toggleClass('scale-out')
 })
 
-$("#search-field .autocomplete")
-  .on('focusin', function(){
-  $("#search-field").children('.row').css("background-color", "rgba(255, 255, 255, 0.80)")
-}).on('focusout', function(){
-  $("#search-field").children('.row').css("background-color", "rgba(255, 255, 255, 0.55)")
-})
+$("#search .autocomplete")
+  .on('focusin', function () {
+    $("#search").children('.row').css("background-color", "rgba(255, 255, 255, 0.80)")
+  }).on('focusout', function () {
+    $("#search").children('.row').css("background-color", "rgba(255, 255, 255, 0.55)")
+  })
+
+$("#autocomplete-input")
+  .on('keyup', function () {
+    let filter = $('#filter_select').find(":selected").val();
+    let arg = $('#autocomplete-input').val();
+    let url = `/_search/${filter}/${arg}`
+    let newData = {};
+    let username, profile_image_url;
+    $.ajax({
+      url: url,
+      type: 'POST',
+      success: function (response) {
+        if (response == false) {
+          return 
+        }
+        for (key in response.items) {
+          if (filter == "username") {
+            username = response.items[key].username
+            profile_image_url = response.items[key].profile_image
+            newData[username] = profile_image_url
+          } else if (filter == "language") {
+            newData[response.items[key].code_language] = null
+          }
+        }
+
+        $('input.autocomplete').autocomplete({
+          data: newData,
+        })
+        $('input.autocomplete').autocomplete('open')
+      },
+      error: function (error) {
+        console.log(error);
+      }
+    });
+  })
