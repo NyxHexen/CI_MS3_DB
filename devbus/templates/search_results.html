@@ -4,6 +4,43 @@
 
 {% include 'sidenavs.html' %}
 
+{% if users != "" %}
+<h2 class="center-align white-text">Users</h2>
+<div class="user row">
+{% for user in users %}
+{% if loop.index % 2 == 0 %}
+    <div class="col s12 m9 offset-m4 l8 offset-l2 xl4">
+{% else %}
+    <div class="col s12 m9 offset-m4 l8 offset-l2 xl4 offset-xl2">
+{% endif %}
+        <div class="card">
+            <div class="card-content squish">
+                <!-- User Picture -->
+                <div class="row valign-wrapper">
+                    <div class="col s4 xl5">
+                        <img class="circle responsive-img" src="{{ user.profile_image }}"
+                            alt="Silhouette of a woman">
+                    </div>
+                <!-- User Username & Bio -->
+                    <div class="col profile-username s8 xl9 center-align">
+                        {% if user.f_name %}
+                        <span class="card-title">{{ user.f_name}}
+                            {{ user.l_name }}</span>
+                        <p class="center-align">@{{ user.username }}</p>
+                        {% else %}
+                        <span class="card-title">{{ user.username }}</span>
+                        {% endif %}
+                        <div class="divider"></div>
+                        <p>{% if user.bio %} {{ user.bio }} {% else %} {{ user.username }} hasn't added anything here yet... {% endif %}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+</div>
+{% endif %}
+<h2 class="center-align white-text">Posts</h2>
 {% for post in posts %}
 <div class="row">
     {% if current_user.username %}
