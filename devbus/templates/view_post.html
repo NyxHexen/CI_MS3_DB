@@ -146,7 +146,7 @@
     <form id="new_comment" class="col s12 m10 offset-m1 l8 offset-l2 center-align new" method="POST">
         <fieldset class="card valign-wrapper">
             {{ form.hidden_tag() }}
-            <legend class="visually-hidden">Post Comment</legend>
+            <legend class="hide">Post Comment</legend>
             <div class="col s4 m3 xl2 grey lighten-1 card-panel comment-user-info">
                 <img src="{{ current_user.profile_image }}" alt="User's profile picture" class="circle responsive-img">
                 <span>Code Area</span>
@@ -173,11 +173,11 @@
                     {% endif %}
                     {{ form.comment_content.label }}
                 </div>
-                <div class="input-field col s12 visually-hidden code-switch">
+                <div class="input-field col s12 hide code-switch">
                     {{ form.code_language(class="autocomplete") }}
                     {{ form.code_language.label }}
                 </div>
-                <div class="input-field col s12 visually-hidden code-switch">
+                <div class="input-field col s12 hide code-switch">
                     {% if form.code_content.errors %}
                     {{ form.code_content(class="materialize-textarea grey darken-4 white-text invalid") }}
                     <div class="invalid-feedback">
@@ -188,7 +188,7 @@
                     {% else %}
                     {{ form.code_content(class="materialize-textarea grey darken-4 white-text") }}
                     {% endif %}
-                    {{ form.code_content.label(class="visually-hidden") }}
+                    {{ form.code_content.label(class="hide") }}
                 </div>
                 {{ form.submit(class="waves-effect waves-light btn-small yellow") }}
             </div>

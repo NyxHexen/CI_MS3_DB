@@ -53,11 +53,11 @@
                 {% endif %}
                 {{ form.post_content.label }}
             </div>
-            <div class="input-field col s6 visually-hidden code-switch">
+            <div class="input-field col s6 hide code-switch">
                 {{ form.code_language(class="autocomplete") }}
                 {{ form.code_language.label }}
             </div>
-            <div class="input-field col s12 visually-hidden code-switch">
+            <div class="input-field col s12 hide code-switch">
                 {% if form.code_content.errors %}
                 {{ form.code_content(class="materialize-textarea grey darken-4 white-text invalid") }}
                 <div class="invalid-feedback">
@@ -68,7 +68,7 @@
                 {% else %}
                 {{ form.code_content(class="materialize-textarea grey darken-4 white-text") }}
                 {% endif %}
-                {{ form.code_content.label(class="visually-hidden") }}
+                {{ form.code_content.label(class="hide") }}
             </div>
             <div class="input-field col s12">
                 {{ form.submit(class="waves-effect waves-light btn yellow") }}

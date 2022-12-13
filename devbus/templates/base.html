@@ -47,8 +47,11 @@
                     <li><a href="{{ url_for('auth.profile')}}">My Profile</a></li>
                     {% else %}
                     <ul class="right hide-on-med-and-down">
-                        <li><a data-target="search-field--container" class="autocomplete-trigger"><i
-                                    class="material-icons">search</i><span class="hide">Show Search Field</span></a>
+                        <li>
+                            <a data-target="search-field--container" class="autocomplete-trigger">
+                            <i class="material-icons">search</i>
+                            <span class="hide">Show Search Field</span>
+                            </a>
                         </li>
                         <li><a href="{{ url_for('main.home')}}">Home</a></li>
                         <li><a href="{{ url_for('auth.signin')}}">Sign In</a></li>
@@ -106,13 +109,13 @@
             {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
             {% for category, message in messages %}
-            <div class="visually-hidden">
+            <div class="hide">
                 <span class="toast {{ category }}">{{ message }}</span>
             </div>
             {% endfor %}
             {% endif %}
             {% endwith %}
-            <h1 class="visually-hidden">{{ title }}</h1>
+            <h1 class="hide">{{ title }}</h1>
             {% block content%}
             {% endblock %}
         </div>
