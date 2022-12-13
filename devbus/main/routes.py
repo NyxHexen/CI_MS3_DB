@@ -21,10 +21,11 @@ def view_user(username):
 
 
 @main.route("/search", methods=["GET", "POST"])
+@main.route("/search/<filter>", methods=["GET", "POST"])
 @main.route("/search/<filter>/<arg>", methods=["GET", "POST"])
 @login_required
-def search_results(arg="", filter="user"):
-    if (arg == "" and filter == "user"):
+def search_results(arg="", filter=""):
+    if (arg == ""):
         arg = request.form.get('search_field')
         filter = request.form.get('filter_select')
     match filter:
@@ -32,10 +33,13 @@ def search_results(arg="", filter="user"):
             users = User.objects(username__icontains=arg)
             posts = Post.objects(created_by__in=users)
         case "lang":
+            users = User.objects(languages__icontains=arg)
             posts = Post.objects(code_language__icontains=arg)
         case _:
+            users = ""
             posts = Post.objects()
-    return render_template("search_results.html", posts=posts)
+    print(len(users), len(posts))
+    return render_template("search_results.html", posts=posts, users=users)
 
 
 @main.route("/_search/<filter>/<arg>", methods=["GET", "POST"])
