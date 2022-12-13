@@ -53,11 +53,11 @@ $('.collection-item').hover(function () {
 $('.new .switch label').on('mouseup', function () {
   if ($('#code_switch').is(':checked')) {
     $('.code-switch').each(function () {
-      $(this).addClass('visually-hidden')
+      $(this).addClass('hide')
     })
   } else if (!$('#code_switch').is(':checked')) {
     $('.code-switch').each(function () {
-      $(this).removeClass('visually-hidden')
+      $(this).removeClass('hide')
     })
   }
 })
@@ -137,7 +137,7 @@ $("#autocomplete-input")
       type: 'POST',
       success: function (response) {
         if (response == false) {
-          return 
+          return
         }
         for (key in response.items) {
           if (filter == "user") {
@@ -155,10 +155,16 @@ $("#autocomplete-input")
         $('input.autocomplete').autocomplete('open')
       },
       error: function (error) {
-        if (error.response == "404"){
+        if (error.response == "404") {
           console.log("Hurray!")
         }
         newData
       }
     });
   })
+
+let languages = ["Python", "C", "C++", "Java", 
+"C#", "Visual Basic", "JavaScript", "SQL", 
+"Assembly", "PHP", "R", "Go", "MATLAB", "Swift", 
+"Delphi", "Ruby", "Perl", "Rust", "CSS", "HTML", 
+"Materialize", "Tailwind", "AngularJS", "React"]
