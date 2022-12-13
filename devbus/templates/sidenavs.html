@@ -2,7 +2,7 @@
 {% if current_user.is_authenticated %}
 <div id="profile" class="row hide-on-small-and-down container">
     <div class="col m5 pull-m1 l4 pull-l2 xl3 pull-xl1">
-        <div class="card">
+        <div class="card z-depth-5">
             <div class="card-content">
                 <!-- User Picture -->
                 <div class="row">
@@ -34,7 +34,7 @@
 <div id="quickmenu" class="row hide-on-med-and-down container">
     <div class="col offset-l10">
         {% if current_user.is_authenticated %}
-        <div class="card card-content">
+        <div class="card card-content z-depth-5">
             <div class="collection">
                 <a href="{{ url_for('posts.new_post')}}" class="collection-item deep-purple-text text-darken-3">Create New Post</a>
                 <a href="{{ url_for('main.search_results', arg=current_user.username, filter='user') }}" class="collection-item deep-purple-text text-darken-3">View My Posts</a>
