@@ -11,7 +11,11 @@
 {% if loop.index % 2 == 0 %}
     <div class="col s12 m9 offset-m4 l8 offset-l2 xl4">
 {% else %}
+    {% if ( users | length ) % 2 != 0 and loop.last %}
+    <div class="col s12 m9 offset-m4 l8 offset-l2 xl4 offset-xl4">
+    {% else %}
     <div class="col s12 m9 offset-m4 l8 offset-l2 xl4 offset-xl2">
+    {% endif %}
 {% endif %}
         <div class="card">
             <div class="card-content squish">
