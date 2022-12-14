@@ -3,11 +3,11 @@ from flask import (
     flash, render_template,
     redirect, request, url_for, Blueprint)
 from flask_login import login_user, current_user, logout_user, login_required
-from devbus import bcrypt, app
+from devbus import bcrypt
 from devbus.auth.forms import (
     SignUpForm, SignInForm, UpdateProfileForm,
     DeleteAccountForm, ForgotPwdForm, NewPwdForm)
-from devbus.auth.utils import upload_image
+from devbus.auth.utils import upload_image, send_reset_email
 from devbus.utils.models import User, Post, Comment
 
 
@@ -103,10 +103,12 @@ def forgot_password():
     if form.validate_on_submit():
         user = User.objects.get(email=form.email.data)
         if user is not None:
-            token = user.generate_pwd_token()
-            form.email.data = url_for('auth.reset_password', token=token, _external=True)
-            return render_template("forgot_password.html", title="Forgotten Password?", form=form, token=token) # currently loads the token link in the email field
-            # url_for('auth.reset_password', token=token, _external=True) print the link to the token
+            send_reset_email(user)
+            flash(
+                '''Thanks! If you have an account with us 
+                you will shortly receive an e-mail 
+                with instructions on how to reset your password.''')
+            return redirect("/signin")
     return render_template("forgot_password.html", title="Forgotten Password?", form=form)
 
 

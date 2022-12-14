@@ -1,4 +1,7 @@
 import boto3, os, secrets, io
+from flask import url_for
+from flask_mail import Message
+import smtplib
 from botocore.exceptions import ClientError
 from PIL import Image
 
@@ -66,3 +69,26 @@ def resize_image(file):
     return to_memory
 
 
+def send_reset_email(user):
+    token = user.generate_pwd_token()
+    FROM = "noreply@devbus.com"
+    TO = user.email
+    message = f'''From: {FROM}\nTo: {TO}\nSubject: Your Password Reset Instructions
+Hey...happens to the best of us!
+
+Click the link below to  reset your password and get back to the fun!
+
+{url_for('auth.reset_password', token=token, _external=True)}
+
+If you did not make this request then simply ignore this email and no changes will be made.'''
+    try:
+        server = smtplib.SMTP("smtp.gmail.com", 587)
+        server.ehlo()
+        server.starttls()
+        server.login(os.environ.get("EMAIL_USER"),
+                     os.environ.get("EMAIL_PASS"))
+        server.sendmail(FROM, TO, message)
+        server.close()
+        print('successful')
+    except:
+        print('unsuccessful')
