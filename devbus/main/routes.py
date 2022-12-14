@@ -10,6 +10,7 @@ def home():
     return render_template("home.html",posts=posts)
 
 @main.route("/user/<username>")
+@login_required
 def view_user(username):
     try: 
         user = User.objects.get(username=username)
@@ -38,7 +39,6 @@ def search_results(arg="", filter=""):
         case _:
             users = ""
             posts = Post.objects()
-    print(len(users), len(posts))
     return render_template("search_results.html", posts=posts, users=users)
 
 
