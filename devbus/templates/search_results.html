@@ -4,47 +4,54 @@
 
 {% include 'sidenavs.html' %}
 
-{% if users != "" %}
-<h2 class="center-align white-text">Users</h2>
-<div class="user row">
-{% for user in users %}
-{% if loop.index % 2 == 0 %}
-    <div class="col s12 m9 offset-m4 l8 offset-l2 xl4">
-{% else %}
-    {% if ( users | length ) % 2 != 0 and loop.last %}
-    <div class="col s12 m9 offset-m4 l8 offset-l2 xl4 offset-xl4">
-    {% else %}
-    <div class="col s12 m9 offset-m4 l8 offset-l2 xl4 offset-xl2">
-    {% endif %}
+{% if user | length == 0 and posts | length == 0 %}
+<h3 class="center white-text">There's nothing here...</h3>
+<p class="center white-text">Please check your keyword and search filter and try again!</p>
 {% endif %}
-        <div class="card">
-            <div class="card-content squish">
-                <!-- User Picture -->
-                <div class="row valign-wrapper">
-                    <div class="col s4 xl5">
-                        <img class="circle responsive-img" src="{{ user.profile_image }}"
-                            alt="Silhouette of a woman">
-                    </div>
-                <!-- User Username & Bio -->
-                    <div class="col profile-username s8 xl9 center-align">
-                        {% if user.f_name %}
-                        <span class="card-title">{{ user.f_name}}
-                            {{ user.l_name }}</span>
-                        <p class="center-align">@{{ user.username }}</p>
-                        {% else %}
-                        <span class="card-title">{{ user.username }}</span>
-                        {% endif %}
-                        <div class="divider"></div>
-                        <p>{% if user.bio %} {{ user.bio }} {% else %} {{ user.username }} hasn't added anything here yet... {% endif %}</p>
+
+{% if users | length != 0 %}
+<div class="row center">
+    <div class="col s12">
+        <h2 class="center-align white-text">Users</h2>
+        <p class="white-text">{{ users | length }} users found:</p>
+        <small class="white-text">Swipe left/right to view search results.</small>
+        <div class="carousel">
+            {% for user in users %}
+            <a href="{{ url_for('main.view_user', username=user.username)}}" class="carousel-item card black-text">
+                <div class="card-content">
+                    <!-- User Picture -->
+                    <div class="row valign-wrapper">
+                        <div class="col s4 xl5">
+                            <img class="circle responsive-img" src="{{ user.profile_image }}"
+                                alt="Silhouette of a woman">
+                        </div>
+                        <!-- User Username & Bio -->
+                        <div class="col profile-username s8 xl9 center-align">
+                            {% if user.f_name %}
+                            <span class="card-title">{{ user.f_name}}
+                                {{ user.l_name }}</span>
+                            <p class="center-align">@{{ user.username }}</p>
+                            {% else %}
+                            <span class="card-title">{{ user.username }}</span>
+                            {% endif %}
+                            <div class="divider"></div>
+                            <p>{% if user.bio %} {{ user.bio }} {% else %} {{ user.username }} hasn't added anything
+                                here yet...
+                                {% endif %}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
+            {% endfor %}
         </div>
     </div>
-{% endfor %}
 </div>
 {% endif %}
+
+{% if users | length != 0 and posts | length != 0 %}
 <h2 class="center-align white-text">Posts</h2>
+{% endif %}
+
 {% for post in posts %}
 <div class="row">
     {% if current_user.username %}
@@ -58,7 +65,8 @@
                         <img src="{{ post.created_by.profile_image }}" alt="" class="circle responsive-img">
                     </div>
                     <div class="col s10">
-                        <a href="{{ url_for('main.view_user', username=post.created_by.username) }}">{{ post.created_by.username }}</a>
+                        <a
+                            href="{{ url_for('main.view_user', username=post.created_by.username) }}">{{ post.created_by.username }}</a>
                         <span class="grey-text">{{ post.created_date }}</span>
                         <div class="card-title-container">
                             <a href="{{ url_for('posts.view_post', id=post.id) }}"
@@ -98,11 +106,11 @@
                     </a>
                     <a href="{{ url_for('posts.new_comment', id=post.id)}}"
                         class="waves-effect waves-light btn right">Reply</a>
-                        {% if current_user == post.created_by %}
-                        <a href="{{ url_for('posts.edit_post', id=post.id)}}"
-                            class="waves-effect waves-light materialize-red lighten-1 btn white-text tooltipped right"
-                            data-position="left" data-tooltip="Edit Post"><i class="fa-solid fa-file-pen"></i></a>
-                        {% endif %}
+                    {% if current_user == post.created_by %}
+                    <a href="{{ url_for('posts.edit_post', id=post.id)}}"
+                        class="waves-effect waves-light materialize-red lighten-1 btn white-text tooltipped right"
+                        data-position="left" data-tooltip="Edit Post"><i class="fa-solid fa-file-pen"></i></a>
+                    {% endif %}
                     <a href="{{ url_for('posts.view_post', id=post.id)}}"
                         class="waves-effect btn-flat grey-text text-darken-2 right"><i
                             class="material-icons right small">chat</i><span>{{ post.comments|length }}
@@ -111,11 +119,11 @@
                     {% else %}
                     <a href="{{ url_for('posts.new_comment', id=post.id)}}"
                         class="waves-effect waves-light deep-purple darken-3 btn white-text">Assist</a>
-                        {% if current_user == post.created_by %}
-                        <a href="{{ url_for('posts.edit_post', id=post.id)}}"
-                            class="waves-effect waves-light materialize-red white-text lighten-1 btn tooltipped"
-                            data-position="right" data-tooltip="Edit Post"><i class="fa-solid fa-file-pen"></i></a>
-                        {% endif %}
+                    {% if current_user == post.created_by %}
+                    <a href="{{ url_for('posts.edit_post', id=post.id)}}"
+                        class="waves-effect waves-light materialize-red white-text lighten-1 btn tooltipped"
+                        data-position="right" data-tooltip="Edit Post"><i class="fa-solid fa-file-pen"></i></a>
+                    {% endif %}
                     <a href="{{ url_for('posts.view_post', id=post.id)}}"
                         class="waves-effect btn-flat grey-text text-darken-2 right">
                         <i class="material-icons small right">chat</i>
