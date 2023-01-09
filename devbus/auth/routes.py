@@ -147,7 +147,6 @@ def delete_user(id):
     posts = Post.objects(created_by=id)
     comments = Comment.objects(created_by=user.id)
     for comment in comments:
-        print(comment)
         comments_ref = Post.objects(comments=comment)
         subcomments_ref = Comment.objects(comments=comment)
         if comments_ref is not None:
