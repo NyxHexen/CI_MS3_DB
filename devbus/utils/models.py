@@ -1,5 +1,6 @@
 from datetime import datetime
 from flask_login import UserMixin
+from flask_mongoengine import BaseQuerySet
 from mongoengine import *
 from itsdangerous import URLSafeTimedSerializer
 from devbus import login_manager, app
@@ -11,7 +12,7 @@ def load_user(user_id):
 
 
 class User(Document, UserMixin):
-    meta = {'collection': 'users'}
+    meta = {'collection': 'users', 'queryset_class': BaseQuerySet}
     user_type = StringField(default='user')
     f_name = StringField(max_length=16)
     l_name = StringField(max_length=16)
@@ -33,7 +34,7 @@ class User(Document, UserMixin):
 
 
 class Subcomment(Document):
-    meta = {'collection': 'comments'}
+    meta = {'collection': 'comments', 'queryset_class': BaseQuerySet}
     comment_content = StringField(required=True)
     votes = DictField(default={"up": [], "down": []})
     created_by = ReferenceField(User)
@@ -41,7 +42,7 @@ class Subcomment(Document):
 
 
 class Comment(Document):
-    meta = {'collection': 'comments'}
+    meta = {'collection': 'comments', 'queryset_class': BaseQuerySet}
     comment_content = StringField(required=True)
     code_language = StringField()
     code_content = StringField()
@@ -52,7 +53,7 @@ class Comment(Document):
 
 
 class Post(Document):
-    meta = {'collection': 'posts'}
+    meta = {'collection': 'posts', 'queryset_class': BaseQuerySet}
     post_title = StringField(max_length=86)
     post_content = StringField()
     code_content = StringField()
