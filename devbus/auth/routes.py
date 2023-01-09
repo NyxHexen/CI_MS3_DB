@@ -27,7 +27,7 @@ def signup():
         user.save()
         flash("Account created successfully!", "light-green black-text lighten-2")
         return redirect(url_for('auth.signin'))
-    return render_template("signup.html", title="Sign Up", form=form)
+    return render_template("auth/signup.html", title="Sign Up", form=form)
 
 
 @auth.route("/signin", methods=["GET", "POST"])
@@ -45,7 +45,7 @@ def signin():
             return redirect(next) if next else redirect("/")
         else:
             flash('Login Unsuccessful. Please check your email or password.', 'materialize-red lighten-1')
-    return render_template("signin.html", title="License and Registration", form=form)
+    return render_template("auth/signin.html", title="License and Registration", form=form)
 
 
 @auth.route("/logout")
@@ -63,7 +63,7 @@ def profile():
         return redirect(f"/profile/_{current_user.id}/delete_user")
     elif form.validate_on_submit() and not bcrypt.check_password_hash(user.password, form.password.data):
         flash("Incorrect password. Please try again.", 'red')
-    return render_template("profile.html", title="Profile", user=user, form=form)
+    return render_template("auth/profile.html", title="Profile", user=user, form=form)
 
 
 @auth.route("/edit_profile", methods=["GET", "POST"])
@@ -93,7 +93,7 @@ def edit_profile():
         form.languages.data = current_user.languages
         form.bio.data = current_user.bio
         form.profile_image.data = current_user.profile_image
-    return render_template("edit_profile.html", title="Edit Profile", form=form)
+    return render_template("auth/edit_profile.html", title="Edit Profile", form=form)
 
 
 @auth.route("/forgot_password", methods=["GET", "POST"])
@@ -115,7 +115,7 @@ def forgot_password():
             else:
                 flash("Something happened... please try again!")
                 return redirect('/forgot_password')
-    return render_template("forgot_password.html", title="Forgotten Password?", form=form)
+    return render_template("auth/forgot_password.html", title="Forgotten Password?", form=form)
 
 
 @auth.route("/reset_password/<token>", methods=["GET", "POST"])
@@ -136,7 +136,7 @@ def reset_password(token):
         user.save()
         flash("Your password has been reset! You can now login.", "green")
         return redirect("/signin")
-    return render_template("reset_password.html", title="Reset Password", form=form)
+    return render_template("auth/reset_password.html", title="Reset Password", form=form)
 
 
 @auth.route("/profile/_<id>/delete_user", methods=["GET", "POST"])
