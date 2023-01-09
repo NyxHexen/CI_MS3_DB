@@ -53,11 +53,11 @@
     {% if posts %}
     <div id="user_posts" class="row">
         <div class="col s12">
-            {% for post in posts %}
+            {% for post in posts.items %}
                 {% if loop.index % 2 == 0 %}
                     <div class="col s12 m6 xl5">
                 {% else %}
-                    {% if ( posts | length ) % 2 != 0 and loop.last %}
+                    {% if ( posts.items | length ) % 2 != 0 and loop.last %}
                     <div class="col s12 m6 offset-m3">
                     {% else %}
                     <div class="col s12 m6 xl5 offset-xl1">
@@ -84,7 +84,7 @@
                                         thumb_down
                                     </i>{{ post.votes.down | length}}</span>
                                 {% endif %}
-                                <a href="#" class="btn-flat red-text right">View Post</a>
+                                <a href="{{ url_for('posts.view_post', id=post.id) }}" class="btn-flat red-text right">View Post</a>
                             </div>
                         </div>
                     </div>

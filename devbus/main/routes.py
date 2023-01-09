@@ -19,8 +19,12 @@ def home():
 @login_required
 def view_user(username):
     try: 
+        try:
+            page_num = int(request.args.get('page'))
+        except:
+            page_num = 1
         user = User.objects.get(username=username)
-        posts = Post.objects(created_by=user.id) if user is not None else None
+        posts = Post.objects(created_by=user.id).paginate(page=page_num, per_page=6) if user is not None else None
         return render_template("view_user.html", user=user, posts=posts)
     except DoesNotExist:
         flash("User you are looking for does not exist or has been deactivated", "red")
