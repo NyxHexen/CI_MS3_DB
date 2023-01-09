@@ -103,12 +103,16 @@ def forgot_password():
     if form.validate_on_submit():
         user = User.objects.get(email=form.email.data)
         if user is not None:
-            send_reset_email(user)
-            flash(
+            reset_email = send_reset_email(user)
+            if reset_email is not False:
+                flash(
                 '''Thanks! If you have an account with us 
                 you will shortly receive an e-mail 
                 with instructions on how to reset your password.''')
-            return redirect("/signin")
+                return redirect("/signin")
+            else:
+                flash("Something happened... please try again!")
+                return redirect('/forgot_password')
     return render_template("forgot_password.html", title="Forgotten Password?", form=form)
 
 

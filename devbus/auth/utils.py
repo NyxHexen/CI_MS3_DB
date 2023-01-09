@@ -1,5 +1,5 @@
 import boto3, os, secrets, io
-from flask import url_for
+from flask import url_for, redirect, flash
 from flask_mail import Message
 import smtplib
 from botocore.exceptions import ClientError
@@ -89,6 +89,5 @@ If you did not make this request then simply ignore this email and no changes wi
                      os.environ.get("EMAIL_PASS"))
         server.sendmail(FROM, TO, message)
         server.close()
-        print('successful')
     except:
-        print('unsuccessful')
+        return False
