@@ -33,6 +33,7 @@ def signup():
 @auth.route("/signin", methods=["GET", "POST"])
 def signin():
     if current_user.is_authenticated:
+        flash("You are already logged in!", "yellow black-text")
         return redirect("/")
     form = SignInForm()
     if form.validate_on_submit():
@@ -98,6 +99,7 @@ def edit_profile():
 @auth.route("/forgot_password", methods=["GET", "POST"])
 def forgot_password():
     if current_user.is_authenticated: 
+        flash("You are already logged in!", "yellow black-text")
         return redirect("/")
     form = ForgotPwdForm()
     if form.validate_on_submit():
@@ -121,9 +123,7 @@ def reset_password(token):
     if current_user.is_authenticated:
         flash("You are already logged in!", "yellow black-text")
         return redirect("/")
-
     form = NewPwdForm()
-
     try:
         user_id = User.verify_pwd_token(token)
     except:
