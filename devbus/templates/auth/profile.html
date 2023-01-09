@@ -51,7 +51,7 @@
                     </div>
                 </div>
                 <div class="card-action center-align">
-                    <a class="waves-effect waves-light btn red white-text">Change Password</a>
+                    <a href="{{ url_for('auth.change_password') }}"class="waves-effect waves-light btn red white-text">Change Password</a>
                     <a href="{{ url_for('auth.edit_profile') }}" class="waves-effect waves-light btn">Update
                         Profile</a>
                     <a href="#delete_user"

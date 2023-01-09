@@ -155,6 +155,20 @@ class NewPwdForm(FlaskForm):
         if not is_strong_password:
             raise ValidationError('Password should contain an uppercase letter, a lowercase letter, a number, and a symbol.')
 
+class ChangePwdForm(FlaskForm):
+    old_password = PasswordField('Old Password',
+                            validators=[DataRequired(), Length(min=8, max=32)])
+    new_password = PasswordField('New Password',
+                            validators=[DataRequired(), Length(min=8, max=32)])
+    confirm_password = PasswordField('Confirm Password',
+                            validators=[DataRequired(), Length(max=32), EqualTo('password')])
+    submit = SubmitField('Update Password')
+
+    def validate_password(self, password):
+        is_strong_password = True if password_check(password.data) else False
+        if not is_strong_password:
+            raise ValidationError('Password should contain an uppercase letter, a lowercase letter, a number, and a symbol.')
+
 class DeleteAccountForm(FlaskForm):
     password = PasswordField('Password',
                             validators=[DataRequired()])

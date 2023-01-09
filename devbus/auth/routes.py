@@ -6,7 +6,8 @@ from flask_login import login_user, current_user, logout_user, login_required
 from devbus import bcrypt
 from devbus.auth.forms import (
     SignUpForm, SignInForm, UpdateProfileForm,
-    DeleteAccountForm, ForgotPwdForm, NewPwdForm)
+    DeleteAccountForm, ForgotPwdForm, NewPwdForm,
+    ChangePwdForm)
 from devbus.auth.utils import upload_image, send_reset_email
 from devbus.utils.models import User, Post, Comment
 
@@ -137,6 +138,18 @@ def reset_password(token):
         flash("Your password has been reset! You can now login.", "green")
         return redirect("/signin")
     return render_template("auth/reset_password.html", title="Reset Password", form=form)
+
+@auth.route("/profile/change_password", methods=["GET", "POST"])
+@login_required
+def change_password():
+    form = ChangePwdForm()
+    user = User.objects.get(id=current_user.id)
+    if form.validate_on_submit():
+        user.password = bcrypt.generate_password_hash(form.new_password.data).decode('utf-8')
+        user.save()
+        flash("Your password has been reset! You can now login.", "green")
+        return redirect("/signin")
+    return render_template("auth/change_password.html", title="Reset Password", form=form)
 
 
 @auth.route("/profile/_<id>/delete_user", methods=["GET", "POST"])
