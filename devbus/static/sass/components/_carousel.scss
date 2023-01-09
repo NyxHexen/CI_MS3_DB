@@ -45,8 +45,8 @@
 
   .carousel-item {
     visibility: hidden;
-    width: $carousel-item-width;
-    height: $carousel-item-height;
+    width: 275px;
+    height: fit-content;
     position: absolute;
     top: 0;
     left: 0;

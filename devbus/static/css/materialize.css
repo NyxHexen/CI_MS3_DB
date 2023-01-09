@@ -7552,8 +7552,8 @@ input[type=range]::-ms-thumb {
 }
 .carousel .carousel-item {
   visibility: hidden;
-  width: 200px;
-  height: 200px;
+  width: 275px;
+  height: fit-content;
   position: absolute;
   top: 0;
   left: 0;

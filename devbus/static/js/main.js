@@ -3,6 +3,7 @@ $(document).ready(function () {
   $('select').formSelect();
   $('.tooltipped').tooltip();
   $('.modal').modal();
+  $('.carousel').carousel();
 
   if ($('.toast')) {
     $('.toast').each(function () {
