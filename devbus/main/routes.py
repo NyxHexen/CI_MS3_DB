@@ -6,8 +6,14 @@ main = Blueprint("main", "__name__")
 
 @main.route("/")
 def home():
-    posts = Post.objects()
-    return render_template("home.html",posts=posts)
+    try:
+        page_num = int(request.args.get('page'))
+    except:
+        page_num = 1
+    posts = Post.objects.paginate(
+        page=page_num, 
+        per_page=2)
+    return render_template("home.html", posts=posts, page_num=(1 if page_num is None else page_num))
 
 @main.route("/user/<username>")
 @login_required
