@@ -306,6 +306,10 @@ a[data-tooltip="Edit Post"] {
       rgba(0, 0, 0, 0) 100%);
 }
 
+.social-media-icon{
+  font-size: 3rem;
+  margin: 0 0 1rem;
+}
 
 /* --------------------------------------------------------------------------- MEDIA QUERIES */
 @media only screen and (min-width: 993px) {
