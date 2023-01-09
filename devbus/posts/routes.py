@@ -42,9 +42,14 @@ def edit_post(id):
 @posts.route("/posts/<post_id>/<comment_id>", methods=["GET", "POST"])
 @login_required
 def view_comment(post_id, comment_id):
+    try:
+        page_num = int(request.args.get('page'))
+    except:
+        page_num = 1
     post = Post.objects.get(id=post_id)
     comment = Comment.objects.get(id=comment_id)
-    return render_template("view_comment.html", post=post, comment=comment)
+    subcomments = Comment.objects.paginate_field('comments', page=page_num, per_page=1, doc_id=comment_id)
+    return render_template("view_comment.html", post=post, comment=comment, subcomments=subcomments, page_num=page_num)
 
 
 @posts.route("/posts/<id>/reply", methods=["GET", "POST"])
@@ -89,8 +94,13 @@ def edit_comment(post_id, comment_id):
 @posts.route("/posts/<post_id>/<comment_id>/reply", methods=["GET", "POST"])
 @login_required
 def new_subcomment(post_id, comment_id):
+    try:
+        page_num = int(request.args.get('page'))
+    except:
+        page_num = 1
     post = Post.objects.get(id=post_id)
     comment = Comment.objects.get(id=comment_id)
+    subcomments = Comment.objects.paginate_field('comments', page=page_num, per_page=1, doc_id=comment_id)
     sub_form = NewSubCommentForm()
     if sub_form.validate_on_submit():
         sub_comment = Subcomment(created_by=current_user.id)
@@ -101,7 +111,7 @@ def new_subcomment(post_id, comment_id):
         flash("Your comment has been posted!", 'message')
         return redirect(f"/posts/{post_id}/{comment_id}")
     return render_template(
-        "view_comment.html", post=post, comment=comment, sub_form=sub_form
+        "view_comment.html", post=post, comment=comment, sub_form=sub_form, subcomments=subcomments, page_num=page_num
     )
 
 
