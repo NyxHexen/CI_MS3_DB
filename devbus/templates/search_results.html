@@ -18,7 +18,7 @@
     <div class="col s12 m9 offset-m4 l8 push-l2">
         <h2 class="center-align white-text">Users</h2>
         <p class="white-text">{{ users | length }} users found:</p>
-        <small class="white-text">Swipe left/right to view search results.</small>
+        <small class="white-text">Swipe left/right to view explore results.</small>
         <div class="carousel">
             {% for user in users %}
             <a href="{{ url_for('main.view_user', username=user.username)}}" class="carousel-item card black-text">
