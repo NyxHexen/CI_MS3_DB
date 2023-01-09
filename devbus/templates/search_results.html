@@ -4,14 +4,18 @@
 
 {% include 'sidenavs.html' %}
 
-{% if user | length == 0 and posts | length == 0 %}
-<h3 class="center white-text">There's nothing here...</h3>
-<p class="center white-text">Please check your keyword and search filter and try again!</p>
+{% if user | length == 0 and posts.items | length == 0 %}
+<div class="row">
+    <div class="col s12 m9 offset-m4 l8 push-l2">
+        <h3 class="center white-text">There's nothing here...</h3>
+        <p class="center white-text">Please check your keyword and search filter and try again!</p>
+    </div>
+</div>
 {% endif %}
 
 {% if users | length != 0 %}
 <div class="row center">
-    <div class="col s12">
+    <div class="col s12 m9 offset-m4 l8 push-l2">
         <h2 class="center-align white-text">Users</h2>
         <p class="white-text">{{ users | length }} users found:</p>
         <small class="white-text">Swipe left/right to view search results.</small>
@@ -48,11 +52,15 @@
 </div>
 {% endif %}
 
-{% if users | length != 0 and posts | length != 0 %}
-<h2 class="center-align white-text">Posts</h2>
+{% if users | length != 0 and posts.items | length != 0 %}
+<div class="row">
+    <div class="col s12 m9 offset-m4 l8 push-l2">
+        <h2 class="center-align white-text">Posts</h2>
+    </div>
+</div>
 {% endif %}
 
-{% for post in posts %}
+{% for post in posts.items %}
 <div class="row">
     {% if current_user.username %}
     <div class="col s12 m9 offset-m4 l8 push-l2">
@@ -136,4 +144,39 @@
         </div>
     </div>
     {% endfor %}
+
+    {% macro render_navigation(pagination, endpoint) %}
+    <div class="row">
+        <div class="col s12 m9 offset-m4 l8 push-l2 center">
+            <ul class=pagination>
+                {% if pagination.has_prev %}
+                <li class="waves-effect"><a href="{{ url_for(endpoint, page=page_num-1) }}"><i
+                            class="material-icons yellow-text">chevron_left</i></a></li>
+                {% else %}
+                <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                {% endif %}
+                {% for page in pagination.iter_pages() %}
+                {% if page %}
+                {% if page != pagination.page %}
+                <li class="waves-effect"><a class="yellow-text" href="{{ url_for(endpoint, page=page) }}">{{ page }}</a>
+                </li>
+                {% else %}
+                <li class="active"><a href="#!">{{ page }}</a></li>
+                {% endif %}
+                {% endif %}
+                {% if loop.last %}
+                {% if pagination.has_next %}
+                <li class="waves-effect"><a href="{{ url_for(endpoint, page=page_num+1) }}"><i
+                            class="material-icons yellow-text">chevron_right</i></a></li>
+                {% else %}
+                <li class="disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+                {% endif %}
+                {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% endmacro %}
+
+    {{ render_navigation(posts, 'main.home') }}
     {% endblock %}

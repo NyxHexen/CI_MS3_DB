@@ -32,20 +32,24 @@ def view_user(username):
 @main.route("/search/<filter>/<arg>", methods=["GET", "POST"])
 @login_required
 def search_results(arg="", filter=""):
+    try:
+        page_num = int(request.args.get('page'))
+    except:
+        page_num = 1
     if (arg == ""):
         arg = request.form.get('search_field')
         filter = request.form.get('filter_select')
     match filter:
         case "user":
             users = User.objects(username__icontains=arg)
-            posts = Post.objects(created_by__in=users)
+            posts = Post.objects(created_by__in=users).paginate(page=page_num, per_page=2)
         case "lang":
             users = User.objects(languages__icontains=arg)
-            posts = Post.objects(code_language__icontains=arg)
+            posts = Post.objects(code_language__icontains=arg).paginate(page=page_num, per_page=2)
         case _:
             users = ""
-            posts = Post.objects()
-    return render_template("search_results.html", posts=posts, users=users)
+            posts = Post.objects().paginate(page=page_num, per_page=2)
+    return render_template("search_results.html", posts=posts, users=users, page_num=page_num)
 
 
 @main.route("/_search/<filter>/<arg>", methods=["GET", "POST"])
