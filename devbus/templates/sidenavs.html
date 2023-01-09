@@ -38,7 +38,6 @@
             <div class="collection">
                 <a href="{{ url_for('posts.new_post')}}" class="collection-item deep-purple-text text-darken-3">Create New Post</a>
                 <a href="{{ url_for('main.search_results', arg=current_user.username, filter='user') }}" class="collection-item deep-purple-text text-darken-3">View My Posts</a>
-                <a href="#" class="collection-item deep-purple-text text-darken-3">View My Comments</a>
                 <a href="{{ url_for('auth.edit_profile')}}" class="collection-item deep-purple-text text-darken-3">Edit Profile</a>
             </div>
         </div>
