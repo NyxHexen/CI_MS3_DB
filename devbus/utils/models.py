@@ -49,7 +49,6 @@ class Comment(Document):
     votes = DictField(default={"up": [], "down": []})
     created_by = ReferenceField(User)
     created_date = DateField(default=datetime.utcnow)
-    is_verified = BooleanField(default=False)
 
 
 class Post(Document):
