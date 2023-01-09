@@ -132,7 +132,7 @@ $("#autocomplete-input")
     let arg = $('#autocomplete-input').val();
     let url = `/_search/${filter}/${arg}`
     let newData = {};
-    let username, profile_image_url;
+    let username;
     $.ajax({
       url: url,
       type: 'POST',
@@ -143,8 +143,7 @@ $("#autocomplete-input")
         for (key in response.items) {
           if (filter == "user") {
             username = response.items[key].username
-            profile_image_url = response.items[key].profile_image
-            newData[username] = profile_image_url
+            newData[username] = ""
           } else if (filter == "lang") {
             newData[response.items[key].code_language] = null
           }
