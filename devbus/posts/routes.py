@@ -10,8 +10,13 @@ posts = Blueprint("posts", "__name__")
 @posts.route("/posts/<id>", methods=["GET", "POST"])
 @login_required
 def view_post(id):
-    post = Post.objects.get(id=id)
-    return render_template("view_post.html", post=post)
+    try:
+        page_num = int(request.args.get('page'))
+    except:
+        page_num = 1
+    post = Post.objects.get_or_404(id=id)
+    comments = Post.objects.paginate_field('comments', page=page_num, per_page=1, doc_id=id)
+    return render_template("view_post.html", post=post, comments=comments, page_num=page_num)
 
 
 @posts.route("/posts/<id>/edit_post", methods=["GET", "POST"])
@@ -45,8 +50,13 @@ def view_comment(post_id, comment_id):
 @posts.route("/posts/<id>/reply", methods=["GET", "POST"])
 @login_required
 def new_comment(id):
+    try:
+        page_num = int(request.args.get('page'))
+    except:
+        page_num = 1
     post = Post.objects.get(id=id)
     form = NewCommentForm()
+    comments = Post.objects.paginate_field('comments', page=page_num, per_page=1, doc_id=id)
     if form.validate_on_submit():
         comment = Comment(created_by=current_user.id)
         form.populate_obj(comment)
@@ -55,7 +65,7 @@ def new_comment(id):
         post.save()
         flash("Your comment has been posted!", 'message')
         return redirect(f"/posts/{id}")
-    return render_template("view_post.html", post=post, form=form)
+    return render_template("view_post.html", post=post, form=form, comments=comments, page_num=page_num)
 
 
 @posts.route("/posts/<post_id>/<comment_id>/edit_reply", methods=["GET", "POST"])
