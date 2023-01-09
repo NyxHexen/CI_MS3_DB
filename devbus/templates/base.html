@@ -29,35 +29,29 @@
                 <a href="{{ url_for('main.home')}}" class="brand-logo hide-on-small-only">DevBus</a>
                 <a href="{{ url_for('main.home')}}" class="brand-logo hide-on-med-and-up">DB</a>
                 <a data-target="mobile-menu" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-                <a data-target="search-field--container" class="autocomplete-trigger hide-on-med-and-up right">
-                    <i class="material-icons">search</i>
-                    <span class="hide">Show/Hide Search</span>
-                </a>
                 {% if current_user.is_authenticated %}
                 <ul class="right">
-                    <li><a href="#log_out"
-                            class="hide-on-small-only waves-effect waves-light btn-small tooltipped modal-trigger"
-                            data-position="bottom" data-tooltip="Sign Out"><i
-                                class="fa-solid fa-right-to-bracket"></i></a></li>
-                </ul>
-                <ul class="right hide-on-med-and-down">
                     <li><a data-target="search-field--container" class="autocomplete-trigger" data-position="left"><i
                                 class="material-icons">search</i><span class="hide">Show/Hide
                                 Search</span></a></li>
-                    <li><a href="{{ url_for('auth.profile')}}">My Profile</a></li>
-                    {% else %}
-                    <ul class="right hide-on-med-and-down">
-                        <li>
-                            <a data-target="search-field--container" class="autocomplete-trigger">
-                            <i class="material-icons">search</i>
-                            <span class="hide">Show Search Field</span>
-                            </a>
-                        </li>
-                        <li><a href="{{ url_for('main.home')}}">Home</a></li>
-                        <li><a href="{{ url_for('auth.signin')}}">Sign In</a></li>
-                        <li><a href="{{ url_for('auth.signup')}}" class="waves-effect waves-light btn">Sign Up</a></li>
-                        {% endif %}
-                    </ul>
+                    <li class="hide-on-med-and-down"><a href="{{ url_for('auth.profile')}}">My Profile</a></li>
+                    <li><a href="#log_out"
+                        class="hide-on-small-only waves-effect waves-light btn-small tooltipped modal-trigger"
+                        data-position="bottom" data-tooltip="Sign Out"><i
+                            class="fa-solid fa-right-to-bracket"></i></a></li>
+                {% else %}
+                <ul class="right hide-on-med-and-down">
+                    <li>
+                        <a data-target="search-field--container" class="autocomplete-trigger">
+                        <i class="material-icons">search</i>
+                        <span class="hide">Show Search Field</span>
+                        </a>
+                    </li>
+                    <li><a href="{{ url_for('main.home')}}">Home</a></li>
+                    <li><a href="{{ url_for('auth.signin')}}">Sign In</a></li>
+                    <li><a href="{{ url_for('auth.signup')}}" class="waves-effect waves-light btn">Sign Up</a></li>
+                {% endif %}
+                </ul>
             </div>
         </nav>
         <ul class="sidenav" id="mobile-menu">
