@@ -154,16 +154,23 @@ $("#autocomplete-input")
   })
 
 
-$('a').each(function() {
-    if ($(this).data().hasOwnProperty('uid')){
+$('a').each(function () {
+  if ($(this).data().hasOwnProperty('uid')) {
+    if ($(this).data().hasOwnProperty('suid')) {
+      $(this).click(function () {
+        $('#delete_comment a').first().attr("href", `/${$(this).data("uid")}/${$(this).data("suid")}/delete_subcomment`);
+      })
+    } else {
       $(this).click(function () {
         $('#delete_comment a').first().attr("href", `/${$(this).data("uid")}/delete_comment`);
-    })
+      })
+    }
   }
 })
 
-let languages = ["Python", "C", "C++", "Java", 
-"C#", "Visual Basic", "JavaScript", "SQL", 
-"Assembly", "PHP", "R", "Go", "MATLAB", "Swift", 
-"Delphi", "Ruby", "Perl", "Rust", "CSS", "HTML", 
-"Materialize", "Tailwind", "AngularJS", "React"]
+let languages = ["Python", "C", "C++", "Java",
+  "C#", "Visual Basic", "JavaScript", "SQL",
+  "Assembly", "PHP", "R", "Go", "MATLAB", "Swift",
+  "Delphi", "Ruby", "Perl", "Rust", "CSS", "HTML",
+  "Materialize", "Tailwind", "AngularJS", "React"
+]

@@ -94,7 +94,7 @@
                 <span class="grey-text">{{ comment.created_date }}</span>
                 {% if current_user == comment.created_by %}
                 <a href="{{ url_for('posts.edit_comment', post_id=post.id, comment_id=comment.id)}}" class="crud-btn btn-flat blue-text">EDIT</a>
-                <a href="#delete_comment" data-uid="{{comment.id}}" class="crud-btn btn-flat red-text modal-trigger delete-comment">DELETE</a>
+                <a href="#delete_comment" data-uid="{{comment.id}}" class="crud-btn btn-flat red-text modal-trigger">DELETE</a>
                 {% endif %}
             </div>
             <div class="col s12 m10 card-content">

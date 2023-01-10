@@ -91,7 +91,7 @@
                 <span class="grey-text">{{ comment.created_date }}</span>
                 {% if current_user == comment.created_by %}
                 <a href="{{ url_for('posts.edit_comment', post_id=post.id, comment_id=comment.id)}}" class="crud-btn btn-flat blue-text">EDIT</a>
-                <a href="{{ url_for('posts.delete_comment', comment_id=comment.id)}}" class="crud-btn btn-flat red-text">DELETE</a>
+                <a href="#delete_comment" data-uid="{{comment.id}}" class="crud-btn btn-flat red-text modal-trigger">DELETE</a>
                 {% endif %}
             </div>
             <div class="col s12 m8 card-content">
@@ -146,7 +146,7 @@
                 <span class="grey-text">{{ subcomment.created_date }}</span>
                 {% if current_user == subcomment.created_by %}
                 <a href="{{ url_for('posts.edit_subcomment', post_id=post.id, comment_id=comment.id, subcomment_id=subcomment.id) }}" class="crud-btn btn-flat blue-text">EDIT</a>
-                <a href="{{ url_for('posts.delete_subcomment', comment_id=comment.id, subcomment_id=subcomment.id) }}" class="crud-btn btn-flat red-text">DELETE</a>
+                <a href="#delete_comment" data-uid="{{comment.id}}" data-suid="{{subcomment.id}}" class="crud-btn btn-flat red-text modal-trigger">DELETE</a>
                 {% endif %}
             </div>
             <div class="col s12 m10 card-content">
@@ -217,4 +217,17 @@
     </form>
 </div>
 {% endif %}
+{% endblock %}
+
+{% block modals %}
+<div id="delete_comment" class="modal">
+    <div class="modal-content">
+        <h4>Confirm Deletion</h4>
+        <p>Are you sure you want to delete your comment?</p>
+    </div>
+    <div class="modal-footer center">
+        <a href="#!" class="waves-effect waves-green btn-flat">Yes</a>
+        <a class="modal-close waves-effect waves-green btn-flat">No</a>
+    </div>
+</div>
 {% endblock %}
