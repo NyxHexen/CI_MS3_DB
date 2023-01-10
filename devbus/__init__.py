@@ -1,6 +1,7 @@
 import os
 from flask import Flask
-from flask_admin import Admin, model
+from flask_admin import Admin
+from flask_admin.menu import MenuLink
 from flask_bcrypt import Bcrypt
 from flask_mongoengine import MongoEngine
 from flask_login import LoginManager
@@ -13,7 +14,7 @@ app.config["MONGODB_SETTINGS"] = [{
     'host': os.environ.get("MONGO_URI"),
     'alias': 'default'
 }]
-app.config['FLASK_ADMIN_SWATCH'] = 'yeti'
+app.config['FLASK_ADMIN_SWATCH'] = 'lumen'
 app.secret_key = os.environ.get("SECRET_KEY")
 db = MongoEngine(app)
 bcrypt = Bcrypt(app)
@@ -32,7 +33,9 @@ app.register_blueprint(main)
 app.register_blueprint(posts)
 app.register_blueprint(errors)
 
-admin_page = Admin(app, name='DEVBUS', template_mode='bootstrap4', index_view=MyHomeView())
-admin_page.add_view(UserView(User, name='Users'))
-admin_page.add_view(PostView(Post, name='Posts'))
-admin_page.add_view(CommentView(Comment, name='Comments'))
+admin_page = Admin(app, name='DEVBUS', template_mode='bootstrap4', index_view=MyHomeView(menu_class_name="btn btn-primary btn-sm ml-1"))
+admin_page.add_view(UserView(User, name='Users', menu_class_name="btn btn-primary btn-sm ml-1"))
+admin_page.add_view(PostView(Post, name='Posts', menu_class_name="btn btn-primary btn-sm ml-1"))
+admin_page.add_view(CommentView(Comment, name='Comments', menu_class_name="btn btn-primary btn-sm ml-1"))
+admin_page.add_link(MenuLink(name="Log Out", url='/logout', class_name="btn btn-outline-warning btn-sm mr-3"))
+admin_page.add_link(MenuLink(name="Back to DB", url='/', class_name="btn btn-outline-primary btn-sm"))
