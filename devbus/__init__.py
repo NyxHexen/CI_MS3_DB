@@ -21,7 +21,9 @@ login_manager.login_view = 'auth.signin'
 from devbus.auth.routes import auth
 from devbus.main.routes import main
 from devbus.posts.routes import posts
+from devbus.errors.handlers import errors
 
 app.register_blueprint(auth)
 app.register_blueprint(main)
 app.register_blueprint(posts)
+app.register_blueprint(errors)

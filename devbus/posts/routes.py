@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, request, jsonify, flash
+from flask import Blueprint, render_template, redirect, request, jsonify, flash, abort
 from flask_login import login_required, current_user
 from devbus.utils.models import Post, Comment, Subcomment
 from devbus.posts.forms import NewPostForm, NewCommentForm, NewSubCommentForm
@@ -23,6 +23,8 @@ def view_post(id):
 @login_required
 def edit_post(id):
     post = Post.objects.get(id=id)
+    if post.created_by != current_user:
+        abort(403)
     form = NewPostForm()
     if form.validate_on_submit():
         form.populate_obj(post)
@@ -78,6 +80,8 @@ def new_comment(id):
 def edit_comment(post_id, comment_id):
     post = Post.objects.get(id=post_id)
     comment = Comment.objects.get(id=comment_id)
+    if comment.created_by != current_user:
+        abort(403)
     form = NewCommentForm()
     if form.validate_on_submit():
         form.populate_obj(comment)
@@ -121,6 +125,8 @@ def edit_subcomment(post_id, comment_id, subcomment_id):
     post = Post.objects.get(id=post_id)
     comment = Comment.objects.get(id=comment_id)
     subcomment = Comment.objects.get(id=subcomment_id)
+    if subcomment.created_by != current_user:
+        abort(403)
     form = NewSubCommentForm()
     if form.validate_on_submit():
         form.populate_obj(subcomment)

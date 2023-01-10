@@ -20,7 +20,25 @@ $(document).ready(function () {
       }
     })
   }
-});
+
+  // Redirect timer for error pages
+  if ($('section.error')) {
+    $(function () {
+      let timerDuration = 30
+      let timer = setTimeout(function() {
+        console.log("success")
+      }, timerDuration * 1000)
+      let countdown = setInterval(function() {
+        timerDuration = timerDuration - 1;
+        $('section.error .timer').text(timerDuration);
+        if (timerDuration == 0){
+          location.href='/'
+          clearInterval(countdown)
+        }
+      }, 1000)
+    })
+  };
+})
 
 // $(window).innerWidth() returns 17px less as a value
 if ($(window).innerWidth() + 17 <= 690) {
@@ -173,4 +191,4 @@ let languages = ["Python", "C", "C++", "Java",
   "Assembly", "PHP", "R", "Go", "MATLAB", "Swift",
   "Delphi", "Ruby", "Perl", "Rust", "CSS", "HTML",
   "Materialize", "Tailwind", "AngularJS", "React"
-]
+];

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="error section">
+    <div class="row">
+        <div class="col s12 m6 push-m6 l6 push-l3">
+            <div class="card deep-purple darken-3">
+                <div class="card-content center">
+                    <h1 class="center white-text">Whoops! There's nothing here... (404)</h1>
+                    <div class="card-panel">
+                        <p class="left-align">The page you are looking for has been moved or does not exist.
+                            Click one of the navigation links, or the button below to return to the home page.
+                        </p>
+                        <a href="/" class="btn waves-effect">Home</a>
+                    </div>
+                    <small class="white-text">You will automatically be redirected in <span class="timer">30</span>
+                        seconds</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
