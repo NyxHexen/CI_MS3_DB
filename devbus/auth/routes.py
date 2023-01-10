@@ -1,7 +1,7 @@
 import os
 from flask import (
     flash, render_template,
-    redirect, request, url_for, Blueprint)
+    redirect, request, url_for, Blueprint, abort)
 from flask_login import login_user, current_user, logout_user, login_required
 from devbus import bcrypt
 from devbus.auth.forms import (
@@ -155,8 +155,10 @@ def change_password():
 @auth.route("/profile/_<id>/delete_user", methods=["GET", "POST"])
 @login_required
 def delete_user(id):
-    logout_user()
     user = User.objects(id=id).first()
+    if (current_user != user):
+        abort(403)
+    logout_user()
     posts = Post.objects(created_by=id)
     comments = Comment.objects(created_by=user.id)
     for comment in comments:
