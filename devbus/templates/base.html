@@ -35,6 +35,11 @@
                                 class="material-icons">search</i><span class="hide">Show/Hide
                                 Search</span></a></li>
                     <li class="hide-on-med-and-down"><a href="{{ url_for('auth.profile')}}">My Profile</a></li>
+                    {% if current_user.is_active and current_user.is_authenticated and current_user.user_type == 'superuser' %}
+                    <li><a href="/admin"
+                        class="hide-on-small-only waves-effect waves-light btn-small tooltipped modal-trigger blue white-text"
+                        data-position="bottom" data-tooltip="Admin"><i class="fa-solid fa-user-gear"></i></a></li>
+                    {% endif %}
                     <li><a href="#log_out"
                         class="hide-on-small-only waves-effect waves-light btn-small tooltipped modal-trigger"
                         data-position="bottom" data-tooltip="Sign Out"><i

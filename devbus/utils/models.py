@@ -32,9 +32,13 @@ class User(Document, UserMixin):
         s = URLSafeTimedSerializer(app.config['SECRET_KEY'], 'reset_pwd')
         return s.loads(token, max_age=max_age)
 
+    def __unicode__(self):
+        return self.username
+
 
 class Subcomment(Document):
     meta = {'collection': 'comments', 'queryset_class': BaseQuerySet}
+    type = StringField(default="subcomment")
     comment_content = StringField(required=True)
     votes = DictField(default={"up": [], "down": []})
     created_by = ReferenceField(User)
@@ -43,6 +47,7 @@ class Subcomment(Document):
 
 class Comment(Document):
     meta = {'collection': 'comments', 'queryset_class': BaseQuerySet}
+    type = StringField(default="comment")
     comment_content = StringField(required=True)
     code_language = StringField()
     code_content = StringField()

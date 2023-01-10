@@ -1,0 +1,37 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+<div class="card">
+  <div class="card-body">
+    <h1>Hi, {{ current_user.username }}!</h1 class="justify-content-md-center">
+      <p>Here are some simple stats:</p>
+  </div>
+</div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Collection</th>
+          <th scope="col">Items</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Users</th>
+          <td>{{ users | length }}</td>
+        </tr>
+        <tr>
+          <th scope="row">Posts</th>
+          <td>{{ posts | length }}</td>
+        </tr>
+        <tr>
+          <th scope="row">Comments</th>
+          <td>{{ comments | length }}</td>
+        </tr>
+        <tr>
+          <th scope="row">Subcomments</th>
+          <td>{{ subcomments | length }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+{% endblock %}

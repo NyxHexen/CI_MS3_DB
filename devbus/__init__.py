@@ -1,5 +1,6 @@
 import os
 from flask import Flask
+from flask_admin import Admin, model
 from flask_bcrypt import Bcrypt
 from flask_mongoengine import MongoEngine
 from flask_login import LoginManager
@@ -12,6 +13,7 @@ app.config["MONGODB_SETTINGS"] = [{
     'host': os.environ.get("MONGO_URI"),
     'alias': 'default'
 }]
+app.config['FLASK_ADMIN_SWATCH'] = 'yeti'
 app.secret_key = os.environ.get("SECRET_KEY")
 db = MongoEngine(app)
 bcrypt = Bcrypt(app)
@@ -22,8 +24,15 @@ from devbus.auth.routes import auth
 from devbus.main.routes import main
 from devbus.posts.routes import posts
 from devbus.errors.handlers import errors
+from devbus.admin.views import UserView, PostView, CommentView, MyHomeView
+from devbus.utils.models import User, Post, Comment
 
 app.register_blueprint(auth)
 app.register_blueprint(main)
 app.register_blueprint(posts)
 app.register_blueprint(errors)
+
+admin_page = Admin(app, name='DEVBUS', template_mode='bootstrap4', index_view=MyHomeView())
+admin_page.add_view(UserView(User, name='Users'))
+admin_page.add_view(PostView(Post, name='Posts'))
+admin_page.add_view(CommentView(Comment, name='Comments'))
