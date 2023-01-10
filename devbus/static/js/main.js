@@ -25,14 +25,12 @@ $(document).ready(function () {
   if ($('section.error')) {
     $(function () {
       let timerDuration = 30
-      let timer = setTimeout(function() {
-        console.log("success")
-      }, timerDuration * 1000)
-      let countdown = setInterval(function() {
+      let timer = setTimeout(function () {}, timerDuration * 1000)
+      let countdown = setInterval(function () {
         timerDuration = timerDuration - 1;
         $('section.error .timer').text(timerDuration);
-        if (timerDuration == 0){
-          location.href='/'
+        if (timerDuration == 0) {
+          location.href = '/'
           clearInterval(countdown)
         }
       }, 1000)
@@ -116,7 +114,10 @@ $(function () {
           }
         },
         error: function (error) {
-          console.log(error);
+          M.toast({
+            html: "Something went wrong, please refresh the page and try again!",
+            classes: 'red'
+          })
         }
       });
     })
@@ -163,10 +164,10 @@ $("#autocomplete-input")
         $('input.autocomplete').autocomplete('open')
       },
       error: function (error) {
-        if (error.response == "404") {
-          console.log("Hurray!")
-        }
-        newData
+        newData["Something went wrong..."] = ""
+        $('input.autocomplete').autocomplete({
+          data: newData,
+        })
       }
     });
   })
