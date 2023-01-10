@@ -22,18 +22,19 @@ $(document).ready(function () {
   }
 
   // Redirect timer for error pages
-  if ($('section.error')) {
+  if ($('section.error').html() != undefined) {
     $(function () {
-      let timerDuration = 30
-      let timer = setTimeout(function () {}, timerDuration * 1000)
+      let timerDuration = 30;
+      let timer = setTimeout(function () {}, timerDuration * 1000);
       let countdown = setInterval(function () {
         timerDuration = timerDuration - 1;
         $('section.error .timer').text(timerDuration);
         if (timerDuration == 0) {
           location.href = '/'
           clearInterval(countdown)
+          clearTimeout(timer)
         }
-      }, 1000)
+      }, 1000);
     })
   };
 })
