@@ -52,6 +52,7 @@ $('.new .switch label').on('mouseup', function () {
   }
 })
 
+
 $(function () {
   $('.vote-button').each(function () {
     $(this).on('click', function (e) {
@@ -151,6 +152,15 @@ $("#autocomplete-input")
       }
     });
   })
+
+
+$('a').each(function() {
+    if ($(this).data().hasOwnProperty('uid')){
+      $(this).click(function () {
+        $('#delete_comment a').first().attr("href", `/${$(this).data("uid")}/delete_comment`);
+    })
+  }
+})
 
 let languages = ["Python", "C", "C++", "Java", 
 "C#", "Visual Basic", "JavaScript", "SQL", 
