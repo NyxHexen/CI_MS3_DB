@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="static/images/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="static/images/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="static/images/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="static/images/favicon_io/site.webmanifest">
     <!-- Material Icons CSS -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- PrismJS CSS -->
@@ -38,7 +43,8 @@
                     {% if current_user.is_active and current_user.is_authenticated and current_user.user_type == 'superuser' %}
                     <li><a href="/admin"
                             class="waves-effect waves-light btn-small tooltipped modal-trigger blue darken-2 white-text"
-                            data-position="bottom" data-tooltip="Admin Page"><i class="fa-solid fa-user-gear"></i><span class="hide">Open Admin Page</span></a></li>
+                            data-position="bottom" data-tooltip="Admin Page"><i class="fa-solid fa-user-gear"></i><span
+                                class="hide">Open Admin Page</span></a></li>
                     {% endif %}
                     <li><a href="#log_out"
                             class="hide-on-small-only waves-effect waves-light btn-small tooltipped modal-trigger"
@@ -67,7 +73,8 @@
             <div class="divider"></div>
             <li><a href="{{ url_for('posts.new_post')}}">Create
                     New Post</a></li>
-            <li><a href="{{ url_for('main.search_results', arg=current_user.username, filter='user') }}">View My Posts</a></li>
+            <li><a href="{{ url_for('main.search_results', arg=current_user.username, filter='user') }}">View My
+                    Posts</a></li>
             <div class="divider"></div>
             <li><a href="#log_out" class="waves-effect waves-light btn modal-trigger">Sign Out</a></li>
             {% else %}
@@ -86,7 +93,8 @@
                     <fieldset class="row z-depth-5 valign-wrapper">
                         <legend class="hide">Search Bar</legend>
                         <div class="input-field col s2">
-                            <button type="submit" class="btn yellow "><i class="material-icons">search</i><span class="hide">Open Search Bar</span></button>
+                            <button type="submit" class="btn yellow "><i class="material-icons">search</i><span
+                                    class="hide">Open Search Bar</span></button>
                         </div>
                         <div class="input-field col s6">
                             <input type="text" name="search_field" id="autocomplete-input" class="autocomplete">
