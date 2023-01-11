@@ -81,8 +81,8 @@ def send_reset_email(user):
     token = user.generate_pwd_token()
     FROM = "noreply@devbus.com"
     TO = user.email
-    message = f'''From: {FROM}\nTo: {TO}\n
-    Subject: Your Password Reset Instructions
+    SUBJECT = "Your Password Reset Instructions"
+    message = f'''From: {FROM}\nTo: {TO}\nSubject: {SUBJECT}
 Hey...happens to the best of us!
 
 Click the link below to  reset your password and get back to the fun!

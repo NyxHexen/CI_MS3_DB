@@ -1,4 +1,4 @@
-from flask import abort, redirect, url_for, request
+from flask import abort, redirect, flash
 from flask_admin import AdminIndexView, expose
 from flask_login import current_user
 from flask_admin.contrib.mongoengine import ModelView
@@ -21,6 +21,7 @@ class CustomView(ModelView):
                 abort(403)
             else:
                 # login
+                flash("You must login first to visit this page.", "red white-text")
                 return redirect("/signin")
 
 
@@ -35,6 +36,7 @@ class MyHomeView(AdminIndexView):
                 abort(403)
             else:
                 # login
+                flash("You must login first to visit this page.", "red white-text")
                 return redirect("/signin")
         users = User.objects()
         posts = Post.objects()
