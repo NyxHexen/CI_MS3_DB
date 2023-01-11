@@ -5,6 +5,7 @@ from flask_admin.menu import MenuLink
 from flask_bcrypt import Bcrypt
 from flask_mongoengine import MongoEngine
 from flask_login import LoginManager
+from flask_compress import Compress
 if os.path.exists("env.py"):
     import env
 
@@ -20,6 +21,7 @@ db = MongoEngine(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'auth.signin'
+Compress(app)
 
 from devbus.auth.routes import auth
 from devbus.main.routes import main
