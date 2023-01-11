@@ -48,8 +48,8 @@ $(document).ready(function () {
 if ($(window).innerWidth() + 17 <= 690) {
   $('.post .card-action span').each(function () {
     let text = $(this).text();
-    text = text.replace("comments", "");
-    text = text.replace("assists", "")
+    text = text.replace(/comments|comment/g, "");
+    text = text.replace(/assists|assist/g, "")
     $(this).text(text)
   });
 }
