@@ -37,6 +37,11 @@ $(document).ready(function () {
       }, 1000);
     })
   };
+
+  if ($("input[name='search_field']").html() != undefined) {
+    $("input.select-dropdown.dropdown-trigger").attr("id", "select-dropdown")
+    $("input.select-dropdown.dropdown-trigger").prepend("<label for='select-dropdown'>Filter By</label>")
+  }
 })
 
 // $(window).innerWidth() returns 17px less as a value

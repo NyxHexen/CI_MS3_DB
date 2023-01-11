@@ -5,7 +5,7 @@
     <form id="edit_post" class="col s12 m8 offset-m2 l6 offset-l3 grey lighten-3 center-align new" method="POST">
         <fieldset class="row">
             <legend class="deep-purple-text text-darken-3">Edit Post</legend>
-            <a href="#delete_post" class="waves-effect waves-light btn-small red white-text right modal-trigger"><i class="fa-solid fa-trash-can"></i><span class="hide">Delete Post</span></a>
+            <a href="#delete_post" class="waves-effect waves-light btn-small red darken-2 white-text right modal-trigger"><i class="fa-solid fa-trash-can"></i><span class="hide">Delete Post</span></a>
             {{ form.hidden_tag() }}
             {% for subfield in form.post_type %}
             <div class="col s6 m3">
@@ -77,7 +77,7 @@
             </div>
             <div class="input-field col s12">
                 {{ form.submit(class="waves-effect waves-light btn yellow") }}
-                <a href="{{ url_for('posts.view_post', id=post.id)}}" class="waves-effect waves-light btn red white-text">Cancel</a>
+                <a href="{{ url_for('posts.view_post', id=post.id)}}" class="waves-effect waves-light btn red darken-2 white-text">Cancel</a>
             </div>
         </fieldset>
     </form>

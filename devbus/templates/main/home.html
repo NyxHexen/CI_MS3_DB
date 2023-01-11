@@ -17,8 +17,9 @@
                         <img src="{{ post.created_by.profile_image }}" alt="" class="circle responsive-img">
                     </div>
                     <div class="col s10">
-                        <a href="{{ url_for('main.view_user', username=post.created_by.username) }}">{{ post.created_by.username }}</a>
-                        <span class="grey-text">{{ post.created_date }}</span>
+                        <a
+                            href="{{ url_for('main.view_user', username=post.created_by.username) }}">{{ post.created_by.username }}</a>
+                        <span class="grey-text text-darken-2">{{ post.created_date }}</span>
                         <div class="card-title-container">
                             <a href="{{ url_for('posts.view_post', id=post.id) }}"
                                 class="card-title flow-text black-text">{{ post.post_title }}</a>
@@ -57,11 +58,11 @@
                     </a>
                     <a href="{{ url_for('posts.new_comment', id=post.id)}}"
                         class="waves-effect waves-light btn right">Reply</a>
-                        {% if current_user == post.created_by %}
-                        <a href="{{ url_for('posts.edit_post', id=post.id)}}"
-                            class="waves-effect waves-light materialize-red lighten-1 btn white-text tooltipped right"
-                            data-position="left" data-tooltip="Edit Post"><i class="fa-solid fa-file-pen"></i></a>
-                        {% endif %}
+                    {% if current_user == post.created_by %}
+                    <a href="{{ url_for('posts.edit_post', id=post.id)}}"
+                        class="waves-effect waves-light red darken-2 btn white-text tooltipped right"
+                        data-position="left" data-tooltip="Edit Post"><i class="fa-solid fa-file-pen"></i><span class="hide">Edit Post</span></a>
+                    {% endif %}
                     <a href="{{ url_for('posts.view_post', id=post.id)}}"
                         class="waves-effect btn-flat grey-text text-darken-2 right"><i
                             class="material-icons right small">chat</i><span>{{ post.comments|length }}
@@ -70,11 +71,11 @@
                     {% else %}
                     <a href="{{ url_for('posts.new_comment', id=post.id)}}"
                         class="waves-effect waves-light deep-purple darken-3 btn white-text">Assist</a>
-                        {% if current_user == post.created_by %}
-                        <a href="{{ url_for('posts.edit_post', id=post.id)}}"
-                            class="waves-effect waves-light materialize-red white-text lighten-1 btn tooltipped"
-                            data-position="right" data-tooltip="Edit Post"><i class="fa-solid fa-file-pen"></i></a>
-                        {% endif %}
+                    {% if current_user == post.created_by %}
+                    <a href="{{ url_for('posts.edit_post', id=post.id)}}"
+                        class="waves-effect waves-light materialize-red white-text lighten-1 btn tooltipped"
+                        data-position="right" data-tooltip="Edit Post"><i class="fa-solid fa-file-pen"></i><span class="hide">Edit Post</span></a>
+                    {% endif %}
                     <a href="{{ url_for('posts.view_post', id=post.id)}}"
                         class="waves-effect btn-flat grey-text text-darken-2 right">
                         <i class="material-icons small right">chat</i>
@@ -89,31 +90,36 @@
     {% endfor %}
 
     {% macro render_navigation(pagination, endpoint) %}
+    {% if pagination.has_prev and pagination.has_next %}
     <div class="row">
         <div class="col s12 m9 offset-m4 l8 push-l2 center">
             <ul class=pagination>
                 {% if pagination.has_prev %}
-                <li class="waves-effect"><a href="{{ url_for(endpoint, page=page_num-1) }}"><i class="material-icons yellow-text">chevron_left</i></a></li>
+                <li class="waves-effect"><a href="{{ url_for(endpoint, page=page_num-1) }}"><i
+                            class="material-icons yellow-text">chevron_left</i></a></li>
                 {% else %}
                 <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
                 {% endif %}
                 {% for page in pagination.iter_pages() %}
-                    {% if page %}
-                    {% if page != pagination.page %}
-                        <li class="waves-effect"><a class="yellow-text" href="{{ url_for(endpoint, page=page) }}">{{ page }}</a></li>
-                    {% else %}
-                        <li class="active"><a href="#!">{{ page }}</a></li>
-                    {% endif %}
-                    {% endif %}
+                {% if page %}
+                {% if page != pagination.page %}
+                <li class="waves-effect"><a class="yellow-text" href="{{ url_for(endpoint, page=page) }}">{{ page }}</a>
+                </li>
+                {% else %}
+                <li class="active"><a href="#!">{{ page }}</a></li>
+                {% endif %}
+                {% endif %}
                 {% endfor %}
                 {% if pagination.has_next %}
-                    <li class="waves-effect"><a href="{{ url_for(endpoint, page=page_num+1) }}"><i class="material-icons yellow-text">chevron_right</i></a></li>
+                <li class="waves-effect"><a href="{{ url_for(endpoint, page=page_num+1) }}"><i
+                            class="material-icons yellow-text">chevron_right</i></a></li>
                 {% else %}
-                    <li class="disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+                <li class="disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
                 {% endif %}
             </ul>
         </div>
     </div>
+    {% endif %}
     {% endmacro %}
 
     {{ render_navigation(posts, 'main.home') }}

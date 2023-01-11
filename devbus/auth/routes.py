@@ -52,7 +52,7 @@ def signin():
             return redirect(next) if next else redirect("/")
         else:
             flash('Login Unsuccessful. Please check your email or password.',
-                  'materialize-red lighten-1')
+                  'red darken-2')
     return render_template("auth/signin.html",
                            title="License and Registration", form=form)
 
