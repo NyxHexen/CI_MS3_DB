@@ -30,58 +30,58 @@ $(document).ready(function () {
         timerDuration = timerDuration - 1;
         $('section.error .timer').text(timerDuration);
         if (timerDuration == 0) {
-          clearInterval(countdown)
-          clearTimeout(timer)
+          clearInterval(countdown);
+          clearTimeout(timer);
           location.href = '/';
         }
       }, 1000);
-    })
-  };
+    });
+  }
 
   if ($("input[name='search_field']").html() != undefined) {
-    $("input.select-dropdown.dropdown-trigger").attr("id", "select-dropdown")
-    $("input.select-dropdown.dropdown-trigger").prepend("<label for='select-dropdown'>Filter By</label>")
+    $("input.select-dropdown.dropdown-trigger").attr("id", "select-dropdown");
+    $("input.select-dropdown.dropdown-trigger").prepend("<label for='select-dropdown'>Filter By</label>");
   }
-})
+});
 
 // $(window).innerWidth() returns 17px less as a value
 if ($(window).innerWidth() + 17 <= 690) {
   $('.post .card-action span').each(function () {
     let text = $(this).text();
     text = text.replace(/comments|comment/g, "");
-    text = text.replace(/assists|assist/g, "")
-    $(this).text(text)
+    text = text.replace(/assists|assist/g, "");
+    $(this).text(text);
   });
 }
 
 $('.collection-item').hover(function () {
-  $(this).removeClass('deep-purple-text text-darken-3')
-  $(this).addClass('deep-purple darken-3 active')
+  $(this).removeClass('deep-purple-text text-darken-3');
+  $(this).addClass('deep-purple darken-3 active');
 }, function () {
-  $(this).removeClass('deep-purple darken-3 active')
-  $(this).addClass('deep-purple-text text-darken-3')
-})
+  $(this).removeClass('deep-purple darken-3 active');
+  $(this).addClass('deep-purple-text text-darken-3');
+});
 
 $('.new .switch label').on('mouseup', function () {
   if ($('#code_switch').is(':checked')) {
     $('.code-switch').each(function () {
-      $(this).addClass('hide')
-    })
+      $(this).addClass('hide');
+    });
   } else if (!$('#code_switch').is(':checked')) {
     $('.code-switch').each(function () {
-      $(this).removeClass('hide')
-    })
+      $(this).removeClass('hide');
+    });
   }
-})
+});
 
 
 $(function () {
   $('.vote-button').each(function () {
     $(this).on('click', function (e) {
       e.preventDefault();
-      let thisElem = $(this)
+      let thisElem = $(this);
       let thisCounter = $(this).children('span');
-      let siblingCounter = thisElem.siblings('.vote-button').children('span')
+      let siblingCounter = thisElem.siblings('.vote-button').children('span');
       let thisCounterCurrentNum = parseInt(thisCounter.text());
       let siblingCounterCurrentNum = parseInt(siblingCounter.text());
       $.ajax({
@@ -90,13 +90,13 @@ $(function () {
         success: function (response) {
           // If user is not logged in (server returns false), redirect to login page and trigger a toast
           if (!response) {
-            return window.location.replace(window.location.protocol + "//" + window.location.host + "/signin")
+            return window.location.replace(window.location.protocol + "//" + window.location.host + "/signin");
           } else {
             // Deconstruct; if button pressed is upvote assign response.length_up as thisCounterNewNum
             // and response_length_up as siblingCounterNewNum. If button pressed is down vote - reverse logic.
             let [thisCounterNewNum,
               siblingCounterNewNum
-            ] = thisElem.attr('href').match('/up') ? [response.length_up, response.length_down] : [response.length_down, response.length_up]
+            ] = thisElem.attr('href').match('/up') ? [response.length_up, response.length_down] : [response.length_down, response.length_up];
             // Check current state of vote buttons
             if (thisCounterCurrentNum < thisCounterNewNum && siblingCounterCurrentNum == siblingCounterNewNum) {
               // If User hasn't voted before
@@ -115,37 +115,37 @@ $(function () {
               siblingCounter.siblings('i').removeClass('accent-4').addClass('text-lighten-2');
             }
             // Update variable values from response
-            thisCounter.text(thisCounterNewNum)
-            siblingCounter.text(siblingCounterNewNum)
+            thisCounter.text(thisCounterNewNum);
+            siblingCounter.text(siblingCounterNewNum);
           }
         },
         error: function (error) {
           M.toast({
             html: "Something went wrong, please refresh the page and try again!",
             classes: 'red'
-          })
+          });
         }
       });
-    })
-  })
-})
+    });
+  });
+});
 
 $('[data-target="search-field--container"]').on('mousedown', function () {
-  $('#search').toggleClass('scale-out')
-})
+  $('#search').toggleClass('scale-out');
+});
 
 $("#search .autocomplete")
   .on('focusin', function () {
-    $("#search").children('.row').css("background-color", "rgba(255, 255, 255, 0.80)")
+    $("#search").children('.row').css("background-color", "rgba(255, 255, 255, 0.80)");
   }).on('focusout', function () {
-    $("#search").children('.row').css("background-color", "rgba(255, 255, 255, 0.55)")
-  })
+    $("#search").children('.row').css("background-color", "rgba(255, 255, 255, 0.55)");
+  });
 
 $("#autocomplete-input")
   .on('keyup', function () {
     let filter = $('#filter_select').find(":selected").val();
     let arg = $('#autocomplete-input').val();
-    let url = `/_search/${filter}/${arg}`
+    let url = `/_search/${filter}/${arg}`;
     let newData = {};
     let username;
     $.ajax({
@@ -153,30 +153,30 @@ $("#autocomplete-input")
       type: 'POST',
       success: function (response) {
         if (response == false) {
-          return
+          return;
         }
-        for (key in response.items) {
+        for (let key in response.items) {
           if (filter == "user") {
-            username = response.items[key].username
-            newData[username] = ""
+            username = response.items[key].username;
+            newData[username] = "";
           } else if (filter == "lang") {
-            newData[response.items[key].code_language] = null
+            newData[response.items[key].code_language] = null;
           }
         }
 
         $('input.autocomplete').autocomplete({
           data: newData,
-        })
-        $('input.autocomplete').autocomplete('open')
+        });
+        $('input.autocomplete').autocomplete('open');
       },
       error: function (error) {
-        newData["Something went wrong..."] = ""
+        newData["Something went wrong..."] = "";
         $('input.autocomplete').autocomplete({
           data: newData,
-        })
+        });
       }
     });
-  })
+  });
 
 
 $('a').each(function () {
@@ -184,18 +184,11 @@ $('a').each(function () {
     if ($(this).data().hasOwnProperty('suid')) {
       $(this).click(function () {
         $('#delete_comment a').first().attr("href", `/${$(this).data("uid")}/${$(this).data("suid")}/delete_subcomment`);
-      })
+      });
     } else {
       $(this).click(function () {
         $('#delete_comment a').first().attr("href", `/${$(this).data("uid")}/delete_comment`);
-      })
+      });
     }
   }
-})
-
-let languages = ["Python", "C", "C++", "Java",
-  "C#", "Visual Basic", "JavaScript", "SQL",
-  "Assembly", "PHP", "R", "Go", "MATLAB", "Swift",
-  "Delphi", "Ruby", "Perl", "Rust", "CSS", "HTML",
-  "Materialize", "Tailwind", "AngularJS", "React"
-];
+});
