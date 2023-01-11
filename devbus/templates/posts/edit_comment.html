@@ -53,7 +53,7 @@
                 {% if current_user == post.created_by %}
                 <a href="{{ url_for('posts.edit_post', id=post.id)}}"
                     class="waves-effect waves-light red darken-2 btn white-text tooltipped right"
-                    data-position="left" data-tooltip="Edit Post"><i class="fa-solid fa-file-pen"></i><span class="hide">Edit Post</span></a>
+                    data-position="left" data-tooltip="Edit Post"><i class="fa-solid fa-file-pen"></i><span class="visually-hidden">Edit Post</span></a>
                 {% endif %}
                 <a href="{{ url_for('posts.view_post', id=post.id)}}"
                     class="waves-effect btn-flat grey-text text-darken-2 right"><i
@@ -66,7 +66,7 @@
                 {% if current_user == post.created_by %}
                 <a href="{{ url_for('posts.edit_post', id=post.id)}}"
                     class="waves-effect waves-light materialize-red white-text lighten-1 btn tooltipped"
-                    data-position="right" data-tooltip="Edit Post"><i class="fa-solid fa-file-pen"></i><span class="hide">Edit Post</span></a>
+                    data-position="right" data-tooltip="Edit Post"><i class="fa-solid fa-file-pen"></i><span class="visually-hidden">Edit Post</span></a>
                 {% endif %}
                 <a href="{{ url_for('posts.view_post', id=post.id)}}"
                     class="waves-effect btn-flat grey-text text-darken-2 right">
@@ -125,7 +125,7 @@
                     {% else %}
                     {{ form.code_content(class="materialize-textarea grey darken-4 white-text") }}
                     {% endif %}
-                    {{ form.code_content.label(class="hide") }}
+                    {{ form.code_content.label(class="visually-hidden") }}
                 </div>
                 {{ form.submit(class="waves-effect waves-light btn-small yellow ") }}
             </div>

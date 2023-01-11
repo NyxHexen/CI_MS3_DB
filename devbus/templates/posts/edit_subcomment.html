@@ -53,7 +53,7 @@
                 {% if current_user == post.created_by %}
                 <a href="{{ url_for('posts.edit_post', id=post.id)}}"
                     class="waves-effect waves-light red darken-2 btn white-text tooltipped right"
-                    data-position="left" data-tooltip="Edit Post"><i class="fa-solid fa-file-pen"></i><span class="hide">Edit Post</span></a>
+                    data-position="left" data-tooltip="Edit Post"><i class="fa-solid fa-file-pen"></i><span class="visually-hidden">Edit Post</span></a>
                 {% endif %}
                 <a href="{{ url_for('posts.view_post', id=post.id)}}"
                     class="waves-effect btn-flat grey-text text-darken-2 right"><i
@@ -66,7 +66,7 @@
                 {% if current_user == post.created_by %}
                 <a href="{{ url_for('posts.edit_post', id=post.id)}}"
                     class="waves-effect waves-light materialize-red white-text lighten-1 btn tooltipped"
-                    data-position="right" data-tooltip="Edit Post"><i class="fa-solid fa-file-pen"></i><span class="hide">Edit Post</span></a>
+                    data-position="right" data-tooltip="Edit Post"><i class="fa-solid fa-file-pen"></i><span class="visually-hidden">Edit Post</span></a>
                 {% endif %}
                 <a href="{{ url_for('posts.view_post', id=post.id)}}"
                     class="waves-effect btn-flat grey-text text-darken-2 right">
@@ -136,7 +136,7 @@
     <div class="row">
         <form id="new_subcomment" class="col s11 offset-s1 m9 offset-m2 l7 offset-l3 center-align new" method="POST">
             <fieldset class="card valign-wrapper">
-                <legend class="hide">Comment SubComment</legend>
+                <legend class="visually-hidden">Comment SubComment</legend>
                 {{ form.hidden_tag() }}
                 <div class="col s4 m3 xl2 grey lighten-1 card-panel comment-user-info">
                     <img src="{{ current_user.profile_image }}" alt="User's profile picture" class="circle responsive-img">

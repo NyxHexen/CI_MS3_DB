@@ -56,7 +56,7 @@
                     <a href="#delete_user"
                         class="waves-effect waves-light btn-small modal-trigger red darken-2 right white-text tooltipped"
                         data-position="left" data-tooltip="Delete Account"><i class="fa-solid fa-trash-can"></i><span
-                            class="hide">Delete User</span></a>
+                            class="visually-hidden">Delete User</span></a>
                 </div>
             </div>
         </div>
@@ -69,7 +69,7 @@
 <div id="delete_user" class="modal">
     <form id="delete_user_form" method="POST">
         <fieldset>
-            <legend class="hide">Delete Account</legend>
+            <legend class="visually-hidden">Delete Account</legend>
             {{ form.hidden_tag() }}
             <div class="modal-content">
                 <h4>Confirm Deletion</h4>
