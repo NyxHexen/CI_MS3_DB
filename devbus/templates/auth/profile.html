@@ -32,7 +32,6 @@
                                 {% else %}
                                 <p class="user-field-content grey-text">Nothing here yet...</p>
                                 {% endif %}
-                                </p>
                             </div>
                         </div>
                         <div class="input-field col s12 m8 offset-m2 center-align">
@@ -51,7 +50,7 @@
                     </div>
                 </div>
                 <div class="card-action center-align">
-                    <a href="{{ url_for('auth.change_password') }}"class="waves-effect waves-light btn red darken-2 white-text">Change Password</a>
+                    <a href="{{ url_for('auth.change_password') }}" class="waves-effect waves-light btn red darken-2 white-text">Change Password</a>
                     <a href="{{ url_for('auth.edit_profile') }}" class="waves-effect waves-light btn">Update
                         Profile</a>
                     <a href="#delete_user"
