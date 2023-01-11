@@ -42,7 +42,7 @@
                     <li class="hide-on-med-and-down"><a href="{{ url_for('auth.profile')}}">My Profile</a></li>
                     {% if current_user.is_active and current_user.is_authenticated and current_user.user_type == 'superuser' %}
                     <li><a href="/admin"
-                            class="waves-effect waves-light btn-small tooltipped modal-trigger blue darken-2 white-text"
+                            class="waves-effect waves-light btn-small tooltipped blue darken-2 white-text hide-on-small-and-down"
                             data-position="bottom" data-tooltip="Admin Page"><i class="fa-solid fa-user-gear"></i><span
                                 class="hide">Open Admin Page</span></a></li>
                     {% endif %}
@@ -80,7 +80,13 @@
             <li>
                 <div class="divider"></div>
             </li>
-            <li><a href="#log_out" class="waves-effect waves-light btn modal-trigger">Sign Out</a></li>
+            {% if current_user.is_active and current_user.is_authenticated and current_user.user_type == 'superuser' %}
+            <li><a href="/admin"
+                    class="waves-effect waves-light btn-small blue darken-2 white-text"
+                    data-position="bottom" data-tooltip="Admin Page"><i class="fa-solid fa-user-gear"></i>Admin Page</a></li>
+            {% endif %}
+            <li><a href="#log_out" class="waves-effect waves-light btn-small tooltipped modal-trigger"><i
+                class="fa-solid fa-right-to-bracket"></i>Sign Out</a></li>
             {% else %}
             <li><a href="{{ url_for('main.home')}}">Home</a></li>
             <li><a href="{{ url_for('auth.signin')}}">Sign In</a></li>
