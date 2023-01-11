@@ -25,7 +25,7 @@ def view_user(username):
             page_num = 1
         user = User.objects.get(username=username)
         posts = Post.objects(created_by=user.id).paginate(page=page_num, per_page=6) if user is not None else None
-        return render_template("main/view_user.html", user=user, posts=posts)
+        return render_template("main/view_user.html", title=username, user=user, posts=posts)
     except DoesNotExist:
         flash("User you are looking for does not exist or has been deactivated", "red")
     return redirect("/")
@@ -53,7 +53,7 @@ def search_results(arg="", filter=""):
         case _:
             users = ""
             posts = Post.objects().paginate(page=page_num, per_page=2)
-    return render_template("main/search_results.html", posts=posts, users=users, page_num=page_num)
+    return render_template("main/search_results.html", title="Search Results", posts=posts, users=users, page_num=page_num)
 
 
 @main.route("/_search/<filter>/<arg>", methods=["GET", "POST"])

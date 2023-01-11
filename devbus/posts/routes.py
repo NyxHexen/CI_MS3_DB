@@ -16,7 +16,7 @@ def view_post(id):
         page_num = 1
     post = Post.objects.get_or_404(id=id)
     comments = Post.objects.paginate_field('comments', page=page_num, per_page=1, doc_id=id)
-    return render_template("posts/view_post.html", post=post, comments=comments, page_num=page_num)
+    return render_template("posts/view_post.html", title="View Post", post=post, comments=comments, page_num=page_num)
 
 
 @posts.route("/posts/<id>/edit_post", methods=["GET", "POST"])
@@ -38,7 +38,7 @@ def edit_post(id):
         form.code_language.data = post.code_language
         form.code_content.data = post.code_content
         form.post_type.data = post.post_type
-    return render_template("posts/edit_post.html", form=form, post=post)
+    return render_template("posts/edit_post.html", title="Edit Post", form=form, post=post)
 
 
 @posts.route("/posts/<post_id>/<comment_id>", methods=["GET", "POST"])
@@ -51,7 +51,7 @@ def view_comment(post_id, comment_id):
     post = Post.objects.get(id=post_id)
     comment = Comment.objects.get(id=comment_id)
     subcomments = Comment.objects.paginate_field('comments', page=page_num, per_page=1, doc_id=comment_id)
-    return render_template("posts/view_comment.html", post=post, comment=comment, subcomments=subcomments, page_num=page_num)
+    return render_template("posts/view_comment.html", title="View Comment", post=post, comment=comment, subcomments=subcomments, page_num=page_num)
 
 
 @posts.route("/posts/<id>/reply", methods=["GET", "POST"])
@@ -72,7 +72,7 @@ def new_comment(id):
         post.save()
         flash("Your comment has been posted!", 'message')
         return redirect(f"/posts/{id}")
-    return render_template("posts/view_post.html", post=post, form=form, comments=comments, page_num=page_num)
+    return render_template("posts/view_post.html", title="New Comment", post=post, form=form, comments=comments, page_num=page_num)
 
 
 @posts.route("/posts/<post_id>/<comment_id>/edit_reply", methods=["GET", "POST"])
@@ -92,7 +92,7 @@ def edit_comment(post_id, comment_id):
         form.comment_content.data = comment.comment_content
         form.code_language.data = comment.code_language
         form.code_content.data = comment.code_content
-    return render_template("posts/edit_comment.html", post=post, comment=comment, form=form)
+    return render_template("posts/edit_comment.html", title="Edit Comment", post=post, comment=comment, form=form)
 
 
 @posts.route("/posts/<post_id>/<comment_id>/reply", methods=["GET", "POST"])
@@ -115,7 +115,7 @@ def new_subcomment(post_id, comment_id):
         flash("Your comment has been posted!", 'message')
         return redirect(f"/posts/{post_id}/{comment_id}")
     return render_template(
-        "posts/view_comment.html", post=post, comment=comment, sub_form=sub_form, subcomments=subcomments, page_num=page_num
+        "posts/view_comment.html", title="New Subcomment", post=post, comment=comment, sub_form=sub_form, subcomments=subcomments, page_num=page_num
     )
 
 
@@ -137,6 +137,7 @@ def edit_subcomment(post_id, comment_id, subcomment_id):
         form.comment_content.data = subcomment.comment_content
     return render_template(
         "posts/edit_subcomment.html",
+        title="Edit Subcomment",
         post=post,
         comment=comment,
         subcomment=subcomment,
@@ -155,7 +156,7 @@ def new_post():
         post.save()
         flash("Your post has been created!", 'message')
         return redirect(f"/posts/{post.id}")
-    return render_template("posts/new_post.html", form=form)
+    return render_template("posts/new_post.html", title="New Post", form=form)
 
 
 @posts.route("/_update_votes/<id>/<vote>", methods=["GET", "POST"])

@@ -113,7 +113,9 @@
             {% endfor %}
             {% endif %}
             {% endwith %}
+            {% if title %}
             <h1 class="hide">{{ title }}</h1>
+            {% endif %}
             {% block content%}
             {% endblock %}
         </div>

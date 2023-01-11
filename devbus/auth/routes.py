@@ -149,7 +149,7 @@ def change_password():
         user.save()
         flash("Your password has been reset! You can now login.", "green")
         return redirect("/signin")
-    return render_template("auth/change_password.html", title="Reset Password", form=form)
+    return render_template("auth/change_password.html", title="Change Password", form=form)
 
 
 @auth.route("/profile/_<id>/delete_user", methods=["GET", "POST"])
