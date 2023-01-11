@@ -190,8 +190,8 @@
 <div class="row">
     <form id="new_subcomment" class="col s11 offset-s1 m9 offset-m2 l7 offset-l3 center-align new" method="POST">
         <fieldset class="card valign-wrapper">
-            {{ sub_form.hidden_tag() }}
             <legend class="hide">SubComment</legend>
+            {{ sub_form.hidden_tag() }}
             <div class="col s4 m3 xl2 grey lighten-1 card-panel comment-user-info">
                 <img src="{{ current_user.profile_image }}" alt="User's profile picture" class="circle responsive-img">
             </div>
