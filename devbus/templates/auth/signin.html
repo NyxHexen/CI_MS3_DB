@@ -6,8 +6,8 @@
         <div class="row">
             <form id="signin" class="signin-form col s12 center-align" method="POST">
                 <fieldset class="row">
-                    {{ form.hidden_tag() }}
                     <legend class="deep-purple-text text-darken-3">Sign In</legend>
+                    {{ form.hidden_tag() }}
                     <div class="input-field col s12">
                         {% if form.email.errors %}
                         {{ form.email(class="invalid") }}
