@@ -1,5 +1,5 @@
 from flask import render_template, Blueprint, redirect, flash, jsonify, request
-from flask_login import login_required, current_user
+from flask_login import login_required
 from devbus.utils.models import Post, User, DoesNotExist
 
 main = Blueprint("main", "__name__")
