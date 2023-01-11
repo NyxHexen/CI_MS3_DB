@@ -146,6 +146,7 @@
     {% endfor %}
 
     {% macro render_navigation(pagination, endpoint) %}
+    {% if pagination.has_prev and pagination.has_next %}
     <div class="row">
         <div class="col s12 m9 offset-m4 l8 push-l2 center">
             <ul class=pagination>
@@ -174,6 +175,7 @@
             </ul>
         </div>
     </div>
+    {% endif %}
     {% endmacro %}
 
     {{ render_navigation(posts, 'main.home') }}
