@@ -2,7 +2,7 @@ from datetime import datetime
 from flask_login import UserMixin
 from flask_mongoengine import BaseQuerySet
 from mongoengine import *
-from itsdangerous import URLSafeTimedSerializer, SignatureExpired
+from itsdangerous import URLSafeTimedSerializer
 from devbus import login_manager, app
 
 
