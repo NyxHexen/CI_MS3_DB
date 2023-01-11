@@ -11,14 +11,14 @@ $(document).ready(function () {
         M.toast({
           html: $(this).text(),
           classes: 'light-blue'
-        })
+        });
       } else {
         M.toast({
           html: $(this).text(),
           classes: $('.toast').attr('class')
-        })
+        });
       }
-    })
+    });
   }
 
   // Redirect timer for error pages
@@ -30,9 +30,9 @@ $(document).ready(function () {
         timerDuration = timerDuration - 1;
         $('section.error .timer').text(timerDuration);
         if (timerDuration == 0) {
-          location.href = '/'
           clearInterval(countdown)
           clearTimeout(timer)
+          location.href = '/';
         }
       }, 1000);
     })
@@ -94,7 +94,7 @@ $(function () {
           } else {
             // Deconstruct; if button pressed is upvote assign response.length_up as thisCounterNewNum
             // and response_length_up as siblingCounterNewNum. If button pressed is down vote - reverse logic.
-            [thisCounterNewNum,
+            let [thisCounterNewNum,
               siblingCounterNewNum
             ] = thisElem.attr('href').match('/up') ? [response.length_up, response.length_down] : [response.length_down, response.length_up]
             // Check current state of vote buttons
