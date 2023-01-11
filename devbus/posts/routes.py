@@ -18,7 +18,7 @@ def view_post(id):
     post = Post.objects.get_or_404(id=id)
     comments = Post.objects.paginate_field('comments',
                                            page=page_num,
-                                           per_page=1,
+                                           per_page=10,
                                            doc_id=id)
     return render_template("posts/view_post.html", title="View Post",
                            post=post, comments=comments, page_num=page_num)
@@ -58,7 +58,7 @@ def view_comment(post_id, comment_id):
     comment = Comment.objects.get(id=comment_id)
     subcomments = Comment.objects.paginate_field('comments',
                                                  page=page_num,
-                                                 per_page=1,
+                                                 per_page=10,
                                                  doc_id=comment_id)
     return render_template("posts/view_comment.html", title="View Comment",
                            post=post, comment=comment,
@@ -77,7 +77,7 @@ def new_comment(id):
     form = NewCommentForm()
     comments = Post.objects.paginate_field('comments',
                                            page=page_num,
-                                           per_page=1,
+                                           per_page=10,
                                            doc_id=id)
     if form.validate_on_submit():
         comment = Comment(created_by=current_user.id)
@@ -129,7 +129,7 @@ def new_subcomment(post_id, comment_id):
     comment = Comment.objects.get(id=comment_id)
     subcomments = Comment.objects.paginate_field('comments',
                                                  page=page_num,
-                                                 per_page=1,
+                                                 per_page=10,
                                                  doc_id=comment_id)
     sub_form = NewSubCommentForm()
     if sub_form.validate_on_submit():
