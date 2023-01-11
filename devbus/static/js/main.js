@@ -62,7 +62,7 @@ $('.collection-item').hover(function () {
   $(this).addClass('deep-purple-text text-darken-3');
 });
 
-$('.new .switch label').on('mouseup', function () {
+$('.switch label').on('mouseup', function () {
   if ($('#code_switch').is(':checked')) {
     $('.code-switch').each(function () {
       $(this).addClass('hide');
