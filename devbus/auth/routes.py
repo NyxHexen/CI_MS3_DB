@@ -3,6 +3,7 @@ from flask import (
     flash, render_template,
     redirect, request, url_for, Blueprint, abort)
 from flask_login import login_user, current_user, logout_user, login_required
+from itsdangerous import SignatureExpired
 from devbus import bcrypt
 from devbus.auth.forms import (
     SignUpForm, SignInForm, UpdateProfileForm,
@@ -14,19 +15,22 @@ from devbus.utils.models import User, Post, Comment
 
 auth = Blueprint('auth', '__name__')
 
+
 @auth.route("/signup", methods=["GET", "POST"])
 def signup():
     if current_user.is_authenticated:
         return redirect("/")
     form = SignUpForm()
     if form.validate_on_submit():
-        user = User(username = form.username.data,
-                    password = bcrypt.generate_password_hash(form.password.data).decode('utf-8'),
-                    f_name = form.f_name.data,
-                    l_name = form.l_name.data,
-                    email = form.email.data)
+        user = User(username=form.username.data),
+        password = (
+            bcrypt.generate_password_hash(form.password.data).decode('utf-8')),
+        f_name = form.f_name.data,
+        l_name = form.l_name.data,
+        email = form.email.data
         user.save()
-        flash("Account created successfully!", "light-green black-text lighten-2")
+        flash("Account created successfully!",
+              "light-green black-text lighten-2")
         return redirect(url_for('auth.signin'))
     return render_template("auth/signup.html", title="Sign Up", form=form)
 
@@ -39,14 +43,18 @@ def signin():
     form = SignInForm()
     if form.validate_on_submit():
         user = User.objects(email=form.email.data).first()
-        if user is not None and bcrypt.check_password_hash(user.password, form.password.data):
+        if ((user is not None) and
+                bcrypt.check_password_hash(user.password, form.password.data)):
             login_user(user, remember=form.remember.data)
             next = request.args.get('next')
-            flash(f"Hi, {user.f_name}!" if user.f_name else f"Welcome, {user.username}!")
+            flash((f"Hi, {user.f_name}!"
+                   if user.f_name else f"Welcome, {user.username}!"))
             return redirect(next) if next else redirect("/")
         else:
-            flash('Login Unsuccessful. Please check your email or password.', 'materialize-red lighten-1')
-    return render_template("auth/signin.html", title="License and Registration", form=form)
+            flash('Login Unsuccessful. Please check your email or password.',
+                  'materialize-red lighten-1')
+    return render_template("auth/signin.html",
+                           title="License and Registration", form=form)
 
 
 @auth.route("/logout")
@@ -58,13 +66,17 @@ def logout():
 @auth.route("/profile", methods=["GET", "POST"])
 @login_required
 def profile():
-    user = User.objects.get(id = current_user.id)
+    user = User.objects.get(id=current_user.id)
     form = DeleteAccountForm()
-    if form.validate_on_submit() and bcrypt.check_password_hash(user.password, form.password.data):
+    if (form.validate_on_submit()
+            and bcrypt.check_password_hash(user.password, form.password.data)):
         return redirect(f"/profile/_{current_user.id}/delete_user")
-    elif form.validate_on_submit() and not bcrypt.check_password_hash(user.password, form.password.data):
+    elif (form.validate_on_submit()
+            and not bcrypt.check_password_hash(
+                    user.password, form.password.data)):
         flash("Incorrect password. Please try again.", 'red')
-    return render_template("auth/profile.html", title="Profile", user=user, form=form)
+    return render_template("auth/profile.html", title="Profile", user=user,
+                           form=form)
 
 
 @auth.route("/edit_profile", methods=["GET", "POST"])
@@ -78,11 +90,13 @@ def edit_profile():
             current_user.profile_image = img_url
         elif form.profile_image.data is None:
             """
-            populate_obj method is destructive, so to ensure that the member's picture
-            doesn't get overwritten to the default one every time they update their profile
-            we must re-assign it's value from db before it is saved.
+            populate_obj method is destructive, so to ensure that the member's
+            picture doesn't get overwritten to the default one every time they
+            update their profile we must re-assign it's value from db before it
+            is saved.
             """
-            current_user.profile_image = User.objects.get(id=current_user.id).profile_image
+            current_user.profile_image = (User.objects.get(id=current_user.id)
+                                          .profile_image)
         current_user.save()
         flash('Got it! Your profile has been updated.', 'message')
         return redirect('/profile')
@@ -94,12 +108,13 @@ def edit_profile():
         form.languages.data = current_user.languages
         form.bio.data = current_user.bio
         form.profile_image.data = current_user.profile_image
-    return render_template("auth/edit_profile.html", title="Edit Profile", form=form)
+    return render_template("auth/edit_profile.html", title="Edit Profile",
+                           form=form)
 
 
 @auth.route("/forgot_password", methods=["GET", "POST"])
 def forgot_password():
-    if current_user.is_authenticated: 
+    if current_user.is_authenticated:
         flash("You are already logged in!", "yellow black-text")
         return redirect("/")
     form = ForgotPwdForm()
@@ -109,14 +124,16 @@ def forgot_password():
             reset_email = send_reset_email(user)
             if reset_email is not False:
                 flash(
-                '''Thanks! If you have an account with us 
-                you will shortly receive an e-mail 
-                with instructions on how to reset your password.''')
+                    '''Thanks! If you have an account with us
+                 you will shortly receive an e-mail
+                 with instructions on how to reset your password.''')
                 return redirect("/signin")
             else:
-                flash("Something happened... please try again!")
+                flash('''Connection timed out. Please try again in a
+                 few minutes.''', "yellow black-text")
                 return redirect('/forgot_password')
-    return render_template("auth/forgot_password.html", title="Forgotten Password?", form=form)
+    return render_template("auth/forgot_password.html",
+                           title="Forgotten Password?", form=form)
 
 
 @auth.route("/reset_password/<token>", methods=["GET", "POST"])
@@ -127,17 +144,21 @@ def reset_password(token):
     form = NewPwdForm()
     try:
         user_id = User.verify_pwd_token(token)
-    except:
-        flash("This token is no longer valid. Please try again!", "materialize-red")
+    except SignatureExpired:
+        flash("This token is no longer valid. Please try again!",
+              "materialize-red")
         return redirect("/signin")
 
     user = User.objects.get(id=user_id)
     if form.validate_on_submit():
-        user.password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user.password = (bcrypt.generate_password_hash(form.password.data)
+                         .decode('utf-8'))
         user.save()
         flash("Your password has been reset! You can now login.", "green")
         return redirect("/signin")
-    return render_template("auth/reset_password.html", title="Reset Password", form=form)
+    return render_template("auth/reset_password.html", title="Reset Password",
+                           form=form)
+
 
 @auth.route("/profile/change_password", methods=["GET", "POST"])
 @login_required
@@ -145,11 +166,13 @@ def change_password():
     form = ChangePwdForm()
     user = User.objects.get(id=current_user.id)
     if form.validate_on_submit():
-        user.password = bcrypt.generate_password_hash(form.new_password.data).decode('utf-8')
+        user.password = (bcrypt.generate_password_hash(form.new_password.data)
+                         .decode('utf-8'))
         user.save()
         flash("Your password has been reset! You can now login.", "green")
         return redirect("/signin")
-    return render_template("auth/change_password.html", title="Change Password", form=form)
+    return render_template("auth/change_password.html",
+                           title="Change Password", form=form)
 
 
 @auth.route("/profile/_<id>/delete_user", methods=["GET", "POST"])

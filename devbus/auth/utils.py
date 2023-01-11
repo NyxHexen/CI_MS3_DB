@@ -1,6 +1,8 @@
-import boto3, os, secrets, io
-from flask import url_for, redirect, flash
-from flask_mail import Message
+import boto3
+import os
+import secrets
+import io
+from flask import url_for
 import smtplib
 from botocore.exceptions import ClientError
 from PIL import Image
@@ -38,8 +40,9 @@ def upload_image(file):
                 Key=image_name,
                 Body=image)
     except ClientError:
-        raise Exception("There was a problem uploading the image to the AWS S3 bucket")
-    
+        raise Exception('''There was a problem uploading the
+                        image to the AWS S3 bucket''')
+
     image_url = s3_bucket_url + image_name
     return image_url
 
@@ -51,19 +54,24 @@ def resize_image(file):
 
     if image_w > image_h:
         image_diff = (image_w - image_h) / 2
-        cropped_image = image.crop((image_diff, 0, image_w - image_diff , image_h))
+        cropped_image = image.crop((image_diff, 0,
+                                    image_w - image_diff, image_h))
     elif image_h > image_w:
         image_diff = (image_h - image_w) / 2
-        cropped_image = image.crop((0, image_diff, image_w, image_h - image_diff))
+        cropped_image = image.crop((0, image_diff,
+                                    image_w, image_h - image_diff))
     else:
         cropped_image = None
 
     # Set size tuple to which image should be resized to
     # Resize the image to dimensions from size var
-    (cropped_image if cropped_image else image).thumbnail((350, 350), Image.Resampling.LANCZOS)
+    (cropped_image if cropped_image else image).thumbnail((350, 350),
+                                                          Image.Resampling
+                                                          .LANCZOS)
     # Save the image to an in-memory file
     to_memory = io.BytesIO()
-    (cropped_image if cropped_image else image).save(to_memory, format=image.format)
+    (cropped_image if cropped_image else image).save(to_memory,
+                                                     format=image.format)
     to_memory.seek(0)
 
     return to_memory
@@ -73,14 +81,16 @@ def send_reset_email(user):
     token = user.generate_pwd_token()
     FROM = "noreply@devbus.com"
     TO = user.email
-    message = f'''From: {FROM}\nTo: {TO}\nSubject: Your Password Reset Instructions
+    message = f'''From: {FROM}\nTo: {TO}\n
+    Subject: Your Password Reset Instructions
 Hey...happens to the best of us!
 
 Click the link below to  reset your password and get back to the fun!
 
 {url_for('auth.reset_password', token=token, _external=True)}
 
-If you did not make this request then simply ignore this email and no changes will be made.'''
+If you did not make this request then simply ignore this email and
+no changes will be made.'''
     try:
         server = smtplib.SMTP("smtp.gmail.com", 587)
         server.ehlo()
@@ -89,5 +99,5 @@ If you did not make this request then simply ignore this email and no changes wi
                      os.environ.get("EMAIL_PASS"))
         server.sendmail(FROM, TO, message)
         server.close()
-    except:
+    except BaseException as e:
         return False

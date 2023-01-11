@@ -2,7 +2,7 @@ from datetime import datetime
 from flask_login import UserMixin
 from flask_mongoengine import BaseQuerySet
 from mongoengine import *
-from itsdangerous import URLSafeTimedSerializer
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 from devbus import login_manager, app
 
 
@@ -19,14 +19,17 @@ class User(Document, UserMixin):
     username = StringField(min_length=6, max_length=16, unique=True)
     email = StringField(unique=True)
     password = StringField()
-    profile_image = StringField(default="https://ci-ms3-devbus.s3.eu-west-1.amazonaws.com/default.jpg")
+    profile_image = (
+        StringField(
+            default='''https://ci-ms3-devbus.s3.eu-west-1.
+            amazonaws.com/default.jpg'''))
     bio = StringField(max_length=126, default="")
     languages = ListField(default=[])
 
     def generate_pwd_token(self):
         s = URLSafeTimedSerializer(app.config['SECRET_KEY'], 'reset_pwd')
         return s.dumps(str(self.id))
-    
+
     @staticmethod
     def verify_pwd_token(token, max_age=1800):
         s = URLSafeTimedSerializer(app.config['SECRET_KEY'], 'reset_pwd')
