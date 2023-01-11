@@ -130,8 +130,8 @@
                 {{ form.submit(class="waves-effect waves-light btn-small yellow ") }}
             </div>
             <div class="col s12 card-action">
-                <a href="{{ url_for('posts.update_votes', id=comment.id, vote='up') }}"
-                    class="waves-effect waves-dark btn-flat vote-button" disabled>
+                <a role="button" href="{{ url_for('posts.update_votes', id=comment.id, vote='up') }}"
+                    class="waves-effect waves-dark btn-flat vote-button disabled">
                     <i
                         class="material-icons right green-text {% if current_user in comment.votes.up %} accent-4 {% else %} text-lighten-2 {% endif %}">
                         thumb_up
@@ -141,7 +141,7 @@
                     </span>
                 </a>
                 <a href="{{ url_for('posts.update_votes', id=comment.id, vote='down') }}"
-                    class="waves-effect btn-flat vote-button" disabled>
+                    class="waves-effect btn-flat vote-button disabled">
                     <i
                         class="material-icons right small red-text {% if current_user in comment.votes.down %} accent-4 {% else %} text-lighten-2 {% endif %}">
                         thumb_down
@@ -151,9 +151,9 @@
                     </span>
                 </a>
                 <a href="{{ url_for('posts.new_subcomment', post_id=post.id, comment_id=comment.id)}}"
-                    class="waves-effect waves-light btn-flat right" disabled>Reply</a>
+                    class="waves-effect waves-light btn-flat right disabled">Reply</a>
                 <a href="{{ url_for('posts.view_comment', post_id=post.id, comment_id=comment.id) }}"
-                    class="waves-effect btn-flat right" disabled>
+                    class="waves-effect btn-flat right disabled">
                     <i class="material-icons right small grey-text text-darken-2">chat</i>
                     <span>{{ comment.comments|length }}</span>
                 </a>
