@@ -112,11 +112,11 @@
                     {% endif %}
                     {{ form.comment_content.label }}
                 </div>
-                <div class="input-field col s12 {% if not post.code_content %} hide {% endif%} code-switch">
+                <div class="input-field col s12 {% if not post.code_content %} visually-hidden {% endif%} code-switch">
                     {{ form.code_language(class="autocomplete") }}
                     {{ form.code_language.label }}
                 </div>
-                <div class="input-field col s12 {% if not post.code_content %} hide {% endif%} code-switch">
+                <div class="input-field col s12 {% if not post.code_content %} visually-hidden {% endif%} code-switch">
                     {% if form.code_content.errors %}
                     {{ form.code_content(class="materialize-textarea grey darken-4 white-text invalid") }}
                     <div class="invalid-feedback">
