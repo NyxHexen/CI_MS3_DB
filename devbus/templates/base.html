@@ -31,6 +31,7 @@
 <body class="grey darken-3">
     <header>
         <nav>
+            <!-- Navbar -->
             <div class="container nav-wrapper">
                 <a href="{{ url_for('main.home')}}" class="brand-logo hide-on-small-only">DevBus</a>
                 <a href="{{ url_for('main.home')}}" class="brand-logo hide-on-med-and-up">DB</a>
@@ -66,6 +67,7 @@
                     </ul>
             </div>
         </nav>
+        <!-- Sidenav (Hamburger Menu) -->
         <ul class="sidenav" id="mobile-menu">
             {% if current_user.is_authenticated %}
             <li><a href="{{ url_for('auth.profile')}}">My Profile</a></li>
@@ -97,6 +99,7 @@
         </ul>
     </header>
     <main>
+        <!-- Search Bar -->
         <div class="container">
             <div class="row search-field--container">
                 <form class="col s12 m10 push-m1 l6 push-l3 scale-transition scale-out" id="search" method="POST"
@@ -125,6 +128,7 @@
                     </fieldset>
                 </form>
             </div>
+            <!-- Flash Messages -->
             {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
             {% for category, message in messages %}
@@ -143,6 +147,7 @@
             {% endblock %}
         </div>
     </main>
+    <!-- Footer -->
     <footer class="page-footer">
         <div class="container">
             <div class="row">
