@@ -26,11 +26,20 @@ class User(Document, UserMixin):
     languages = ListField(default=[])
 
     def generate_pwd_token(self):
+        """
+        Generates a timed serializer token, which is later sent
+        as an e-mail using flask-mail.
+        """
         s = URLSafeTimedSerializer(app.config['SECRET_KEY'], 'reset_pwd')
         return s.dumps(str(self.id))
 
     @staticmethod
     def verify_pwd_token(token, max_age=1800):
+        """ 
+        Accepts a timer serializer token and checks if
+        it's older than 30 minutes. Returns an error if
+        older than 30 minutes.
+        """
         s = URLSafeTimedSerializer(app.config['SECRET_KEY'], 'reset_pwd')
         return s.loads(token, max_age=max_age)
 
