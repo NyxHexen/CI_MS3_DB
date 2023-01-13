@@ -16,7 +16,7 @@ def home():
         per_page=10)
     return render_template("main/home.html",
                            posts=posts,
-                           page_num=(1 if page_num is None else page_num))
+                           page_num=page_num)
 
 
 @main.route("/user/<username>")
