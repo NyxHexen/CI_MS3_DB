@@ -9,7 +9,7 @@ from flask_compress import Compress
 if os.path.exists("env.py"):
     import env
 
-
+# App Setup
 app = Flask(__name__)
 app.config["MONGODB_SETTINGS"] = [{
     'host': os.environ.get("MONGO_URI"),
@@ -30,11 +30,13 @@ from devbus.errors.handlers import errors
 from devbus.admin.views import UserView, PostView, CommentView, MyHomeView
 from devbus.utils.models import User, Post, Comment
 
+# Flask Blueprint Registration
 app.register_blueprint(auth)
 app.register_blueprint(main)
 app.register_blueprint(posts)
 app.register_blueprint(errors)
 
+# Admin Views Registration
 admin_page = Admin(app, name='DEVBUS', template_mode='bootstrap4',
                    index_view=(MyHomeView(
                     menu_class_name="btn btn-primary btn-sm ml-1")))

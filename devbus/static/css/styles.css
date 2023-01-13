@@ -2,6 +2,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
 
+/* --------------------------------------------------------------------- Helper Styles */
+
 /* Accessibility */
 .visually-hidden {
   /* clip is deprecated, but still works and better than display: none; */
@@ -24,6 +26,8 @@
   padding-bottom: 0 !important;
 }
 
+
+/* --------------------------------------------------------------------- Base Styles */
 body {
   display: flex;
   min-height: 100vh;
@@ -39,6 +43,25 @@ nav {
   margin-bottom: 2rem;
 }
 
+h1,
+h2,
+.brand-logo,
+legend {
+  font-family: 'Bangers', cursive;
+  letter-spacing: .15rem;
+
+}
+
+fieldset {
+  border: none;
+}
+
+legend {
+  font-size: 3.5rem !important;
+  padding-top: 2.4rem;
+  line-height: 42px !important;
+}
+
 img.responsive-img {
   aspect-ratio: 1/1;
   object-fit: cover;
@@ -49,9 +72,27 @@ img.responsive-img {
   line-height: inherit !important;
 }
 
+/* --------------------------------------------------------------------- NavBar */
+.brand-logo {
+  font-size: 3.5rem !important;
+}
+
+/* --------------------------------------------------------------------- Sidenavs */
+#profile,
+#quickmenu {
+  position: fixed;
+}
+
+/* --------------------------------------------------------------------- Sign In/Up */
+
 .signin-form,
 .signup-form {
   margin-top: 2.5rem;
+}
+
+.signin-link,
+.signup-link {
+  font-size: 1.2rem !important;
 }
 
 #update-form .row {
@@ -62,28 +103,7 @@ img.responsive-img {
   padding-bottom: 0;
 }
 
-h1,
-h2,
-.brand-logo,
-legend {
-  font-family: 'Bangers', cursive;
-  letter-spacing: .15rem;
-
-}
-
-legend {
-  font-size: 3.5rem !important;
-  padding-top: 2.4rem;
-  line-height: 42px !important;
-}
-
-.brand-logo {
-  font-size: 3.5rem !important;
-}
-
-fieldset {
-  border: none;
-}
+/* --------------------------------------------------------------------- Search Bar */
 
 #search {
   position: absolute;
@@ -136,6 +156,9 @@ fieldset {
   background-color: hsla(0, 0%, 30%, 0.75);
 }
 
+/* --------------------------------------------------------------------- Post/Comment/Subcomment */
+
+/* ---------------------------------- Materialize */
 .card {
   max-width: 100%;
 }
@@ -148,9 +171,8 @@ fieldset {
   margin-bottom: 0.5rem;
 }
 
-.comment-user-info.card-panel {
-  padding-top: 12px;
-  padding-bottom: 12px;
+.card-content.profile {
+  padding-bottom: 0;
 }
 
 .chip {
@@ -161,14 +183,24 @@ fieldset {
   margin: 0 4px;
 }
 
-#profile,
-#quickmenu {
-  position: fixed;
+.comment-user-info.card-panel {
+  padding-top: 12px;
+  padding-bottom: 12px;
 }
 
-.card-content.profile {
-  padding-bottom: 0;
+.post .card {
+  margin-bottom: 0;
 }
+
+.post .card-panel {
+  padding: 12px;
+}
+
+.post .card-title {
+  line-height: 0;
+}
+
+/* ---------------------------------- Non-Materialize */
 
 .user-field-title {
   font-size: 1.5em;
@@ -180,21 +212,9 @@ fieldset {
   border-left: 3px solid rgba(69, 39, 160, 80%);
 }
 
-.post .card {
-  margin-bottom: 0;
-}
-
-.post .card-panel {
-  padding: 12px;
-}
-
 .post .card-title-container {
   padding-top: 12px;
   padding-right: 12px;
-}
-
-.post .card-title {
-  line-height: 0;
 }
 
 .post p.card-content {
@@ -211,7 +231,9 @@ fieldset {
   padding-top: 0;
 }
 
-:not(pre)>code[class*=language-], pre[class*=language-] {
+/* Additional Prism Styles */
+:not(pre)>code[class*=language-],
+pre[class*=language-] {
   max-height: 30vh;
   overflow: auto;
 }
@@ -282,11 +304,6 @@ a.crud-btn {
   margin: 14px 0;
 }
 
-.signin-link,
-.signup-link {
-  font-size: 1.2rem !important;
-}
-
 #edit_post {
   position: relative;
 }
@@ -305,6 +322,8 @@ a[data-tooltip="Edit Post"] {
   right: 20px;
 }
 
+/* --------------------------------------------------------------------- Miscellaneous */
+
 .modal {
   width: fit-content !important;
   max-width: 80%;
@@ -321,12 +340,12 @@ a[data-tooltip="Edit Post"] {
       rgba(0, 0, 0, 0) 100%);
 }
 
-.social-media-icon{
+.social-media-icon {
   font-size: 3rem;
   margin: 0 0 1rem;
 }
 
-/* --------------------------------------------------------------------------- MEDIA QUERIES */
+/* --------------------------------------------------------------------- CUSTOM MEDIA QUERIES */
 @media only screen and (min-width: 993px) {
   #quickmenu .col.offset-l9 {
     margin-left: 73%;
@@ -349,18 +368,22 @@ a[data-tooltip="Edit Post"] {
     padding-left: 0;
     padding-right: 0;
   }
+
   #search fieldset {
     justify-content: space-evenly;
     padding: 2px;
   }
+
   #search .input-field {
     margin: 4px 1px;
     padding: 2px 0;
   }
+
   #search .input-field:first-child,
   #search .input-field:last-child {
     width: fit-content;
   }
+
   #search .input-field button {
     line-height: 1.4;
     height: 30px;

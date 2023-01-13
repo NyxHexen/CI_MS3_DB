@@ -1,10 +1,12 @@
 $(document).ready(function () {
+  // Materialize Inits
   $('.sidenav').sidenav();
   $('select').formSelect();
   $('.tooltipped').tooltip();
   $('.modal').modal();
   $('.carousel').carousel();
 
+// If any flash messages are passed, this code turns it into a Materialize toast.
   if ($('.toast')) {
     $('.toast').each(function () {
       if ($(this).hasClass('message')) {
@@ -38,12 +40,15 @@ $(document).ready(function () {
     });
   }
 
+  // Adds a label to the Materialize generated Filter dropdown menu for compliance.
   if ($("input[name='search_field']").html() != undefined) {
     $("input.select-dropdown.dropdown-trigger").attr("id", "select-dropdown");
     $("input.select-dropdown.dropdown-trigger").prepend("<label for='select-dropdown'>Filter By</label>");
   }
 });
 
+// Controls the comments/assists text on smaller devices.
+// If window is max-width 690, then comment(s) and assist(s) text is omitted.
 // $(window).innerWidth() returns 17px less as a value
 if ($(window).innerWidth() + 17 <= 690) {
   $('.post .card-action span').each(function () {
@@ -54,6 +59,7 @@ if ($(window).innerWidth() + 17 <= 690) {
   });
 }
 
+// Hover effect for quickmenu side nav
 $('.collection-item').hover(function () {
   $(this).removeClass('deep-purple-text text-darken-3');
   $(this).addClass('deep-purple darken-3 active');
@@ -62,6 +68,8 @@ $('.collection-item').hover(function () {
   $(this).addClass('deep-purple-text text-darken-3');
 });
 
+
+// Controls if code fields are shown in new/edit post/comment/subcomment.
 $('.switch label').on('mouseup', function () {
   if ($('#code_switch').is(':checked')) {
     $('.code-switch').each(function () {
@@ -74,7 +82,8 @@ $('.switch label').on('mouseup', function () {
   }
 });
 
-
+// Vote Buttons AJAX call, used to capture click and feed to the back-end.
+// Back-end response (count of votes) is then immediately updated to screen.
 $(function () {
   $('.vote-button').each(function () {
     $(this).on('click', function (e) {
@@ -130,10 +139,12 @@ $(function () {
   });
 });
 
+// Close animation for Search Bar
 $('[data-target="search-field--container"]').on('mousedown', function () {
   $('#search').toggleClass('scale-out');
 });
 
+// Hover effect (visual) for Search Bar
 $("#search .autocomplete")
   .on('focusin', function () {
     $("#search").children('.row').css("background-color", "rgba(255, 255, 255, 0.80)");
@@ -141,6 +152,8 @@ $("#search .autocomplete")
     $("#search").children('.row').css("background-color", "rgba(255, 255, 255, 0.55)");
   });
 
+// Search Bar AJAX call, used for the autocomplete (search) field.
+// On server response creates a pop-up with any matching users.
 $("#autocomplete-input")
   .on('keyup', function () {
     let filter = $('#filter_select').find(":selected").val();
@@ -178,7 +191,8 @@ $("#autocomplete-input")
     });
   });
 
-
+// Helper function to dynamically change the href of the delete comment modal,
+// instead of every comment/subcomment having their own modal generated at load.
 $('a').each(function () {
   if ($(this).data().hasOwnProperty('uid')) {
     if ($(this).data().hasOwnProperty('suid')) {
