@@ -11,6 +11,10 @@ posts = Blueprint("posts", "__name__")
 @posts.route("/posts/<id>", methods=["GET", "POST"])
 @login_required
 def view_post(id):
+    """
+    Returns the post on which the user has clicked
+    into single view, loading all comments.
+    """
     try:
         page_num = int(request.args.get('page'))
     except TypeError:
@@ -27,6 +31,10 @@ def view_post(id):
 @posts.route("/posts/<id>/edit_post", methods=["GET", "POST"])
 @login_required
 def edit_post(id):
+    """
+    Allows the user to edit their own posts, once
+    saved redirects back to view_post view.
+    """
     post = Post.objects.get(id=id)
     if post.created_by != current_user:
         abort(403)
@@ -50,6 +58,11 @@ def edit_post(id):
 @posts.route("/posts/<post_id>/<comment_id>", methods=["GET", "POST"])
 @login_required
 def view_comment(post_id, comment_id):
+    """
+    Returns the comment, and the post it belongs to,
+    on which the user has clicked into single view, 
+    loading all subcomments.
+    """
     try:
         page_num = int(request.args.get('page'))
     except TypeError:
@@ -69,6 +82,10 @@ def view_comment(post_id, comment_id):
 @posts.route("/posts/<id>/reply", methods=["GET", "POST"])
 @login_required
 def new_comment(id):
+    """
+    Renders same template as view_post, but with 
+    an additional form variable, created with WTForms.
+    """
     try:
         page_num = int(request.args.get('page'))
     except TypeError:
@@ -98,6 +115,10 @@ def new_comment(id):
                                                                   "POST"])
 @login_required
 def edit_comment(post_id, comment_id):
+    """
+    Allows the user to edit their own comment, once
+    saved redirects back to the post.
+    """
     post = Post.objects.get(id=post_id)
     comment = Comment.objects.get(id=comment_id)
     if comment.created_by != current_user:
@@ -121,6 +142,11 @@ def edit_comment(post_id, comment_id):
 @posts.route("/posts/<post_id>/<comment_id>/reply", methods=["GET", "POST"])
 @login_required
 def new_subcomment(post_id, comment_id):
+    """
+    Similar to view comment, but instead passes an additional
+    form variable, containing a form created with WTForms.
+    On submit redirects to post page.
+    """
     try:
         page_num = int(request.args.get('page'))
     except TypeError:
@@ -152,6 +178,11 @@ def new_subcomment(post_id, comment_id):
              methods=["GET", "POST"])
 @login_required
 def edit_subcomment(post_id, comment_id, subcomment_id):
+    """
+    Renders a WTForm, similar to add_subcomment, which
+    allows the user to edit their subcomment. On successful
+    submission, redirects back to view comment page.
+    """
     post = Post.objects.get(id=post_id)
     comment = Comment.objects.get(id=comment_id)
     subcomment = Comment.objects.get(id=subcomment_id)
@@ -178,6 +209,10 @@ def edit_subcomment(post_id, comment_id, subcomment_id):
 @posts.route("/new_post", methods=["GET", "POST"])
 @login_required
 def new_post():
+    """
+    Providers a form, created with WTForms, which allows the
+    user to create a new post.
+    """
     form = NewPostForm()
     if form.validate_on_submit():
         post = Post()
@@ -191,6 +226,12 @@ def new_post():
 
 @posts.route("/_update_votes/<id>/<vote>", methods=["GET", "POST"])
 def update_votes(id, vote):
+    """
+    Function does not render/use a template at all; this is the back-end
+    logic of the post and comments vote buttons. Depending on the button
+    pressed updates the database and then sends a JSON response to the AJAX
+    in the front end to update visually.
+    """
     if current_user.is_authenticated is False:
         flash("You must be signed in to do that!", "red")
         return jsonify(False)
@@ -224,6 +265,12 @@ def update_votes(id, vote):
 @posts.route("/posts/<id>/delete")
 @login_required
 def delete_post(id):
+    """
+    Allows the user to delete their post
+    This function does not render a template,
+    instead if actions the delete_post request and
+    redirects back to home page.
+    """
     post = Post.objects.get(id=id)
     post.delete()
     flash("Your post has been deleted!", "green")
@@ -233,6 +280,12 @@ def delete_post(id):
 @posts.route("/<comment_id>/delete_comment")
 @login_required
 def delete_comment(comment_id):
+    """
+    Allows user to delete their own comment, which
+    also deletes any subcomments.
+    Does not render a template, instead actions the request
+    and then redirects back to the post page.
+    """
     post = Post.objects.get(comments=comment_id)
     comment = Comment.objects.get(id=comment_id)
     for subcomment in comment.comments:
@@ -246,6 +299,11 @@ def delete_comment(comment_id):
 @posts.route("/<comment_id>/<subcomment_id>/delete_subcomment")
 @login_required
 def delete_subcomment(comment_id, subcomment_id):
+    """
+    Allows user to delete their own subcomment.
+    Does not render a template, instead actions the request
+    and then redirects back to the post page.
+    """
     comment = Comment.objects.get(id=comment_id)
     post = Post.objects.get(comments__icontains=comment.id)
     subcomment = Comment.objects.get(id=subcomment_id)

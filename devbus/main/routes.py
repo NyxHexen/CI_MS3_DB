@@ -7,11 +7,15 @@ main = Blueprint("main", "__name__")
 
 @main.route("/")
 def home():
+    """
+    This function renders the home page and provides 
+    a list of all posts in chronological order.
+    """
     try:
         page_num = int(request.args.get('page'))
     except TypeError:
         page_num = 1
-    posts = Post.objects.paginate(
+    posts = Post.objects().order_by('-created_date').paginate(
         page=page_num,
         per_page=10)
     return render_template("main/home.html",

@@ -29,16 +29,26 @@ class SignUpForm(FlaskForm):
     submit = SubmitField('READY!')
 
     def validate_username(self, username):
+        """
+        Method to check if entered username is taken/unique.
+        """
         is_unique_username = len(User.objects(username=username.data)) == 0
         if not is_unique_username:
             raise ValidationError('Username is taken. Please pick another.')
 
     def validate_email(self, email):
+        """
+        Method to check if entered email is taken/unique.
+        """
         is_unique_email = len(User.objects(email=email.data)) == 0
         if not is_unique_email:
             raise ValidationError('Email is taken. Please use another.')
 
     def validate_password(self, password):
+        """
+        Method to check if entered password complies with
+        our password rules.
+        """
         is_strong_password = True if password_check(password.data) else False
         if not is_strong_password:
             raise ValidationError('''Password should contain an uppercase

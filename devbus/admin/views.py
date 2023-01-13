@@ -5,6 +5,10 @@ from flask_admin.contrib.mongoengine import ModelView
 from devbus.utils.models import StringField, User, Post, Comment
 
 class CustomView(ModelView):
+    """
+    Custom view to help limit who can access
+    each of the DB views.
+    """
     def is_accessible(self):
         return (current_user.is_active and
                 current_user.is_authenticated and
@@ -13,7 +17,8 @@ class CustomView(ModelView):
 
     def _handle_view(self, name, **kwargs):
         """
-        Override builtin _handle_view in order to redirect users when a view is not accessible.
+        Override builtin _handle_view in order to redirect users 
+        when a view is not accessible.
         """
         if not self.is_accessible():
             if current_user.is_authenticated:
@@ -32,10 +37,8 @@ class MyHomeView(AdminIndexView):
                 current_user.is_authenticated and
                 current_user.user_type == 'superuser'):
             if current_user.is_authenticated:
-                # permission denied
                 abort(403)
             else:
-                # login
                 flash("You must login first to visit this page.", "red white-text")
                 return redirect("/signin")
         users = User.objects()

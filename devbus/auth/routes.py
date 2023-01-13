@@ -18,6 +18,10 @@ auth = Blueprint('auth', '__name__')
 
 @auth.route("/signup", methods=["GET", "POST"])
 def signup():
+    """
+    Registers a new user in the users collection,
+    then if successful redirects to the sign in page.
+    """
     if current_user.is_authenticated:
         return redirect("/")
     form = SignUpForm()
@@ -37,6 +41,11 @@ def signup():
 
 @auth.route("/signin", methods=["GET", "POST"])
 def signin():
+    """
+    Checks if user exists and logs in the users,
+    then if successful redirects them to the page they
+    wanted to access or home page.
+    """
     if current_user.is_authenticated:
         flash("You are already logged in!", "yellow black-text")
         return redirect("/")
@@ -59,6 +68,9 @@ def signin():
 
 @auth.route("/logout")
 def logout():
+    """
+    Logs out user and redirects to home page.
+    """
     logout_user()
     return redirect("/")
 
@@ -66,6 +78,12 @@ def logout():
 @auth.route("/profile", methods=["GET", "POST"])
 @login_required
 def profile():
+    """
+    Renders the user's profile/account and handles
+    the delete button functionality. 
+    In order to delete their account, the user must
+    provide their password.
+    """
     user = User.objects.get(id=current_user.id)
     form = DeleteAccountForm()
     if (form.validate_on_submit()
@@ -82,6 +100,10 @@ def profile():
 @auth.route("/edit_profile", methods=["GET", "POST"])
 @login_required
 def edit_profile():
+    """
+    This function renders the edit profile template,
+    and allows the user to change their profile details.
+    """
     form = UpdateProfileForm()
     if form.validate_on_submit():
         form.populate_obj(current_user)
@@ -114,6 +136,11 @@ def edit_profile():
 
 @auth.route("/forgot_password", methods=["GET", "POST"])
 def forgot_password():
+    """
+    This function helps users who have forgotten their password.
+    Upon entering e-mail address that is in already in the DB, 
+    flask-mail sends an email with a password reset token link.
+    """
     if current_user.is_authenticated:
         flash("You are already logged in!", "yellow black-text")
         return redirect("/")
@@ -138,6 +165,13 @@ def forgot_password():
 
 @auth.route("/reset_password/<token>", methods=["GET", "POST"])
 def reset_password(token):
+    """
+    Route is accessed by accessing the reset password token link
+    which flask-mail sends via e-mail when the user submits the 
+    forgot_password form. If token is valid, the user is able to
+    choose a new password. If the token is expired, they are
+    redirected to login.
+    """
     if current_user.is_authenticated:
         flash("You are already logged in!", "yellow black-text")
         return redirect("/")
@@ -148,7 +182,6 @@ def reset_password(token):
         flash("This token is no longer valid. Please try again!",
               "materialize-red")
         return redirect("/signin")
-
     user = User.objects.get(id=user_id)
     if form.validate_on_submit():
         user.password = (bcrypt.generate_password_hash(form.password.data)
@@ -163,6 +196,11 @@ def reset_password(token):
 @auth.route("/profile/change_password", methods=["GET", "POST"])
 @login_required
 def change_password():
+    """
+    Route is accessed through the user's profile and
+    allows the user to change their password by providing
+    current and new password.
+    """
     form = ChangePwdForm()
     user = User.objects.get(id=current_user.id)
     if form.validate_on_submit():
@@ -178,6 +216,13 @@ def change_password():
 @auth.route("/profile/_<id>/delete_user", methods=["GET", "POST"])
 @login_required
 def delete_user(id):
+    """
+    This function does not render a template, but instead 
+    actions the user deletion requests and then redirects to
+    the home page.
+    When called, this function deletes all posts, comments,
+    subcomments that the user has added, then also deletes user account.
+    """
     user = User.objects(id=id).first()
     if (current_user != user):
         abort(403)
