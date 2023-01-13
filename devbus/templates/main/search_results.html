@@ -4,7 +4,7 @@
 
 {% include 'sidenavs.html' %}
 
-{% if user | length == 0 and posts.items | length == 0 %}
+{% if users | length == 0 and posts.items | length == 0 %}
 <div class="row">
     <div class="col s12 m9 offset-m4 l8 push-l2">
         <h3 class="center white-text">There's nothing here...</h3>
@@ -58,11 +58,18 @@
         <h2 class="center-align white-text">Posts</h2>
     </div>
 </div>
+{% elif users | length != 0 and posts.items | length == 0 %}
+<div class="row">
+    <div class="col s12 m9 offset-m4 l8 push-l2">
+        <h2 class="center-align white-text">Posts</h2>
+        <p class="center white-text">This user doesn't have posts yet!</p>
+    </div>
+</div>
 {% endif %}
 
 {% for post in posts.items %}
 <div class="row">
-    {% if current_user.username %}
+    {% if current_user.is_authenticated %}
     <div class="col s12 m9 offset-m4 l8 push-l2">
         {% else %}
         <div class="col s12 m10 push-m1 l8 push-l2">
@@ -146,7 +153,7 @@
     {% endfor %}
 
     {% macro render_navigation(pagination, endpoint) %}
-    {% if pagination.has_prev and pagination.has_next %}
+    {% if pagination.pages > 1 %}
     <div class="row">
         <div class="col s12 m9 offset-m4 l8 push-l2 center">
             <ul class=pagination>
