@@ -53,11 +53,11 @@
                 {% endif %}
                 {{ form.post_content.label }}
             </div>
-            <div class="input-field col s6 hide code-switch">
+            <div class="input-field col s6 visually-hidden code-switch">
                 {{ form.code_language(class="autocomplete") }}
                 {{ form.code_language.label }}
             </div>
-            <div class="input-field col s12 hide code-switch">
+            <div class="input-field col s12 visually-hidden code-switch">
                 {% if form.code_content.errors %}
                 {{ form.code_content(class="materialize-textarea grey darken-4 white-text invalid") }}
                 <div class="invalid-feedback">

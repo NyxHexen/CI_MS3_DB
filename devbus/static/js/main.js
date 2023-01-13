@@ -65,11 +65,11 @@ $('.collection-item').hover(function () {
 $('.switch label').on('mouseup', function () {
   if ($('#code_switch').is(':checked')) {
     $('.code-switch').each(function () {
-      $(this).addClass('hide');
+      $(this).addClass('visually-hidden');
     });
   } else if (!$('#code_switch').is(':checked')) {
     $('.code-switch').each(function () {
-      $(this).removeClass('hide');
+      $(this).removeClass('visually-hidden');
     });
   }
 });
