@@ -22,12 +22,12 @@ def signup():
         return redirect("/")
     form = SignUpForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data),
-        password = (
-            bcrypt.generate_password_hash(form.password.data).decode('utf-8')),
-        f_name = form.f_name.data,
-        l_name = form.l_name.data,
-        email = form.email.data
+        user = User(username=form.username.data,
+                    password = (
+                        bcrypt.generate_password_hash(form.password.data).decode('utf-8')),
+                    f_name = form.f_name.data,
+                    l_name = form.l_name.data,
+                    email = form.email.data)
         user.save()
         flash("Account created successfully!",
               "light-green black-text lighten-2")
