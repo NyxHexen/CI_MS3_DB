@@ -53,7 +53,7 @@ class Subcomment(Document):
     comment_content = StringField(required=True)
     votes = DictField(default={"up": [], "down": []})
     created_by = ReferenceField(User)
-    created_date = DateField(default=datetime.utcnow)
+    created_date = DateTimeField(default=datetime.utcnow)
 
 
 class Comment(Document):
@@ -65,7 +65,7 @@ class Comment(Document):
     comments = ListField(ReferenceField(Subcomment))
     votes = DictField(default={"up": [], "down": []})
     created_by = ReferenceField(User)
-    created_date = DateField(default=datetime.utcnow)
+    created_date = DateTimeField(default=datetime.utcnow)
 
 
 class Post(Document):
@@ -78,4 +78,4 @@ class Post(Document):
     votes = DictField(default={"up": [], "down": []})
     post_type = StringField()
     created_by = ReferenceField(User)
-    created_date = DateField(default=datetime.utcnow)
+    created_date = DateTimeField(default=datetime.utcnow)
