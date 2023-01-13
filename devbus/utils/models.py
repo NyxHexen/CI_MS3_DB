@@ -21,8 +21,7 @@ class User(Document, UserMixin):
     password = StringField()
     profile_image = (
         StringField(
-            default='''https://ci-ms3-devbus.s3.eu-west-1.
-            amazonaws.com/default.jpg'''))
+            default="https://ci-ms3-devbus.s3.eu-west-1.amazonaws.com/default.jpg"))
     bio = StringField(max_length=126, default="")
     languages = ListField(default=[])
 
