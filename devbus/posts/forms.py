@@ -9,7 +9,7 @@ class NewPostForm(FlaskForm):
     post_title = StringField('Post Title',
                              validators=[DataRequired(), Length(max=86)])
     post_content = TextAreaField('Post Content',
-                                 validators=[DataRequired(), Length(max=250)])
+                                 validators=[DataRequired(), Length(max=350)])
     code_content = TextAreaField('Code Content',
                                  validators=[])
     code_language = StringField('Code Language')
