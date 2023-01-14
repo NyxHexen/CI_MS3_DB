@@ -1,16 +1,23 @@
+- [Automatic Testing](#automatic-testing)
+- [Manual Testing](#manual-testing)
+  * [Browser compatibility:](#browser-compatibility-)
+  * [Devices tested on:](#devices-tested-on-)
+  * [Testing User Stories](#testing-user-stories)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
 # Automatic Testing
 Unfortunately, I did not have enough time to get familiarized and conduct automatic testing with PyTest.
 
 # Manual Testing
 
-## Browser compatibility:
-
+## Browser compatibility
 - Microsoft Edge: Functionality and styles as expected.
 - Google Chrome: Functionality and styles as expected.
 - Firefox: Functionality and styles as expected.
 - Opera/Opera GX: Functionality and styles as expected.
 
-## Devices tested on:
+## Devices tested on
 
 - Tower desktop with 27" monitor;
 - OnePlus 9 Pro.

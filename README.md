@@ -6,28 +6,83 @@ A social media website for developers that allows people to create simple text p
 
 ![Responsiveness Display](devbus/static/images/am_i_responsive/responsive_devices.png)
 
-
-# Table of Contents
-- [UX](#ux)
+- [User Experience](#user-experience)
   * [Strategy](#strategy)
+    + [Primary Goal](#primary-goal)
+      - [Owner side:](#owner-side-)
+      - [User side:](#user-side-)
   * [Structure](#structure)
-    + Front-End Structure
-    + Back-End Structure
+    + [Front-End Structure](#front-end-structure)
+      - [Images](#images)
+    + [Back-End Structure](#back-end-structure)
+      - [Physical Database Model](#physical-database-model)
+      - [Forms](#forms)
+      - [Amazon Web Services (AWS) S3 bucket](#amazon-web-services--aws--s3-bucket)
   * [Scope](#scope)
-    + [User Stories - Owner](#user-stories-website-owner)
-    + [User Stories - New/Existing Users](#user-stories-new/existing-customer)
+    + [Admin/Site Owner User Stories (A)](#admin-site-owner-user-stories--a-)
+    + [Potential/New User User Stories (B)](#potential-new-user-user-stories--b-)
+    + [Existing (Logged In) User User Stories (C)](#existing--logged-in--user-user-stories--c-)
   * [Skeleton](#skeleton)
+    + [Wireframes](#wireframes)
   * [Surface](#surface)
+    + [Color Palette](#color-palette)
+    + [Typography](#typography)
 - [Features](#features)
-  * [Features Left to Implement](#postrelease-features)
+  * [MVP Features](#mvp-features)
+    + [Feature 1 - Navigation Bar](#feature-1---navigation-bar)
+    + [Feature 2 - Side Bars](#feature-2---side-bars)
+    + [Feature 3 - Footer](#feature-3---footer)
+    + [Feature 4 - Landing Page](#feature-4---landing-page)
+    + [Feature 5 - Sign In/Sign Up](#feature-5---sign-in-sign-up)
+      - [Sign Up Page](#sign-up-page)
+      - [Sign In Page](#sign-in-page)
+    + [Feature 6 - Search Bar & Search Results Page](#feature-6---search-bar---search-results-page)
+      - [Search Bar](#search-bar)
+      - [Search Results](#search-results)
+    + [Feature 7 - Posts (CRUD)](#feature-7---posts--crud-)
+      - [Create a New Post](#create-a-new-post)
+      - [View Post](#view-post)
+      - [Update Post](#update-post)
+      - [Delete Post](#delete-post)
+    + [Feature 8 - Comments (CRUD)](#feature-8---comments--crud-)
+      - [Create Comment](#create-comment)
+      - [View Comment](#view-comment)
+      - [Edit Comment](#edit-comment)
+      - [Delete Comment](#delete-comment)
+    + [Feature 9 - Sub-comments (CRUD)](#feature-9---sub-comments--crud-)
+      - [Create Sub-comment](#create-sub-comment)
+      - [Edit Sub-comment](#edit-sub-comment)
+      - [Delete Sub-comment](#delete-sub-comment)
+    + [Feature 10 - Profile (View, Update, & Delete)](#feature-10---profile--view--update----delete-)
+      - [View Profile](#view-profile)
+      - [Update Profile](#update-profile)
+      - [Delete Profile](#delete-profile)
+    + [Feature 11 - View User](#feature-11---view-user)
+    + [Feature 12 - Admin Page (Flask-Admin)](#feature-12---admin-page--flask-admin-)
+    + [Feature 13 - Forgot/Reset Password](#feature-13---forgot-reset-password)
+      - [Forgot Password](#forgot-password)
+      - [Reset Password](#reset-password)
 - [Technologies](#technologies)
 - [Testing](#testing)
-- [APIs](#apis)
+  * [HTML Validation](#html-validation)
+  * [CSS Validation](#css-validation)
+  * [JavaScript Validation](#javascript-validation)
+  * [Python Validation](#python-validation)
+  * [Accessibility](#accessibility)
+  * [Performance](#performance)
+  * [Manual Testing](#manual-testing)
 - [Deployment](#deployment)
+  * [Heroku](#heroku)
+  * [MongoDB](#mongodb)
+  * [AWS S3 Bucket](#aws-s3-bucket)
+  * [Local Deployment](#local-deployment)
 - [Credits](#credits)
-- [Content](#content)
-- [Media](#media)
-- [Acknowledgements](#acknowledgements)
+  * [Code Content](#code-content)
+  * [Media](#media)
+  * [Acknowledgements](#acknowledgements)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
 
 # User Experience
 
@@ -985,3 +1040,94 @@ Included only one of the error pages as the remaining share structure and design
 ## Manual Testing
 
 Manual testing can be found in [TESTING.md](/TESTING.md)
+
+# Deployment
+
+To run this application locally there are a couple of application that need to be configured.
+
+## Heroku
+
+1. In app.py file, ensure that debug is not enabled, i.e. not set to True.
+2. Create a plan file with no extensions called 'Procfile' in the root directory of your project (if it doesn't already exist), within it add the line 'web: python app.py' (essentially same thing we do when we run our program locally).
+3. Create a requirements.txt file by running the command the following command in your terminal:
+- `pip freeze --local > requirements.txt`
+4. Procfile and requirements.txt files should both be committed to your Git repository.
+5. Create an account on [Heroku](https://signup.heroku.com/login?redirect-url=https%3A%2F%2Fid.heroku.com%2Foauth%2Fauthorize%3Fclient_id%3D8ba4d6bc-6d8c-4de8-8d31-9e540595c199%26redirect_uri%3Dhttps%253A%252F%252Fdevcenter.heroku.com%252Fauth%252Fheroku%252Fcallback%253Fback_to%253D%252F%26response_type%3Dcode%26scope%3Didentity%26state%3D5627683e234758322a2e4a8ae45f254b4883a8266b26975c).
+6. Create a new application and name it same as your project (if name is available, if not choose one).
+7. In the application dashboard, navigate to the 'Deploy' section.
+8. Link your GitHub account in the Deployment method section, then in the 'App connected to GitHub' select your project repository. Enable automatic deployment if desired, otherwise deployment will need to be manually done.
+9. Next, configure your 'Config Vars'. Those should contain sets of key-value pairs of the keys you have stored in your local env.py, such as:
+  - IP
+  - PORT
+  - SECRET_KEY
+  - MONGO_URI
+  - AWS_ACCESS_KEY_ID
+  - AWS_SECRET_ACCESS_KEY
+  - EMAIL_USER (if using `flask-mail`)
+  - EMAIL_PASS (if using `flask-mail`)
+10. Go to the project dashboard and in 'Manual Deploy' section select the correct branch, then click 'Deploy Branch' button.
+11. This will trigger the site's deployment. Once deployment has completed, click on the "Open App" button to open the deployed application.
+
+If the above steps have been followed correctly you will be greeted by your website's landing page.
+
+## MongoDB
+1. Create an account on MongoDB website.
+2. Create a database cluster.
+3. Open your cluster and navigate to the 'Collections' tab.
+4. To mirror this project - create 4 collections:
+  - users
+  - posts
+  - comments
+5. On the side nav, under 'Security' - navigate to 'Database Access' tab. Within it, create a root database user and assign it the `readWriteAnyDatabase` MongoDB role.
+6. Under 'Security', this time navigate to 'Network Acess' and add a new IP address to allow access from the specified IP address from the app.
+7. In the 'Databases' section, click the 'Connect' button of your cluster and choose your preferred connection method.
+NB! - Take note of your environment variable and keep it safe as it contains sensitive information.
+
+## AWS S3 Bucket
+
+1. Create an account at [Amazon AWS](https://aws.amazon.com/).
+2. Open the navigation bar menu 'Services' (top-left) and select 'IAM'. If you can't find it, you can use the search bar.
+3. Create a new user with an `AmazonS3FullAccess` policy assigned.
+4. Through 'Services' menu, navigate to (Storage >)'S3' and create a new bucket. For the purpose of this application the bucket name is ci-ms3-devbus, but this can later be changed.
+5. Go into your bucket's Permissions tab and setup that the bucket to have Public Accesss and is visible to others. Consult the AWS documentation if required!
+6. The bucket should now be ready to use with your application, however you will need to change the name and links in the `auth/utils.py` file to match your bucket.
+
+## Local Deployment 
+
+1. Login to GitHub.
+2. Find and open the CI_MS3_DB repository.
+3. Click the 'Code' button and copy the HTTPS link to use with Git.
+4. In your own IDE, open a terminal and run the below command to clone the repository:
+- `git clone https://github.com/NyxHexen/CI_MS3_DB.git`
+5. Depending on your IDE, the new local version of the repository will automatically open.
+6. Create an `env.py` file, populate it, and add it to your `.gitignore` file, to make sure it is not committed with your code, as it contains sensitive information.
+7. Install the relevant packages by running:
+- `pip install requirements.txt`
+8. Start the application by running:
+- `python app.py`
+
+# Credits
+
+I have used predominantly my own code, learned through studying each extension/library/framework's Documents.
+
+## Code Content 
+
+- Corey Schafer and his [Flask Tutorial Playlist](https://www.youtube.com/watch?v=MwZwr5Tvyxo&list=PL-osiE80TeTs4UjLw5MM6OjgkjFeUxCYH&ab_channel=CoreySchafer) as it was great help while I was still figuring out everything.
+- [Stack Overflow](https://stackoverflow.com/)
+  * [Uploading PIL image object to AWS S3](https://stackoverflow.com/questions/46204514/uploading-pil-image-object-to-amazon-s3-python)
+  * [Password Check helper function](https://stackoverflow.com/questions/16709638/checking-the-strength-of-a-password-how-to-check-conditions#32542964)
+  * [Regular Expression](https://stackoverflow.com/questions/4931825/regular-expression-any-number)
+  * [How to update MongoDB data with JQuery Ajax](https://stackoverflow.com/questions/55152813/how-to-update-mongodb-data-with-jquery-ajax)
+  * [How do I check whether a checkbox is checked in jQuery?](https://stackoverflow.com/questions/901712/how-do-i-check-whether-a-checkbox-is-checked-in-jquery)
+  * [Mongoengine Pagination](https://stackoverflow.com/questions/15822818/flask-mongoengine-pagination)
+- [Prism JS](https://prismjs.com/) - code highlighting.
+
+## Media
+1. [Pexels](https://www.pexels.com/) - Default profile image.
+2. [Google Fonts](https://fonts.google.com/) - Fonts used in project.
+3. [Font Awesome](https://fontawesome.com/) - Icons used in project.
+4. [Favicon](https://favicon.io/) - Used to generate webpage favicon.
+5. [Stack Overflow](https://stackoverflow.com/) - post content.
+
+## Acknowledgements
+- As always, special thanks to my mentor Mo Shami for all the encouragement and support.
