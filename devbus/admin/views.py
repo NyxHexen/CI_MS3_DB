@@ -1,4 +1,4 @@
-from flask import abort, redirect, flash
+from flask import abort, redirect, flash, json
 from flask_admin import AdminIndexView, expose
 from flask_login import current_user
 from flask_admin.contrib.mongoengine import ModelView
@@ -28,6 +28,23 @@ class CustomView(ModelView):
                 # login
                 flash("You must login first to visit this page.", "red white-text")
                 return redirect("/signin")
+
+    def _get_list_value(self, context, model, name, column_formatters, column_type_formatters):
+        """
+        Override builtin _get_list_value as otherwise it's unable to display the votes field
+        as it contains objects. With this override it now displays the
+        number of votes in each key.
+        """
+        if (name == "votes"):
+            votes_up = list()
+            votes_down = list()
+            for i in model.votes['up']:
+                votes_up.append(str(i))
+            for i in model.votes['down']:
+                votes_down.append(str(i))
+            return f"Up: {len(votes_up)}; Down: {len(votes_down)}"
+        else:
+            return super()._get_list_value(context, model, name, column_formatters, column_type_formatters)
 
 
 class MyHomeView(AdminIndexView):
