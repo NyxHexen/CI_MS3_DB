@@ -35,7 +35,7 @@ class User(Document, UserMixin):
 
     @staticmethod
     def verify_pwd_token(token, max_age=1800):
-        """ 
+        """
         Accepts a timer serializer token and checks if
         it's older than 30 minutes. Returns an error if
         older than 30 minutes.

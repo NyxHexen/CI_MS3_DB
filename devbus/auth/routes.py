@@ -28,7 +28,8 @@ def signup():
     if form.validate_on_submit():
         user = User(username=form.username.data,
                     password = (
-                        bcrypt.generate_password_hash(form.password.data).decode('utf-8')),
+                        bcrypt.generate_password_hash(form.password.data)
+                        .decode('utf-8')),
                     f_name = form.f_name.data,
                     l_name = form.l_name.data,
                     email = form.email.data)
@@ -80,7 +81,7 @@ def logout():
 def profile():
     """
     Renders the user's profile/account and handles
-    the delete button functionality. 
+    the delete button functionality.
     In order to delete their account, the user must
     provide their password.
     """
@@ -138,7 +139,7 @@ def edit_profile():
 def forgot_password():
     """
     This function helps users who have forgotten their password.
-    Upon entering e-mail address that is in already in the DB, 
+    Upon entering e-mail address that is in already in the DB,
     flask-mail sends an email with a password reset token link.
     """
     if current_user.is_authenticated:
@@ -167,7 +168,7 @@ def forgot_password():
 def reset_password(token):
     """
     Route is accessed by accessing the reset password token link
-    which flask-mail sends via e-mail when the user submits the 
+    which flask-mail sends via e-mail when the user submits the
     forgot_password form. If token is valid, the user is able to
     choose a new password. If the token is expired, they are
     redirected to login.
@@ -217,7 +218,7 @@ def change_password():
 @login_required
 def delete_user(id):
     """
-    This function does not render a template, but instead 
+    This function does not render a template, but instead
     actions the user deletion requests and then redirects to
     the home page.
     When called, this function deletes all posts, comments,

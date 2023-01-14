@@ -50,7 +50,7 @@ def upload_image(file):
 
 def resize_image(file):
     """
-    Helper function which crops, then compresses an image 
+    Helper function which crops, then compresses an image
     to a 350x350 (thumbnail) size.
     """
     # Open Image
@@ -85,7 +85,7 @@ def resize_image(file):
 def send_reset_email(user):
     """
     This function is triggered via the forgot_password route.
-    Sends a password reset token e-mail using the 
+    Sends a password reset token e-mail using the
     custom generate_pwd_token method from the User model.
     """
     token = user.generate_pwd_token()
@@ -117,7 +117,7 @@ def password_check(password):
     """
     https://stackoverflow.com/questions/16709638/checking-the-strength-of-a-pass
     word-how-to-check-conditions#32542964
-    
+
     Verify the strength of 'password' and return boolean.
     A password is considered strong if:
         8 characters length or more

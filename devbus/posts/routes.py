@@ -60,7 +60,7 @@ def edit_post(id):
 def view_comment(post_id, comment_id):
     """
     Returns the comment, and the post it belongs to,
-    on which the user has clicked into single view, 
+    on which the user has clicked into single view,
     loading all subcomments.
     """
     try:
@@ -83,7 +83,7 @@ def view_comment(post_id, comment_id):
 @login_required
 def new_comment(id):
     """
-    Renders same template as view_post, but with 
+    Renders same template as view_post, but with
     an additional form variable, created with WTForms.
     """
     try:
