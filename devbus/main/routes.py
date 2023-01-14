@@ -65,7 +65,7 @@ def search_results(arg="", filter=""):
             posts = (Post.objects(code_language__icontains=arg)
                      .paginate(page=page_num, per_page=10))
         case _:
-            users = ""
+            users = User.objects() if arg == "" else User.objects(username__icontains=arg)
             posts = Post.objects().paginate(page=page_num, per_page=10)
     return render_template("main/search_results.html",
                            title="Search Results", posts=posts,
