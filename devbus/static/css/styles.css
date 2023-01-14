@@ -243,6 +243,10 @@ pre[class*=language-] {
   color: black !important;
 }
 
+.vote-button i {
+  font-size: 1.6rem;
+}
+
 .vote-button:hover {
   color: black !important;
 }
