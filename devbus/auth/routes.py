@@ -240,5 +240,5 @@ def delete_user(id):
         comment.delete()
     posts.delete()
     user.delete()
-    flash('Sorry to see you go! Your account has now been deleted.', 'yellow')
+    flash('Sorry to see you go! Your account has now been deleted.', 'yellow black-text')
     return redirect("/")
