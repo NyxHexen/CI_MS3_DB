@@ -13,7 +13,7 @@
                 <div class="col s10">
                     <a
                         href="{{ url_for('main.view_user', username=post.created_by.username) }}">{{ post.created_by.username }}</a>
-                    <span class="grey-text text-darken-2">{{ post.created_date }}</span>
+                    <span class="grey-text text-darken-2">{{ post.created_date.strftime('%Y-%m-%d') }}</span>
                     <div class="card-title-container">
                         <span class="card-title flow-text">{{ post.post_title }}</span>
                     </div>
