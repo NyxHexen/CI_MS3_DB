@@ -120,7 +120,7 @@
                     <a href="{{ url_for('posts.update_votes', id=post.id, vote='up') }}"
                         class="waves-effect waves-dark btn-flat vote-button">
                         <i
-                            class="material-icons right green-text {% if current_user in post.votes.up %} accent-4 {% else %} text-lighten-2 {% endif %}">
+                            class="material-icons right green-text {% if current_user in post.votes.up %} text-darken-3 {% else %} text-lighten-1 {% endif %}">
                             thumb_up
                         </i>
                         <span>
@@ -130,7 +130,7 @@
                     <a href="{{ url_for('posts.update_votes', id=post.id, vote='down') }}"
                         class="waves-effect btn-flat vote-button">
                         <i
-                            class="material-icons right small red-text {% if current_user in post.votes.down %} accent-4 {% else %} text-lighten-2 {% endif %}">
+                            class="material-icons right small red-text {% if current_user in post.votes.down %} text-darken-3 {% else %} text-lighten-1 {% endif %}">
                             thumb_down
                         </i>
                         <span>
