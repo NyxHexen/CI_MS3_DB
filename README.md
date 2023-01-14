@@ -281,33 +281,15 @@ While MongoDB stores our database collections, for profile image storage I chose
 
 These are the Wireframes that I created at the inception of the site. Not every page that is currently used has a wireframe as they were a result of the wireframed pages.
 
-|Mobile Wireframes 
+|Wireframes 
 |-------------------
-|<details><summary>1. Home Page</summary><img src=""></details>
-|<details><summary>2. New Post Page</summary><img src=""></details>
-|<details><summary>3. View Post Page</summary><img src=""></details>
-|<details><summary>4. Sign In Page</summary><img src=""></details>
-|<details><summary>5. Sign Up Page</summary><img src=""></details>
-|<details><summary>6. User Profile Page</summary><img src=""></details>
+|<details><summary>1. Home Page</summary><img src="devbus/static/images/wireframes/home.png"></details>
+|<details><summary>2. New Post Page</summary><img src="devbus/static/images/wireframes/new_post.png"></details>
+|<details><summary>3. View Post Page</summary><img src="devbus/static/images/wireframes/view_post.png"></details>
+|<details><summary>4. Sign In Page</summary><img src="devbus/static/images/wireframes/login.png"></details>
+|<details><summary>5. Sign Up Page</summary><img src="devbus/static/images/wireframes/register.png"></details>
+|<details><summary>6. User Profile Page</summary><img src="devbus/static/images/wireframes/user_profile.png"></details>
 
-
-|Tablet Wireframes 
-|-------------------
-|<details><summary>1. Home Page</summary><img src=""></details>
-|<details><summary>2. New Post Page</summary><img src=""></details>
-|<details><summary>3. View Post Page</summary><img src=""></details>
-|<details><summary>4. Sign In Page</summary><img src=""></details>
-|<details><summary>5. Sign Up Page</summary><img src=""></details>
-|<details><summary>6. User Profile Page</summary><img src=""></details>
-
-|Desktop Wireframes 
-|-------------------
-|<details><summary>1. Home Page</summary><img src=""></details>
-|<details><summary>2. New Post Page</summary><img src=""></details>
-|<details><summary>3. View Post Page</summary><img src=""></details>
-|<details><summary>4. Sign In Page</summary><img src=""></details>
-|<details><summary>5. Sign Up Page</summary><img src=""></details>
-|<details><summary>6. User Profile Page</summary><img src=""></details>
 
 ## Surface
 
