@@ -38,7 +38,7 @@
                 <a href="{{ url_for('posts.update_votes', id=post.id, vote='up') }}"
                     class="waves-effect waves-dark btn-flat vote-button">
                     <i
-                        class="material-icons right green-text {% if current_user in post.votes.up %} text-darken-3 {% else %} text-lighten-1 {% endif %}">
+                        class="material-icons right green-text {% if current_user in post.votes.up %} text-darken-3 {% else %} text-lighten-2 {% endif %}">
                         thumb_up
                     </i>
                     <span>
@@ -48,7 +48,7 @@
                 <a href="{{ url_for('posts.update_votes', id=post.id, vote='down') }}"
                     class="waves-effect btn-flat vote-button">
                     <i
-                        class="material-icons right small red-text {% if current_user in post.votes.down %} text-darken-3 {% else %} text-lighten-1 {% endif %}">
+                        class="material-icons right small red-text {% if current_user in post.votes.down %} text-darken-3 {% else %} text-lighten-2 {% endif %}">
                         thumb_down
                     </i>
                     <span>
@@ -105,8 +105,8 @@
                     href="{{ url_for('main.view_user', username=comment.created_by.username) }}">{{ comment.created_by.username }}</a>
                 <span class="grey-text text-darken-2">{{ comment.created_date.strftime('%Y-%m-%d') }}</span>
                 {% if current_user == comment.created_by %}
-                <a href="{{ url_for('posts.edit_comment', post_id=post.id, comment_id=comment.id)}}" class="crud-btn btn-flat blue-text">EDIT</a>
-                <a href="#delete_comment" data-uid="{{comment.id}}" class="crud-btn btn-flat red-text modal-trigger">DELETE</a>
+                <a href="{{ url_for('posts.edit_comment', post_id=post.id, comment_id=comment.id)}}" class="crud-btn btn-flat blue-text text-darken-4">EDIT</a>
+                <a href="#delete_comment" data-uid="{{comment.id}}" class="crud-btn btn-flat red-text text-darken-2 modal-trigger">DELETE</a>
                 {% endif %}
             </div>
             <div class="col s12 m10 card-content">
